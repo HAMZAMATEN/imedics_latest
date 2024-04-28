@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
-import 'package:imedics_latest/helpers/app_text_widgets.dart';
-import 'package:imedics_latest/helpers/myFonts.dart';
+import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/utils/myFonts.dart';
 
 class SessionButton extends StatelessWidget {
   SessionButton(

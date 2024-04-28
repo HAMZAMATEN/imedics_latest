@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-import 'myFonts.dart';
+import '../utils/myFonts.dart';
 
 TextStyle _getTextStyle(
   double fontSize,
@@ -16,7 +16,6 @@ TextStyle _getTextStyle(
   );
 }
 
-// regular style
 TextStyle getRegularStyle({double fontSize = 16, required Color color}) {
   return _getTextStyle(fontSize.sp, FontWeightManager.regular, color);
 }

@@ -6,8 +6,8 @@ import 'package:imedics_latest/screens/common/onboarding/view.dart';
 class SplashController extends GetxController {
   init() async {
     Future.delayed(Duration(seconds: 3), () async {
-      String? userId = await SharedPrefrences().getUserId();
-      String? userindex = await SharedPrefrences().getUserindex();
+      String? userId = await Prefrences().getUserId();
+      String? userindex = await Prefrences().getUserindex();
       if (userId == null || userId.isEmpty) {
         Get.offAll(
           () => OnbordingScreen(),

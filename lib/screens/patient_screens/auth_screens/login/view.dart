@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_field.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/components/custom_text_field.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
+import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/screens/patient_screens/auth_screens/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/auth_screens/login/widgets/loginBottomWidget.dart';
@@ -35,52 +38,45 @@ class _LoginTabState extends State<LoginTab> {
           children: [
             Column(
               children: [
-                SizedBox(
-                  height: 20,
-                ),
-                CustomTextField(
-                  leadingIconPath: AppAssets.user,
-                  texfieldHeight: 60.h,
+                padding10,
+                TextFormField(
                   controller: widget.controller.state.emailController,
-                  hintText: 'Username or Email',
-                  onChanged: (value) {},
-                  onFieldSubmitted: (value) {},
-                  obscure: false,
-                  label: '',
-                  subTitle: '',
-                  validatorFn: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter an email address";
-                    } else if (!value.contains("@")) {
-                      return "Invalid email address";
-                    }
-                    return null; // Return null if the validation passes.
-                  },
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon: Icon(Icons.person_outline),
+                      hintText: "Email",
+                      hintStyle: getLightStyle(color: Colors.black26),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: BorderSide(
+                            color: Colors.grey,
+                          )
+                      )
+                  ),
                 ),
-                padding10,
-                AppTextField(
-                  leadingIconPath: AppAssets.key,
-                  // tailingIcon: Icon(Icons.visibility_off,color: Colors.black54,),
-                  trailingIconPath: AppAssets.eye,
-                  suffixTap: () {},
-                  texfieldHeight: 60.h,
+                padding8,
+                Obx(() => TextFormField(
                   controller: widget.controller.state.passController,
-                  hintText: 'Password',
-                  onChanged: (value) {},
-                  onFieldSubmitted: (value) {},
-                  obscure: false,
-                  label: '',
-                  subTitle: '',
-                  validatorFn: (value) {
-                    if (value == null || value.isEmpty) {
-                      return "Please enter a password";
-                    } else if (value.length < 6) {
-                      return "Minimum Password length is 6";
-                    }
-                    return null; // Return null if the validation passes.
-                  },
-                ),
-                padding10,
+                  obscureText: widget.controller.state.loginIsObscure.value,
+                  decoration: InputDecoration(
+                      fillColor: Colors.white,
+                      filled: true,
+                      prefixIcon: Icon(Icons.key),
+                      suffixIcon: IconButton(
+                        onPressed: (){
+                          widget.controller.state.loginIsObscure.value = !widget.controller.state.loginIsObscure.value;
+                        },
+                        icon:widget.controller.state.loginIsObscure.value?Icon(Icons.visibility_off_outlined,color: Colors.grey,):Icon(Icons.visibility,color: Colors.grey,),
+                      ),
+                      hintText: "Password",
+                      hintStyle: getLightStyle(color: Colors.black26),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(100),
+                      )
+                  ),
+                )),
+                padding8,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -116,22 +112,23 @@ class _LoginTabState extends State<LoginTab> {
                     ),
                   ],
                 ),
-                //handle error string here
-                // if (controller.errorString.value.isNotEmpty)
-                //   Text(
-                //     controller.errorString.value,
-                //     style: TextStyle(color: Colors.red),
-                //   ),
                 padding10,
-                CustomButton(
+                Obx(() => widget.controller.state.loading.value==true?ShowProgressIndicator(): CustomButton(
                   onPressed: () async {
+                    if(widget.controller.state.emailController.text.isEmpty ||
+                        widget.controller.state.passController.text.isEmpty
+                    ){
+                      Snackbar.showSnackBar("Enter all fields", Icons.error_outline);
+                    }else{
+                      widget.controller.loginWithEmailPass(widget.controller.state.emailController.text.toString().trim(), widget.controller.state.passController.text.toString().trim());
+                    }
                     //mthod to handle userLogin
                   },
                   buttonText: "Login",
                   fontSize: 18,
                   borderRadius: 100.r,
                   backColor: AppColors.appColor,
-                ),
+                )),
                 const ULoginBottomSection(),
               ],
             ),

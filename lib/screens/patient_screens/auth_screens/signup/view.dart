@@ -10,6 +10,7 @@ import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/common_password_text_fields.dart';
 import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/components/custom_text_field.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/screens/patient_screens/auth_screens/controller.dart';
@@ -21,6 +22,7 @@ import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/app_text.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
+import 'package:loading_animation_widget/loading_animation_widget.dart';
 
 class UserSignUpScreen extends StatefulWidget {
   TabViewController controller = TabViewController();
@@ -75,21 +77,25 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                   ),
                 ),
                 padding8,
-                TextFormField(
+                Obx(() =>TextFormField(
                   controller: widget.controller.state.signUpPassCont,
                   maxLength: 6,
+                  obscureText:  widget.controller.state.signUpisObscure.value,
                   decoration: InputDecoration(
                       fillColor: Colors.white,
                       filled: true,
                       hintText: "Password",
                       prefixIcon: Icon(Icons.key),
-                      suffixIcon: IconButton(onPressed: (){}, icon: Icon(Icons.visibility_off_outlined),color: Colors.grey,),
+                      suffixIcon: IconButton(onPressed: (){
+                        widget.controller.state.signUpisObscure.value = !widget.controller.state.signUpisObscure.value;
+                      }, icon: widget.controller.state.signUpisObscure.value?Icon(Icons.visibility_off_outlined,color: Colors.grey,):Icon(Icons.visibility,color: Colors.grey,)
+                      ),
                       hintStyle: getLightStyle(color: Colors.black26),
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(100),
                       )
                   ),
-                ),
+                )),
                 padding10,
                 Row(
                   children: [
@@ -118,9 +124,9 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                   ],
                 ),
                 padding45,
-                Padding(
+                Obx(() =>Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 40),
-                  child: CustomButton(
+                  child: widget.controller.state.loading.value==true?ShowProgressIndicator():CustomButton(
                     onPressed: () {
                       if(widget.controller.state.signUpNameCont.text.isEmpty ||
                           widget.controller.state.signUpEmailCont.text.isEmpty ||
@@ -140,13 +146,15 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                         }
 
                       }
+
+                      // widget.controller.signUpWithEmailPassword();
                     },
                     buttonText: signup,
                     fontSize: MyFonts.size18,
                     borderRadius: 12.r,
                     backColor: AppColors.appColor,
                   ),
-                ),
+                )),
                 padding12,
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,

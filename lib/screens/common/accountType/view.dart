@@ -10,6 +10,7 @@ import 'package:imedics_latest/screens/common/accountType/controller.dart';
 import 'package:imedics_latest/screens/common/accountType/widgets/view.dart';
 import 'package:imedics_latest/screens/common/onboarding/view.dart';
 import 'package:imedics_latest/screens/common/splash/view.dart';
+import 'package:imedics_latest/screens/doctors/doctorAccounType/view.dart';
 import 'package:imedics_latest/screens/patient_screens/auth_screens/tab_view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
@@ -104,7 +105,6 @@ class AccountTypeScreen extends StatelessWidget {
                           AppConstants.accountType = 0;
                           sharedPrefrences.saveUserindex(
                               AppConstants.accountType.toString());
-
                         },
                         selectIndex: accountTypeController.index.value,
                         index: 0,
@@ -130,9 +130,11 @@ class AccountTypeScreen extends StatelessWidget {
                           onPressed: () {
                             if (accountTypeController.index.value == 1) {
                               // write code for doctore screen navigation
+                              Get.offAll(
+                                () => DoctorAccountType(),
+                              );
                             } else {
-                              Get.offAll(()=>AuthTabView());
-
+                              Get.offAll(() => AuthTabView());
                             }
                           },
                           buttonText: 'Continue',

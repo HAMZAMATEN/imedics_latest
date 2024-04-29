@@ -40,6 +40,11 @@ dependencies:
   shared_preferences: ^2.2.2
   get: ^4.6.6
   http: ^1.2.1
+  file_picker: ^8.0.0
+  country_code_picker: ^3.0.0
+  image_picker: ^1.0.7
+  country_list: ^0.0.5
+  intl:
 
 dev_dependencies:
   flutter_test:

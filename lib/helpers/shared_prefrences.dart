@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class SharedPrefrences {
+class Prefrences {
   Future<void> saveUserId(String userId) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString('user_id', userId);
@@ -28,4 +28,15 @@ class SharedPrefrences {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getString('user_index');
   }
+
+  Future<void> setIsPatient(bool isPatient) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isPatient', isPatient);
+  }
+
+  Future<bool> getIsPatient() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isPatient') ?? true;
+  }
+
 }

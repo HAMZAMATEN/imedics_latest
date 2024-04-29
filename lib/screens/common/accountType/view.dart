@@ -23,7 +23,7 @@ class AccountTypeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final accountTypeController = Get.put(AccountTypeController());
-    SharedPrefrences sharedPrefrences = SharedPrefrences();
+    Prefrences sharedPrefrences = Prefrences();
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

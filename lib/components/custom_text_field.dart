@@ -1,5 +1,6 @@
 import 'package:csc_picker/csc_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
@@ -31,6 +32,7 @@ class CustomTextField extends StatefulWidget {
   final Function()? subTitleOnTap;
   final Function()? onTap;
   final double? radius;
+  final List<TextInputFormatter>? inputFormatters;
 
   const CustomTextField({
     Key? key,
@@ -55,7 +57,7 @@ class CustomTextField extends StatefulWidget {
     required this.subTitle,
     this.onTap,
     this.subTitleOnTap,
-    this.radius,
+    this.radius, this.inputFormatters,
   }) : super(key: key);
 
   @override
@@ -102,6 +104,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
               obscureText: widget.obscure!,
               controller: widget.controller,
               keyboardType: widget.inputType,
+              inputFormatters: widget.inputFormatters,
               style: const TextStyle(
                 fontSize: 16,
                 color: Colors.black,

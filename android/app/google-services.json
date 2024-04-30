@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "59115230772",
+    "firebase_url": "https://imdfx-f37c7-default-rtdb.firebaseio.com",
+    "project_id": "imdfx-f37c7",
+    "storage_bucket": "imdfx-f37c7.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:59115230772:android:08bbd1c4d0b4cc3d33dc61",
+        "android_client_info": {
+          "package_name": "com.dev.imedfix.app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA3xaX6qA7qbEWyTZklqkjH2vDj7uBJ1vE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

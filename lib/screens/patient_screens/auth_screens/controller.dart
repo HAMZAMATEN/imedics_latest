@@ -1,12 +1,15 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/helpers/shared_prefrences.dart';
+import 'package:imedics_latest/screens/patient_screens/applicationScreens/view.dart';
 import 'package:imedics_latest/screens/patient_screens/auth_screens/state.dart';
 import 'package:http/http.dart' as http;
 import 'package:imedics_latest/utils/app_exception.dart';
@@ -83,6 +86,7 @@ Future<void> loginWithEmailPass(String email,String pass) async{
       print("Patients login data $data");
       // user logged-in and id Fetched, handle logic to fetch details
       await fetchPatientDetails(data.toString());
+
     }else if(response.statusCode==401){
       setLoading(false);
       Snackbar.showSnackBar("Invalid password", Icons.error_outline);
@@ -128,17 +132,8 @@ Future<void> fetchPatientDetails(String id) async{
         AppConstants.wallAmount = double.parse((data['__v']).toString());
         Prefrences().saveUserId(AppConstants.userId);
         Prefrences().setIsPatient(true);
-        setLoading(false);
-        clearControllers();
-
-
-        //priting data for debuging purpose
-        print("----Debuggin Print Statements------");
-        print(AppConstants.userId + AppConstants.userName + AppConstants.userEmail + AppConstants.wallAmount.toString());
-        print(await Prefrences().getUserId());
-        print(await Prefrences().getIsPatient());
-
-
+        // setting push Token and id to firebase
+        setUserFirebaseData(data['_id']);
       }else{
         clearControllers();
         setLoading(false);
@@ -160,6 +155,25 @@ Future<void> fetchPatientDetails(String id) async{
       Snackbar.showSnackBar("$e", Icons.error_outline);
     }
   }
+
+  Future<void> setUserFirebaseData(String id) async{
+    try{
+      String? pushToken = await FirebaseMessaging.instance.getToken();
+      await FirebaseFirestore.instance.collection('${AppConstants.userCollection}').doc(id).set(
+          {
+            'id':id,
+            "pushToken":pushToken,
+          }
+      ).then((value){
+        setLoading(false);
+        Get.offAll(()=>UserApplicationView());
+        clearControllers();
+      });
+    }catch(e){
+      print("Exception while sending data to firebase is $e");
+    }
+  }
+
 
 
   void clearControllers(){

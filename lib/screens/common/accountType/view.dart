@@ -134,7 +134,7 @@ class AccountTypeScreen extends StatelessWidget {
                                 () => DoctorAccountType(),
                               );
                             } else {
-                              Get.offAll(() => AuthTabView());
+                              Get.offAll(() => UserAuthTabView());
                             }
                           },
                           buttonText: 'Continue',

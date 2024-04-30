@@ -16,6 +16,14 @@ class AppConstants{
   static String userEmail = '';
   static double wallAmount = 0.0;
 
+  static void clearUserValues(){
+    userId="";
+    userName="";
+    userEmail="";
+    wallAmount = 0.0;
+  }
 
+  //Firebase Constants
+  static String userCollection = "users";
 
 }

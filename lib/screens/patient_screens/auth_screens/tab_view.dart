@@ -13,14 +13,14 @@ import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
-class AuthTabView extends StatefulWidget {
-  const AuthTabView({super.key});
+class UserAuthTabView extends StatefulWidget {
+  const UserAuthTabView({super.key});
 
   @override
-  State<AuthTabView> createState() => _AuthTabViewState();
+  State<UserAuthTabView> createState() => _UserAuthTabViewState();
 }
 
-class _AuthTabViewState extends State<AuthTabView>
+class _UserAuthTabViewState extends State<UserAuthTabView>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
 

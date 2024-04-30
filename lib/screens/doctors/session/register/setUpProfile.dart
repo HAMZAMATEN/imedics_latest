@@ -8,7 +8,9 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/screens/doctors/session/register/controller.dart';
 import 'package:imedics_latest/screens/doctors/session/register/screens/basic_information_screen.dart';
 import 'package:imedics_latest/screens/doctors/session/register/screens/consulatation_time_view.dart';
+import 'package:imedics_latest/screens/doctors/session/register/screens/doctor_profile_view.dart';
 import 'package:imedics_latest/screens/doctors/session/register/screens/education_and_experience.dart';
+import 'package:imedics_latest/screens/doctors/session/register/widgets/view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
@@ -19,7 +21,8 @@ class SetupIndividualProfileView extends StatefulWidget {
   bool isofficedoctor = false;
 
   @override
-  State<SetupIndividualProfileView> createState() => _SetupIndividualProfileViewState();
+  State<SetupIndividualProfileView> createState() =>
+      _SetupIndividualProfileViewState();
 }
 
 class _SetupIndividualProfileViewState extends State<SetupIndividualProfileView>
@@ -40,84 +43,79 @@ class _SetupIndividualProfileViewState extends State<SetupIndividualProfileView>
     _tabController.dispose();
   }
 
-  int selectdpage = 0;
-
   @override
   Widget build(BuildContext context) {
-    return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: AppColors.appColor1,
-          centerTitle: true,
-          automaticallyImplyLeading: true,
-          title: Text('Setup Your Profile',
-              style: getBoldStyle(
-                  color: AppColors.black, fontSize: MyFonts.size20)),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: AppColors.appColor1,
+        centerTitle: true,
+        automaticallyImplyLeading: true,
+        title: Text('Setup Your Profile',
+            style:
+                getBoldStyle(color: AppColors.black, fontSize: MyFonts.size20)),
+      ),
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.appColor1,
+                AppColors.appColor,
+              ]),
         ),
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.appColor1,
-                  AppColors.appColor,
-                ]),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 2,
-                child: SizedBox(
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 90.w, top: 50.h),
-                        child: Image.asset(
-                          AppAssets.loginBg,
-                          height: 272.h,
-                          width: 307.7.w,
-                          color: AppColors.white.withOpacity(0.1),
-                        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 2,
+              child: SizedBox(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 90.w, top: 50.h),
+                      child: Image.asset(
+                        AppAssets.loginBg,
+                        height: 272.h,
+                        width: 307.7.w,
+                        color: AppColors.white.withOpacity(0.1),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50),
-                        child: Image.asset(
-                          AppAssets.bgGradient,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 50),
+                      child: Image.asset(
+                        AppAssets.bgGradient,
                       ),
-                      Positioned(
-                        top: 10.h,
-                        left: 0,
-                        right: 0,
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(vertical: 9.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Container(
-                                height: 50,
-                                width: MediaQuery.of(context).size.width,
-                                child: ClipRect(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [0, 1, 2, 3].map((e) {
-                                      double maxWidth =
-                                          MediaQuery.of(context).size.width / 6;
-                                      double maxWidth3 =
-                                          MediaQuery.of(context).size.width /
-                                              2.6;
-                                      double maxWidth2 =
-                                          MediaQuery.of(context).size.width / 8;
+                    ),
+                    Positioned(
+                      top: 10.h,
+                      left: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 9.0),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Container(
+                              height: 50,
+                              width: MediaQuery.of(context).size.width,
+                              child: ClipRect(
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [0, 1, 2, 3].map((e) {
+                                    double maxWidth =
+                                        MediaQuery.of(context).size.width / 6;
+                                    double maxWidth3 =
+                                        MediaQuery.of(context).size.width / 2.6;
+                                    double maxWidth2 =
+                                        MediaQuery.of(context).size.width / 8;
 
-                                      return AnimatedContainer(
+                                    return Obx(
+                                      () => AnimatedContainer(
                                         duration: const Duration(seconds: 1),
-                                        width: e == selectdpage
+                                        width: e ==
+                                                contoller
+                                                    .state.selectdpage.value
                                             ? maxWidth3
                                             : e == 3
                                                 ? maxWidth2
@@ -127,7 +125,9 @@ class _SetupIndividualProfileViewState extends State<SetupIndividualProfileView>
                                             CircleAvatar(
                                               radius: 12,
                                               backgroundColor: AppColors.white,
-                                              child: selectdpage != e
+                                              child: contoller.state.selectdpage
+                                                          .value !=
+                                                      e
                                                   ? Container()
                                                   : const CircleAvatar(
                                                       radius: 8,
@@ -136,7 +136,9 @@ class _SetupIndividualProfileViewState extends State<SetupIndividualProfileView>
                                                     ),
                                             ),
                                             padding4,
-                                            if (e == selectdpage)
+                                            if (e ==
+                                                contoller
+                                                    .state.selectdpage.value)
                                               Expanded(
                                                 child: Text(
                                                   widget.isofficedoctor == true
@@ -157,56 +159,56 @@ class _SetupIndividualProfileViewState extends State<SetupIndividualProfileView>
                                                   ? Container()
                                                   : Expanded(
                                                       child:
-                                                          _buildDottedDivider()),
+                                                          buildDottedDivider()),
                                           ],
                                         ),
-                                      );
-                                    }).toList(),
-                                  ),
+                                      ),
+                                    );
+                                  }).toList(),
                                 ),
-                              )
-                            ],
-                          ),
+                              ),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Expanded(
+            ),
+            Obx(
+              () => Expanded(
                   flex: 7,
                   child: widget.isofficedoctor == true
-                      ? office_doctor_registrationTabsPages[selectdpage]
-                      : doctorregistrationTabsPages[selectdpage]),
-            ],
-          ),
+                      ? office_doctor_registrationTabsPages[
+                          contoller.state.selectdpage.value]
+                      : doctorregistrationTabsPages[
+                          contoller.state.selectdpage.value]),
+            )
+          ],
         ),
       ),
     );
   }
 
-  changescreen(int index) {
-    setState(() {
-      selectdpage = index;
-    });
-  }
-
   late List doctorregistrationTabsPages = [
     BasicInformationView(
-        onPressed: () => changescreen(1),
+        onPressed: () => contoller.changescreen(1),
         onPressedback: () {
           Navigator.pop(context);
         }),
     EducationAndExpirienceView(
-        onPressed: () => changescreen(2), onPressedback: () => changescreen(0)),
+        onPressed: () => contoller.changescreen(2),
+        onPressedback: () => contoller.changescreen(0)),
     ConsultationTimeView(
-      onPressed: () => changescreen(3),
-      onPressedback: () => changescreen(1),
+      onPressed: () => contoller.changescreen(3),
+      onPressedback: () => contoller.changescreen(1),
     ),
-    // DoctorProfile(onPressedback: () {
-    //   changescreen(3);
-    // }
-    // )
+    DoctorProfileView(
+      onPressedback: () {
+        contoller.changescreen(3);
+      },
+    ),
   ];
 
   // ignore: non_constant_identifier_names
@@ -231,42 +233,3 @@ List officedoctorregistrationTabsNames = [
   'Add doctor in your office',
   'Review Profile'
 ];
-
-Widget _buildDottedDivider() {
-  return SizedBox(
-    width: double.infinity,
-    height: 1,
-    child: CustomPaint(
-      painter: DottedLinePainter(),
-    ),
-  );
-}
-
-class DottedLinePainter extends CustomPainter {
-  @override
-  void paint(Canvas canvas, Size size) {
-    final Paint paint = Paint()
-      ..color = Colors.white // Change the color if needed
-      ..strokeWidth = 2.0
-      ..strokeCap = StrokeCap.round;
-
-    const double dashWidth = 4.0;
-    const double dashSpace = 4.0;
-    double currentX = 0.0;
-
-    while (currentX < size.width) {
-      canvas.drawLine(
-        Offset(currentX, 0.0),
-        Offset(currentX + dashWidth, 0.0),
-        paint,
-      );
-
-      currentX += dashWidth + dashSpace;
-    }
-  }
-
-  @override
-  bool shouldRepaint(CustomPainter oldDelegate) {
-    return false;
-  }
-}

@@ -6,6 +6,8 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/common/accountType/view.dart';
 import 'package:imedics_latest/screens/doctors/profile/controller.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/myProfile.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/wallet_view.dart';
 import 'package:imedics_latest/screens/doctors/profile/widgets/view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
@@ -191,12 +193,17 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
 
                   DoctorProfileTile(
                     index: 0,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => MyProfileView(),);
+                    },
                     text: "My Profile",
                   ),
                   DoctorProfileTile(
                     index: 1,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => DoctorWalletView(),);
+
+                    },
                     text: "My Wallet",
                   ),
                   AppConstants.doctorAccountType == 1

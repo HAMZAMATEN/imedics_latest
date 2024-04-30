@@ -7,9 +7,9 @@ class Prefrences {
     prefs.setString('user_id', userId);
   }
 
-  Future<String?> getUserId() async {
+  Future<String> getUserId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getString('user_id');
+    return prefs.getString('user_id')??"";
   }
 
   Future<void> removeUserId(BuildContext context) async {

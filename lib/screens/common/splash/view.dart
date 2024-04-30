@@ -12,7 +12,7 @@ class SplashScreen extends GetView<SplashController> {
   @override
   Widget build(BuildContext context) {
     final splashController = Get.put(SplashController());
-    splashController.init();
+    splashController.checkLogin();
     return Scaffold(
       body: Container(
         decoration: const BoxDecoration(

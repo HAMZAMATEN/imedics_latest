@@ -168,7 +168,7 @@ class _UserSignUpScreenState extends State<UserSignUpScreen> {
                     padding5,
                     InkWell(
                       onTap: () {
-                        Get.offAll(()=>AuthTabView());
+                        Get.offAll(()=>UserAuthTabView());
                       },
                       child: Text(
                         login,

@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/session_button.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
-import 'package:imedics_latest/screens/doctors/profile/screens/wallet_withdraw.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/wallet/add_payment_screen.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/wallet/wallet_withdraw.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 
@@ -436,7 +437,7 @@ class _DoctorwalletAmountState extends State<DoctorwalletAmount> {
                   SessionButton(
                       back: () {},
                       onPressed: () {
-
+                        Get.to(() => AddPaymentScreen(),);
                       },
                       isbackbuton: false,
                       text: 'Continue')

@@ -1,16 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/screens/doctors/application/state.dart';
+import 'package:imedics_latest/screens/doctors/home/view.dart';
 import 'package:imedics_latest/screens/doctors/profile/view.dart';
+import 'package:imedics_latest/screens/doctors/records/view.dart';
+import 'package:imedics_latest/screens/doctors/reports/view.dart';
 
 class DoctorApplicationController extends GetxController {
   final state = DoctorApplicationState();
 
   List<Widget> screens = [
-    Center(child: Text('Home')),
-    Center(child: Text('UserReport')),
+    DoctorHomeScreens(),
+    DoctorReportScreen(),
     Center(child: Text('Center')),
-    Center(child: Text('Record')),
+    DoctorRecordScreen(),
     DoctorProfileView(),
   ];
 

@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,8 +8,10 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/common/accountType/view.dart';
 import 'package:imedics_latest/screens/doctors/profile/controller.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/join_office.dart';
 import 'package:imedics_latest/screens/doctors/profile/screens/myProfile.dart';
-import 'package:imedics_latest/screens/doctors/profile/screens/wallet_view.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/settings/setting_view.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/wallet/wallet_view.dart';
 import 'package:imedics_latest/screens/doctors/profile/widgets/view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
@@ -26,6 +30,7 @@ class _DoctorProfileViewState extends State<DoctorProfileView>
 
   @override
   void initState() {
+    log('init from hello');
     _tabController = TabController(length: 2, vsync: this);
     super.initState();
   }
@@ -40,6 +45,7 @@ class _DoctorProfileViewState extends State<DoctorProfileView>
 
   @override
   Widget build(BuildContext context) {
+    log('hello from profile');
     // final mainMenuCtr = ref.watch(dProfileMainprovider);
     final doctorProfileController = Get.put(DoctorProfileController());
     // ignore: deprecated_member_use
@@ -174,7 +180,7 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                     height: 20,
                   ),
                   padding35,
-              Text("No details available"),
+                  Text("No details available"),
                   // Obx(() {
                   //   if (controller.SpecificDoctorDetailsList.isEmpty) {
                   //     return Text("No details available");
@@ -194,15 +200,18 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                   DoctorProfileTile(
                     index: 0,
                     onPressed: () {
-                      Get.to(() => MyProfileView(),);
+                      Get.to(
+                        () => MyProfileView(),
+                      );
                     },
                     text: "My Profile",
                   ),
                   DoctorProfileTile(
                     index: 1,
                     onPressed: () {
-                      Get.to(() => DoctorWalletView(),);
-
+                      Get.to(
+                        () => DoctorWalletView(),
+                      );
                     },
                     text: "My Wallet",
                   ),
@@ -210,7 +219,11 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                       ? Container()
                       : DoctorProfileTile(
                           index: 2,
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.to(
+                              () => JoinOfficePage(),
+                            );
+                          },
                           text: "Join Office",
                         ),
                   DoctorProfileTile(
@@ -220,7 +233,9 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                   ),
                   DoctorProfileTile(
                     index: 4,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(() => SettingsView(),);
+                    },
                     text: "Settings",
                   ),
                   // DoctorProfileTile(

@@ -5,6 +5,7 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/widgets/navBarItem.dart';
 import 'package:imedics_latest/screens/patient_screens/home/view.dart';
+import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 
 class UserApplicationView extends StatefulWidget {
@@ -41,11 +42,7 @@ class _UserApplicationViewState extends State<UserApplicationView> {
                             child: Text('3'),
                           ),
                         )
-                      : Container(
-                          child: Center(
-                            child: Text('4'),
-                          ),
-                        ),
+                      : ProfileView(),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(

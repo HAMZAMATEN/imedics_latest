@@ -133,6 +133,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     width: 1,
                   ),
                 ),
+
                 prefixIcon: widget.leadingIcon ??
                     (widget.leadingIconPath != null
                         ? Padding(
@@ -304,7 +305,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
                     : null,
                 hintText: widget.hintText,
                 hintStyle: TextStyle(
-                  fontSize: 16,
+                  fontSize: 18,
+                  fontFamily: 'Gilroy',
                   color: widget.hintColor ?? Colors.grey,
                 ),
                 border: InputBorder.none,

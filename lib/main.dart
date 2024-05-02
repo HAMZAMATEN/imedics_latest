@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:imedics_latest/firebase_options.dart';
 import 'package:imedics_latest/helpers/app_theme.dart';
 import 'package:imedics_latest/screens/common/splash/view.dart';
+import 'package:imedics_latest/screens/doctors/application/view.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
             title: 'Imedifix Service',
             theme: lightThemeData(context),
             themeMode: ThemeMode.light,
-            home: const SplashScreen(),
+            home: const DoctorApplicationView(),
           );
         });
   }

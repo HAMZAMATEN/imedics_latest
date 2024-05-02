@@ -62,6 +62,7 @@ class AppColors {
   static const Color lightContainerColor = Color(0xFFD9D9D9);
   static const Color lightButtonTextColor = Color(0xFFFFFFFF);
 
+  static Color bgColor = Color(0xffF6FBFA);
 //how to use colors
 // colorscheme.primary : for text and title
 // colorscheme.secondary : for light text

@@ -15,6 +15,7 @@ class AppConstants{
   static String userName = '';
   static String userEmail = '';
   static double wallAmount = 0.0;
+  static String docFee ="";
 
   static void clearUserValues(){
     userId="";

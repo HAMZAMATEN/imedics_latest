@@ -2,25 +2,22 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
+import 'package:imedics_latest/screens/patient_screens/user_DoctorDetails/view.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
 class doctorListCard extends StatelessWidget {
-  final String id;
-  final String image;
-  final String name;
-  final String speciality;
+  UserDocModel doctor;
   final double rating;
   final String review;
-  const doctorListCard(
+   doctorListCard(
       {super.key,
-        required this.id,
-        required this.image,
-        required this.name,
-        required this.speciality,
+        required this.doctor,
         required this.rating,
         required this.review});
 
@@ -31,7 +28,8 @@ class doctorListCard extends StatelessWidget {
       highlightColor: AppColors.transparentColor,
       splashColor: AppColors.transparentColor,
       onTap: (){
-
+      // handle on tap event on doctor
+        Get.to(()=>UserDoctorDetailView(doctor: doctor, rat: rating, review: review));
       },
       child: Container(
         decoration: BoxDecoration(
@@ -44,17 +42,17 @@ class doctorListCard extends StatelessWidget {
         child: Row(
           children: [
             SizedBox(width: 10.w),
-            CachedNetworkImage(
-              imageUrl: image!=""?"${AppConstants.imageBaseUrl+image}":'assets/images/whiteman.png',
+            doctor.image!=null?CachedNetworkImage(
+              imageUrl: "${AppConstants.imageBaseUrl}/${doctor.image!}",
               height: 92.h,
               width: 82.w,
               fit: BoxFit.contain,
               placeholder: (context, url) => Container(
                 height: 30,
                 width: 30,
-                  child: CircularProgressIndicator(
-                    color: AppColors.appColor,
-                  ),
+                child: CircularProgressIndicator(
+                  color: AppColors.appColor,
+                ),
               ),
               errorWidget: (context, url, error) => Image.asset(
                 'assets/images/defaultDoc.jpg', // Path to your default image
@@ -62,6 +60,11 @@ class doctorListCard extends StatelessWidget {
                 width: 82.w,
                 fit: BoxFit.contain,
               ),
+            ):Image.asset(
+              'assets/images/defaultDoc.jpg', // Path to your default image
+              height: 92.h,
+              width: 82.w,
+              fit: BoxFit.contain,
             ),
             SizedBox(width: 10.w),
             Expanded(
@@ -72,7 +75,7 @@ class doctorListCard extends StatelessWidget {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(name,
+                      Text(doctor.name!,
                           style: getBoldStyle(
                               color: AppColors.black, fontSize: MyFonts.size18)),
                       SizedBox(width: 6.w),
@@ -90,7 +93,7 @@ class doctorListCard extends StatelessWidget {
                     color: AppColors.lightgrey,
                   ),
                   Text(
-                    speciality,
+                    doctor.specialization!,
                     style: getRegularStyle(color: Colors.black,fontSize: MyFonts.size13),
                   ),
                   Row(

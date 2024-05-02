@@ -21,6 +21,7 @@ class UserHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(UserHomeController());
     controller.fetchPatientAppointments();
+    controller.fetchAllDoctors();
     return Scaffold(
       body: SafeArea(
         child: Container(
@@ -74,7 +75,7 @@ class UserHomePage extends StatelessWidget {
                     ],
                   ),
                   padding16,
-                  doctorsList(context),
+                  doctorsList(context,controller),
                   // const UpopularDoctor(),
                   // padding8,
                 ],

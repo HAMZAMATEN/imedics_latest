@@ -28,6 +28,12 @@ class AppConstants{
     userEmail="";
     wallAmount = 0.0;
   }
+  static void clearIndDoctorValues(){
+    docId="";
+    docName="";
+    docEmail="";
+    docWallAmount = 0.0;
+  }
 
   //Firebase Constants
   static String userCollection = "users";

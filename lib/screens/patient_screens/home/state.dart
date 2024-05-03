@@ -6,6 +6,7 @@ class UserHomeState {
   //appointment variables
   List<PatientAppointmentModel> patientAppointmentList =[];
   RxBool appointmentFetchLoading = false.obs;
+  List<PatientAppointmentModel> completedAppointmentList =[];
 
   //doctors variables
   List<UserDocModel> doctorsList = [];

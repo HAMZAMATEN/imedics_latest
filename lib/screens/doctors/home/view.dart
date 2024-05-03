@@ -1,9 +1,12 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps, unused_import
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/next_appointment_widgets.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/reviews_widget.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/view.dart';
@@ -48,8 +51,12 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
     _refreshController.refreshCompleted();
   }
 
+  final doctorHomeController = Get.put(DoctorHomeController());
+
   @override
   Widget build(BuildContext context) {
+    doctorHomeController.getDoctorAppointmentDetails();
+    log('list:${doctorHomeController.state.patientAppointmentList.length.toString()}');
     return Scaffold(
       backgroundColor: Color.fromRGBO(246, 251, 250, 1),
       appBar: AppBar(

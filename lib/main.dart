@@ -44,6 +44,7 @@ class MyApp extends StatelessWidget {
             theme: lightThemeData(context),
             themeMode: ThemeMode.light,
             home: const SplashScreen(),
+
           );
         });
   }

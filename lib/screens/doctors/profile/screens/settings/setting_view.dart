@@ -45,7 +45,7 @@ class SettingsView extends StatelessWidget {
                 },
                 leading: Image.asset(
                   'assets/images/rightuser.png',
-                  color: AppColors.appColor1,
+                  color: AppColors.appColor,
                 ),
                 title: Text(
                   'Change Password',
@@ -53,7 +53,7 @@ class SettingsView extends StatelessWidget {
                 ),
                 trailing: const Icon(
                   Icons.arrow_forward_ios,
-                  color: AppColors.appColor1,
+                  color: AppColors.appColor,
                 ),
               ),
               Divider(
@@ -65,7 +65,7 @@ class SettingsView extends StatelessWidget {
                 },
                 leading: Image.asset(
                   'assets/images/notification.png',
-                  color: AppColors.appColor1,
+                  color: AppColors.appColor,
                 ),
                 title: Text(
                   'Notification Settings',
@@ -73,7 +73,7 @@ class SettingsView extends StatelessWidget {
                 ),
                 trailing: const Icon(
                   Icons.arrow_forward_ios,
-                  color: AppColors.appColor1,
+                  color: AppColors.appColor,
                 ),
               ),
               Divider(

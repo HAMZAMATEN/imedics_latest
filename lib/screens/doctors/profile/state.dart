@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class DoctorProfileState {
 
@@ -19,4 +20,6 @@ class DoctorProfileState {
   final currentPasCon = TextEditingController();
   final newPassCon = TextEditingController();
   final confirmPasCon = TextEditingController();
+
+  var loading = false.obs;
 }

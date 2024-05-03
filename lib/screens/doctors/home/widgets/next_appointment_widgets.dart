@@ -2,22 +2,21 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/next_appointment_screen.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/view.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 import 'package:intl/intl.dart';
 
-class DNextAppointmentWidget extends StatefulWidget {
-  @override
-  State<DNextAppointmentWidget> createState() => _DNextAppointmentWidgetState();
-}
+class DNextAppointmentWidget extends StatelessWidget {
+  // final DoctorHomeController homeController;
 
-class _DNextAppointmentWidgetState extends State<DNextAppointmentWidget> {
+  // const DNextAppointmentWidget({super.key, required this.homeController});
   // final DoctorIndHomeProvider controller =
-  // Get.put(DoctorIndHomeProvider(), permanent: true);
-
   @override
   Widget build(BuildContext context) {
+    final homeController = Get.put(DoctorHomeController());
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18),
       child: Column(
@@ -40,7 +39,7 @@ class _DNextAppointmentWidgetState extends State<DNextAppointmentWidget> {
                   specialist: 'specialist',
                   sletedDate: 'sletedDate',
                   seltedTime: 'seltedTime',
-                  DoctorName: 'DoctorName',
+                  DoctorName: AppConstants.docName,
                 ),
               );
               // ConformOppointmentModel model = ConformOppointmentModel(id: '0');
@@ -57,10 +56,10 @@ class _DNextAppointmentWidgetState extends State<DNextAppointmentWidget> {
               //               seltedTime: "thursday",
               //             )));
             },
-            name: 'Dr.  John ',
+            name: homeController.state.patientModel.username.toString(),
             // name: 'Dr. ${details.name.toString() == '' ? 'John' : details.name.toString()}',
             // specialist: details.specialization.toString() == '' ? 'hu' : details.specialization.toString(),
-            specialist: 'hu',
+            specialist: homeController.state.patientModel.email.toString(),
             image: 'assets/images/whiteman.png',
             // rating: 5,
             date: 'No appointment Found',

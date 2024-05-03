@@ -154,7 +154,7 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
                 padding16,
                 const UTopSearchWidget(),
                 padding16,
-                DNextAppointmentWidget(),
+                DNextAppointmentWidget(homeController: doctorHomeController,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Column(

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/doctors/home/controller.dart';
@@ -10,160 +12,116 @@ import 'package:imedics_latest/utils/myFonts.dart';
 import 'package:intl/intl.dart';
 
 class DNextAppointmentWidget extends StatelessWidget {
-  // final DoctorHomeController homeController;
+  final DoctorHomeController homeController;
+
+  const DNextAppointmentWidget({super.key, required this.homeController});
 
   // const DNextAppointmentWidget({super.key, required this.homeController});
   // final DoctorIndHomeProvider controller =
   @override
   Widget build(BuildContext context) {
-    final homeController = Get.put(DoctorHomeController());
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 18),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            'Next Appointments',
-            style: getBoldStyle(
-              color: AppColors.textColor,
-              fontSize: MyFonts.size16,
-            ),
-          ),
-          SizedBox(
-              child: UDoctorNextAppointmentCard(
-            onTap: () {
-              Get.to(
-                () => UserNextAppointmenyScreen(
-                  PatientNames: 'PatientNames',
-                  id: 'id',
-                  specialist: 'specialist',
-                  sletedDate: 'sletedDate',
-                  seltedTime: 'seltedTime',
-                  DoctorName: AppConstants.docName,
+    return
+        // homeController.state.appointmentFetchLoading.value !=true
+        //   ?
+        Obx(
+      () => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 18),
+        child: homeController.state.appointmentFetchLoading.value
+            ? Center(
+                child: ShowProgressIndicator(),
+              )
+            : Padding(
+                padding: EdgeInsets.symmetric(vertical: 15.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Next Appointments',
+                          style: getBoldStyle(
+                            color: AppColors.textColor,
+                            fontSize: MyFonts.size16,
+                          ),
+                        ),
+                        Container(
+                          height: 40.h,
+                          padding: EdgeInsets.symmetric(horizontal: 15),
+                          decoration: BoxDecoration(
+                            color: AppColors.appColor,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: InkWell(
+                              onTap: () {
+                                Get.to(
+                                  () => UserNextAppointmenyScreen(
+                                    homeController: homeController,
+                                    PatientNames: 'PatientNames',
+                                    id: 'id',
+                                    specialist: AppConstants.docSpeciality,
+                                    sletedDate: 'sletedDate',
+                                    seltedTime: 'seltedTime',
+                                    DoctorName: AppConstants.docName,
+                                  ),
+                                );
+                              },
+                              child: Text(
+                                'See All',
+                                style: getRegularStyle(color: AppColors.white),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                        child: homeController
+                                    .state.patientAppointmentList.length ==
+                                0
+                            ? Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: [
+                                  Container(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'No Appointments yet',
+                                          style: getBoldStyle(
+                                              color: Colors.white,
+                                              fontSize: MyFonts.size18),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              )
+                            : UDoctorNextAppointmentCard(
+                                onTap: () {},
+                                name: homeController.state.patientModel.username
+                                    .toString(),
+                                // name: 'Dr. ${details.name.toString() == '' ? 'John' : details.name.toString()}',
+                                // specialist: details.specialization.toString() == '' ? 'hu' : details.specialization.toString(),
+                                specialist: AppConstants.docSpeciality,
+                                image: 'assets/images/whiteman.png',
+                                // rating: 5,
+                                date: homeController.state
+                                    .patientAppointmentList[0].selectedDate
+                                    .toString(),
+                                // date: '',
+                                time: homeController.state
+                                    .patientAppointmentList[0].selectedTimeSlot
+                                    .toString(),
+                                id: '',
+                                // model: null,
+                              )),
+                  ],
                 ),
-              );
-              // ConformOppointmentModel model = ConformOppointmentModel(id: '0');
-              // Navigator.push(
-              //     context,
-              //     MaterialPageRoute(
-              //         builder: (context) => UserNextAppointmenyScreen(
-              //               specialist: 'Dentist',
-              //               DoctorName: 'Ikram Khan',
-              //               id: 'id',
-              //               PatientNames: 'name',
-              //               sletedDate: 'formattedDate',
-              //               model: model,
-              //               seltedTime: "thursday",
-              //             )));
-            },
-            name: homeController.state.patientModel.username.toString(),
-            // name: 'Dr. ${details.name.toString() == '' ? 'John' : details.name.toString()}',
-            // specialist: details.specialization.toString() == '' ? 'hu' : details.specialization.toString(),
-            specialist: homeController.state.patientModel.email.toString(),
-            image: 'assets/images/whiteman.png',
-            // rating: 5,
-            date: 'No appointment Found',
-            time: DateFormat('yyyy-MM-dd').format(DateTime.now()).toString(),
-            id: '',
-            // model: null,
-          )
-
-              // Obx(
-              //       () {
-              //     final details =
-              //     doctorcontroller.SpecificDoctorDetailsList.first!;
-              //     final appointments = controller.Doctorbookappointmentlist.value;
-              //     return appointments.isEmpty
-              //         ? UDoctorNextAppointmentCard(
-              //       onTap: () {
-              //         ConformOppointmentModel model =
-              //         ConformOppointmentModel(id: '0');
-              //         Navigator.push(
-              //             context,
-              //             MaterialPageRoute(
-              //                 builder: (context) =>
-              //                     UserNextAppointmenyScreen(
-              //                       specialist: 'Dentist',
-              //                       DoctorName: 'Ikram Khan',
-              //                       id: 'id',
-              //                       PatientNames: 'name',
-              //                       sletedDate: 'formattedDate',
-              //                       model: model,
-              //                       seltedTime: "thursday",
-              //                     )));
-              //       },
-              //       name: 'Dr. ${details.name.toString()}',
-              //       specialist: details.specialization.toString(),
-              //
-              //       image: 'assets/images/whiteman.png',
-              //       // rating: 5,
-              //       date: 'No appointment Found',
-              //       time: DateFormat('yyyy-MM-dd')
-              //           .format(DateTime.now())
-              //           .toString(),
-              //       id: '',
-              //       model: null,
-              //     )
-              //         :
-              //
-              //     ListView.builder(
-              //       scrollDirection: Axis.horizontal,
-              //       shrinkWrap: true,
-              //       itemCount: appointments.length,
-              //       padding: EdgeInsets.only(top: 10),
-              //       itemBuilder: (context, index) {
-              //
-              //         final appointmentDetails =
-              //             appointments[index].appointmentDetails;
-              //         final patientDetails =
-              //             appointments[index].patietnDetails;
-              //
-              //         ConformOppointmentModel model =
-              //         ConformOppointmentModel(
-              //           id: appointmentDetails!.sId.toString(),
-              //           bookingDate:
-              //           appointmentDetails.bookingDate.toString(),
-              //           fees: appointmentDetails.fees.toString(),
-              //           bookingFor:
-              //           appointmentDetails.bookingFor.toString(),
-              //           docId: appointmentDetails.docId.toString(),
-              //           gender: appointmentDetails.gender.toString(),
-              //           patientAge:
-              //           appointmentDetails.patientAge.toString(),
-              //           selectedDate:
-              //           appointmentDetails.selectedDate.toString(),
-              //           selectedTimeSlot:
-              //           appointmentDetails.selectedTimeSlot.toString(),
-              //           userId: appointmentDetails.userId.toString(),
-              //         );
-              //
-              //         return Padding(
-              //           padding: EdgeInsets.only(bottom: 10),
-              //           child: Padding(
-              //             padding: EdgeInsets.symmetric(horizontal: 10),
-              //             child: UDoctorNextAppointmentCard(
-              //               id: appointmentDetails.sId.toString(),
-              //               model: model,
-              //               date: appointmentDetails.selectedDate
-              //                   ?.toString() ??
-              //                   'N/A',
-              //               time: appointmentDetails.selectedTimeSlot ??
-              //                   'N/A',
-              //               name: patientDetails?.username?.toString() ??
-              //                   'Unknown Doctor',
-              //               specialist: '',
-              //               // Add appropriate value or logic
-              //               image: 'assets/images/im1.png',
-              //               onTap: () {},
-              //             ),
-              //           ),
-              //         );
-              //       },
-              //     );
-              //   },
-              // ),
               ),
-        ],
       ),
     );
   }

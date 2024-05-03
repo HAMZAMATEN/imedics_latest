@@ -18,6 +18,7 @@ class AppConstants{
   static String docFee ="";
   static String docId = '';
   static String docName = '';
+  static String docSpeciality = '';
   static String docEmail = '';
   static double docWallAmount = 0.0;
   // static String docFee ="";
@@ -32,6 +33,7 @@ class AppConstants{
     docId="";
     docName="";
     docEmail="";
+    docSpeciality="";
     docWallAmount = 0.0;
   }
 

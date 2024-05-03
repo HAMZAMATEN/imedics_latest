@@ -159,8 +159,11 @@ class DoctorHomeController extends GetxController {
     state.appointmentFetchLoading.value=val;
   }
   getDoctorAppointmentDetails() async {
+
     setFetchAppointmentLoading(true);
     List<PatientAppointmentModel> filteredAppointments = [];
+    List<PatientAppointmentModel> filteredCompletedAppointments = [];
+
 
     try {
       var response = await http
@@ -182,7 +185,7 @@ class DoctorHomeController extends GetxController {
               filteredAppointments.add(appointment);
             }else{
               log('not eee');
-              state.completedAppointmentList.add(appointment);
+              filteredCompletedAppointments.add(appointment);
             }
           }else {
             log('not');
@@ -191,6 +194,7 @@ class DoctorHomeController extends GetxController {
 
         filteredAppointments.sort((a, b) => a.selectedDate!.compareTo(b.selectedDate!));
         state.patientAppointmentList = filteredAppointments;
+        state.completedAppointmentList = filteredCompletedAppointments;
         if(state.patientAppointmentList.isNotEmpty){
           log('not');
           fetchPatientDetails(state.patientAppointmentList[0].userId!);
@@ -253,6 +257,16 @@ class DoctorHomeController extends GetxController {
 
     }
   }
+  Future<PatientModel> fetchParticularPatientDetails(String userId) async{
+
+      http.Response response = await http.get(Uri.parse("${AppConstants.baseUrl}/getpatient/${userId}"));
+      var items = jsonDecode(response.body);
+      log('item:$items');
+
+        return PatientModel.fromJson(jsonDecode(response.body));
+
+  }
+
 
 
 }

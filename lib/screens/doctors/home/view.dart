@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/next_appointment_widgets.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/reviews_widget.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/view.dart';
@@ -61,34 +62,34 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: 10),
-            // Obx(() {
-            //   if (doctorcontroller.SpecificDoctorDetailsList.isEmpty) {
-            //     return Text(
-            //       "No details available",
-            //       style: TextStyle(),
-            //     );
-            //   } else {
-            //     final details =
-            //     doctorcontroller.SpecificDoctorDetailsList.first!;
-            //     return Column(
-            //       children: [
-            //         Text(
-            //           "Hi  ${details.name}  ",
-            //           style: TextStyle(
-            //               fontSize: 14,
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.w500),
-            //         ),
-            //       ],
-            //     );
-            //   }
-            // }),
-            Text(
-              "No details available",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
+            AppConstants.docName == '' ?
+                Text(
+                  "No details available",
+                  style: TextStyle(
+                    color: Colors.black
+                  ),
+                )
+            :
+
+                Column(
+                  children: [
+                    Text(
+                      "Hi  ${AppConstants.docName}  ",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+
+
+            // Text(
+            //   "No details available",
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //   ),
+            // ),
             Image.asset(
               AppAssets.hand,
               height: 16.h,

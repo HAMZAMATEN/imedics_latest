@@ -43,7 +43,7 @@ class MyApp extends StatelessWidget {
             title: 'Imedifix Service',
             theme: lightThemeData(context),
             themeMode: ThemeMode.light,
-            home: const DoctorApplicationView(),
+            home: const SplashScreen(),
           );
         });
   }

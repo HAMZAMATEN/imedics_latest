@@ -16,6 +16,11 @@ class AppConstants{
   static String userEmail = '';
   static double wallAmount = 0.0;
   static String docFee ="";
+  static String docId = '';
+  static String docName = '';
+  static String docEmail = '';
+  static double docWallAmount = 0.0;
+  // static String docFee ="";
 
   static void clearUserValues(){
     userId="";
@@ -26,5 +31,6 @@ class AppConstants{
 
   //Firebase Constants
   static String userCollection = "users";
+  static String individualDoctorCollection = "doctors";
 
 }

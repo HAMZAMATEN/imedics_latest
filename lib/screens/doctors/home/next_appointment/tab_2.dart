@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/cancel_appointment_tab.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/upcomming_appointment_tab.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
@@ -11,24 +12,10 @@ import 'package:animated_segmented_tab_control/animated_segmented_tab_control.da
 import 'complete_appointment_tab.dart';
 
 class UAppointTab extends StatelessWidget {
-  final String PatientNames;
-  final sletedDate;
-  final String id;
-  final seltedTime;
-
-  // ConformOppointmentModel model;
-  final String doctorname;
-  final String specialist;
+  final DoctorHomeController homeController;
 
   UAppointTab(
-      {super.key,
-      required this.id,
-      // required this.model,
-      required this.PatientNames,
-      required this.doctorname,
-      required this.specialist,
-      required this.sletedDate,
-      required this.seltedTime});
+      {super.key, required this.homeController});
 
   @override
   Widget build(BuildContext context) {
@@ -112,16 +99,12 @@ class UAppointTab extends StatelessWidget {
                   child: TabBarView(
                 children: [
                   UpcomingTabView(
-                      // meetingId: model.id.toString(),
-                      // model: model,
-                      // doctorname: doctorname,
-                      // specialist: specialist,
-                      // id: id,
-                      // PatientName: PatientNames,
-                      // sletedDate: sletedDate,
-                      // seltedTime: seltedTime
+                    homeController: homeController,
+
                   ),
-                  CompleteTabView(),
+                  CompleteTabView(
+                    homeController: homeController,
+                  ),
                   CancelTabView(),
                 ],
               ))

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/components/custom_text_field.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/screens/doctors/session/controller.dart';
@@ -146,30 +147,35 @@ class _TabLoginState extends State<DoctorLoginView> {
               ],
             ),
             padding10,
-            CustomButton(
-              onPressed: () {
-                //controller.login(context);
-                // controller.doctorIndLogin();
-                // controller.userLogin();
-                // if (_formKey.currentState!.validate()) {
-                if (controller.state.loginEmailCon.text.isNotEmpty &&
-                    controller.state.loginPasswordCon.text.isNotEmpty) {
-                  if (widget.isDoctor == true) {
-                    // controller.doctorIndLogin(context);
-                    // TODO:: Doctor login logic goes here
-                  } else {
-                    // Navigator.pushNamed(context, AppRoutes.userMainMenuScreen);
-                  }
-                } else {
-                  Snackbar.showSnackBar(
-                      'All fields must be filled', Icons.error_outline);
-                }
-              },
-              buttonText: login,
-              fontSize: 18,
-              borderRadius: 100.r,
-              backColor: AppColors.appColor,
-            ),
+            Obx(() => controller.state.loading.value == true
+                ? ShowProgressIndicator()
+                : CustomButton(
+                    onPressed: () {
+                      //controller.login(context);
+                      // controller.doctorIndLogin();
+                      // controller.userLogin();
+                      // if (_formKey.currentState!.validate()) {
+                      if (controller.state.loginEmailCon.text.isNotEmpty &&
+                          controller.state.loginPasswordCon.text.isNotEmpty) {
+                        if (widget.isDoctor == true) {
+                          controller.loginWithEmailPass(
+                              controller.state.loginEmailCon.text.trim(),
+                              controller.state.loginPasswordCon.text);
+                          // controller.doctorIndLogin(context);
+                          // TODO:: Doctor login logic goes here
+                        } else {
+                          // Navigator.pushNamed(context, AppRoutes.userMainMenuScreen);
+                        }
+                      } else {
+                        Snackbar.showSnackBar(
+                            'All fields must be filled', Icons.error_outline);
+                      }
+                    },
+                    buttonText: login,
+                    fontSize: 18,
+                    borderRadius: 100.r,
+                    backColor: AppColors.appColor,
+                  )),
             Column(
               children: [
                 padding16,

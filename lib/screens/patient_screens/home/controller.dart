@@ -23,6 +23,7 @@ class UserHomeController extends GetxController {
   Future<void> fetchPatientAppointments() async{
     List<PatientAppointmentModel> filteredAppointments = [];
     setFetchAppointmentLoading(true);
+    print("Function called");
 
    try{
      var response = await http.get(Uri.parse("${AppConstants.baseUrl}/getallbookappointment"),);
@@ -30,34 +31,48 @@ class UserHomeController extends GetxController {
 
 
      if(response.statusCode==200){
+       print("Status code is 200");
        List<PatientAppointmentModel> appointments = items.map<PatientAppointmentModel>((json) {
          return PatientAppointmentModel.fromJson(json);
        }).toList();
+       print("User id is ${AppConstants.userId}");
        String desiredUserId = "${AppConstants.userId}";
        // String desiredUserId = "\"662798168f105ba43d99a6f8\"";
 
        // filtering appointments that have userId of current user
        for (PatientAppointmentModel appointment in appointments) {
+         print("Iteration in fetch appointment");
          if (appointment.userId == desiredUserId) {
            if(checkAppointmentValidation(appointment.bookingDate!)){
+             // logic for appointments of current day and days after current day
              filteredAppointments.add(appointment);
+           }else{
+             // logic for appointments passed current date
+             state.completedAppointmentList.add(appointment);
            }
          }
        }
        //sorting in asceding order and storing in list to show
        filteredAppointments.sort((a, b) => a.selectedDate!.compareTo(b.selectedDate!));
        state.patientAppointmentList = filteredAppointments;
+       if(state.patientAppointmentList.length>0){
+         fetchDocDetails(state.patientAppointmentList[0].docId!);
+       }else{
+         setFetchAppointmentLoading(false);
+       }
 
        // setFetchAppointmentLoading(false);
 
      }
 
      if(response.statusCode==404){
+       print("Status code is 404");
        state.patientAppointmentList=[];
        setFetchAppointmentLoading(false);
      }
    }
    catch(e){
+     print("Error while fetching");
      setFetchAppointmentLoading(false);
      Snackbar.showSnackBar("Error fetching data", Icons.error_outline);
    }

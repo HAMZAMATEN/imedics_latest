@@ -8,7 +8,7 @@ import 'package:imedics_latest/screens/patient_screens/home/controller.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
 Widget userNextAppointmentCard(UserHomeController controller){
-  controller.fetchDocDetails(controller.state.patientAppointmentList[0].docId!);
+  // controller.fetchDocDetails(controller.state.patientAppointmentList[0].docId!);
   return Obx(() => Container(
     height: 190.h,
     width: double.infinity,
@@ -35,23 +35,22 @@ Widget userNextAppointmentCard(UserHomeController controller){
             child: Padding(
               padding:  EdgeInsets.symmetric(vertical: 15.h),
               child: controller.state.patientAppointmentList.length==0?
-              Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text('No Appointments yet', style: getBoldStyle(color: Colors.white,fontSize: MyFonts.size18),),
-                          SizedBox(height: 10.h,),
-                          Text('Book now', style: getBoldStyle(color: Colors.white,fontSize: MyFonts.size16),),
-                        ],
-                      ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+
+                      children: [
+                        Text('No Appointments yet', style: getBoldStyle(color: Colors.white,fontSize: MyFonts.size18),),
+                        SizedBox(height: 10.h,),
+                        Text('Book now', style: getBoldStyle(color: Colors.white,fontSize: MyFonts.size16),),
+                      ],
                     ),
-                  ],
-                ),
+                  ),
+                ],
               )
                   :Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

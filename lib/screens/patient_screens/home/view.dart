@@ -4,6 +4,9 @@ import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/patient_screens/All_Doctors/view.dart';
+import 'package:imedics_latest/screens/patient_screens/All_Specialization/view.dart';
+import 'package:imedics_latest/screens/patient_screens/All_appointments/view.dart';
 import 'package:imedics_latest/screens/patient_screens/home/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/doctors_list_widget.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/specialization_catoger_widget.dart';
@@ -41,7 +44,11 @@ class UserHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Our Specialization",style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-                      Text("See All",style: getBoldStyle(color: AppColors.appColor,fontSize: MyFonts.size16),),
+                      InkWell(
+                          onTap: (){
+                            Get.to(()=>AllSpecializationView(controller: controller));
+                          },
+                          child: Text("See All",style: getBoldStyle(color: AppColors.appColor,fontSize: MyFonts.size16),)),
                     ],
                   ),
                   padding12,
@@ -60,7 +67,11 @@ class UserHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Next Appointment",style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-                      Text("See All",style: getBoldStyle(color: AppColors.appColor,fontSize: MyFonts.size16),),
+                      InkWell(
+                          onTap: (){
+                            Get.to(()=>AllAppointmentsTabView(controller: controller,));
+                          },
+                          child: Text("See All",style: getBoldStyle(color: AppColors.appColor,fontSize: MyFonts.size16),)),
                     ],
                   ),
                   padding12,
@@ -71,7 +82,11 @@ class UserHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text("Popular Doctors",style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-                      Text("See All",style: getBoldStyle(color: AppColors.appColor,fontSize: MyFonts.size16),),
+                      InkWell(
+                          onTap: (){
+                            Get.to(()=>AllDcotorsView(controller: controller,));
+                          },
+                          child: Text("See All",style: getBoldStyle(color: AppColors.appColor,fontSize: MyFonts.size16),)),
                     ],
                   ),
                   padding16,

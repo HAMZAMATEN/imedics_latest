@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/screens/patient_screens/RecordScreen/view.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/widgets/navBarItem.dart';
 import 'package:imedics_latest/screens/patient_screens/home/view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_view.dart';
+import 'package:imedics_latest/screens/patient_screens/report_screens/view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 
 class UserApplicationView extends StatefulWidget {
@@ -25,24 +27,12 @@ class _UserApplicationViewState extends State<UserApplicationView> {
       body: controller.state.index.value == 0
           ? UserHomePage()
           : controller.state.index.value == 1
-              ? Container(
-                  child: Center(
-                    child: Text('2'),
-                  ),
-                )
+              ? ReportView()
               : controller.state.index.value == 2
-                  ? Container(
-                      child: Center(
-                        child: Text('2'),
-                      ),
-                    )
+                  ? UserRecordView()
                   : controller.state.index.value == 3
-                      ? Container(
-                          child: Center(
-                            child: Text('3'),
-                          ),
-                        )
-                      : ProfileView(),
+                      ? ProfileView()
+                      : Container(),
 
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       floatingActionButton: FloatingActionButton(
@@ -96,22 +86,22 @@ class _UserApplicationViewState extends State<UserApplicationView> {
                 controller: controller,
                 onTap: () {
                   setState(() {
-                    controller.setIndex(3);
+                    controller.setIndex(2);
                   });
                 },
                 icon: AppAssets.record,
-                index: 3,
+                index: 2,
               ),
               BottomBarItem(
                 title: 'Profile',
                 controller: controller,
                 onTap: () {
                   setState(() {
-                    controller.setIndex(4);
+                    controller.setIndex(3);
                   });
                 },
                 icon: AppAssets.profile,
-                index: 4,
+                index: 3,
               ),
             ],
           ),

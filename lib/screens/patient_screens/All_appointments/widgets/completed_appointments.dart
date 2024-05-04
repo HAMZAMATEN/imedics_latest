@@ -17,7 +17,8 @@ class CompletedAppointmentsView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+print("Length of completed");
+print(controller.state.completedAppointmentList.length);
     return Container(
         height: 600.h,
         child: ListView.builder(

@@ -14,6 +14,12 @@ class UserHomeController extends GetxController {
 
 
 
+  //clear lists for new fetching every time
+  void clearLists(){
+    state.patientAppointmentList.clear();
+    state.completedAppointmentList.clear();
+    state.doctorsList.clear();
+  }
 
   // code for appointments
 
@@ -21,6 +27,7 @@ class UserHomeController extends GetxController {
     state.appointmentFetchLoading.value=val;
   }
   Future<void> fetchPatientAppointments() async{
+    clearLists();
     List<PatientAppointmentModel> filteredAppointments = [];
     setFetchAppointmentLoading(true);
     print("Function called");
@@ -53,15 +60,20 @@ class UserHomeController extends GetxController {
          }
        }
        //sorting in asceding order and storing in list to show
-       filteredAppointments.sort((a, b) => a.selectedDate!.compareTo(b.selectedDate!));
-       state.patientAppointmentList = filteredAppointments;
+       if(filteredAppointments.length!=0){
+         filteredAppointments.sort((a, b) => a.selectedDate!.compareTo(b.selectedDate!));
+         state.patientAppointmentList = filteredAppointments;
+       }
        if(state.patientAppointmentList.length>0){
          fetchDocDetails(state.patientAppointmentList[0].docId!);
        }else{
          setFetchAppointmentLoading(false);
        }
 
-       // setFetchAppointmentLoading(false);
+       // sorting completed list
+       if(state.completedAppointmentList.length!=0){
+         state.completedAppointmentList.sort((a, b) => a.selectedDate!.compareTo(b.selectedDate!));
+       }
 
      }
 
@@ -150,6 +162,19 @@ class UserHomeController extends GetxController {
       Snackbar.showSnackBar("Error: $e", Icons.error_outline);
     }
     }
+
+    UserDocModel fetchSingleDoctor(String docId){
+    late UserDocModel doctor;
+    for(UserDocModel doc in state.doctorsList){
+      if(doc.sId==docId){
+        doctor= doc;
+        return doctor;
+      }
+    }
+    return doctor;
+    }
+
+
 
 
 

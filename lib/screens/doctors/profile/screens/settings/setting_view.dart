@@ -56,26 +56,26 @@ class SettingsView extends StatelessWidget {
                   color: AppColors.appColor,
                 ),
               ),
-              Divider(
-                color: AppColors.grey.withOpacity(0.30),
-              ),
-              ListTile(
-                onTap: (){
-                  Get.to(() => DoctorNotificationsView(),);
-                },
-                leading: Image.asset(
-                  'assets/images/notification.png',
-                  color: AppColors.appColor,
-                ),
-                title: Text(
-                  'Notification Settings',
-                  style: getSemiBoldStyle(color: Colors.black, fontSize: 16),
-                ),
-                trailing: const Icon(
-                  Icons.arrow_forward_ios,
-                  color: AppColors.appColor,
-                ),
-              ),
+              // Divider(
+              //   color: AppColors.grey.withOpacity(0.30),
+              // ),
+              // ListTile(
+              //   onTap: (){
+              //     Get.to(() => DoctorNotificationsView(),);
+              //   },
+              //   leading: Image.asset(
+              //     'assets/images/notification.png',
+              //     color: AppColors.appColor,
+              //   ),
+              //   title: Text(
+              //     'Notification Settings',
+              //     style: getSemiBoldStyle(color: Colors.black, fontSize: 16),
+              //   ),
+              //   trailing: const Icon(
+              //     Icons.arrow_forward_ios,
+              //     color: AppColors.appColor,
+              //   ),
+              // ),
               Divider(
                 color: AppColors.grey.withOpacity(0.30),
               ),

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
 
 class DoctorProfileState {
-
   String slectedDays = '';
   String weekTime = '';
 
@@ -22,4 +23,17 @@ class DoctorProfileState {
   final confirmPasCon = TextEditingController();
 
   var loading = false.obs;
+  var profileLoading = false.obs;
+  var changePAssLoading = false.obs;
+  var updateProfileLoading = false.obs;
+  late UserDocModel docModel;
+
+  ImagePicker imagePicker = ImagePicker();
+  XFile? pickedImage;
+  var imagePath = ''.obs;
+
+  late TextEditingController emailController;
+  // TextEditingController phoneNumberController = TextEditingController();
+  late TextEditingController aboutYourselfController;
+  late TextEditingController usernameController ;
 }

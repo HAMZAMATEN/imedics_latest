@@ -80,17 +80,17 @@ class UAppointTab extends StatelessWidget {
                           end: Alignment.bottomRight,
                         ),
                       ),
-                      SegmentTab(
-                        label: 'Cancelled',
-                        gradient: LinearGradient(
-                          colors: [
-                            AppColors.appColor1,
-                            AppColors.appColor,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
-                      ),
+                      // SegmentTab(
+                      //   label: 'Cancelled',
+                      //   gradient: LinearGradient(
+                      //     colors: [
+                      //       AppColors.appColor1,
+                      //       AppColors.appColor,
+                      //     ],
+                      //     begin: Alignment.topLeft,
+                      //     end: Alignment.bottomRight,
+                      //   ),
+                      // ),
                     ],
                   ),
                 ),
@@ -105,7 +105,7 @@ class UAppointTab extends StatelessWidget {
                   CompleteTabView(
                     homeController: homeController,
                   ),
-                  CancelTabView(),
+                  // CancelTabView(),
                 ],
               ))
             ],

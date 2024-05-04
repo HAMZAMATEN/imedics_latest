@@ -106,7 +106,8 @@ class DNextAppointmentWidget extends StatelessWidget {
                                     .toString(),
                                 // name: 'Dr. ${details.name.toString() == '' ? 'John' : details.name.toString()}',
                                 // specialist: details.specialization.toString() == '' ? 'hu' : details.specialization.toString(),
-                                specialist: AppConstants.docSpeciality,
+                                specialist: homeController.state.patientModel.email
+                                    .toString(),
                                 image: 'assets/images/whiteman.png',
                                 // rating: 5,
                                 date: homeController.state

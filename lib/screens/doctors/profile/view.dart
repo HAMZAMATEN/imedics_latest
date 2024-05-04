@@ -18,38 +18,14 @@ import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
-class DoctorProfileView extends StatefulWidget {
+class DoctorProfileView extends StatelessWidget {
   const DoctorProfileView({super.key});
-
-  @override
-  State<DoctorProfileView> createState() => _DoctorProfileViewState();
-}
-
-class _DoctorProfileViewState extends State<DoctorProfileView>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
-
-  @override
-  void initState() {
-    log('init from hello');
-    _tabController = TabController(length: 2, vsync: this);
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-    _tabController.dispose();
-  }
-
-  int selectdpage = 0;
 
   // final profileController = Get.put(DoctorProfileController());
 
-  final doctorProfileController = Get.put(DoctorProfileController());
-
   @override
   Widget build(BuildContext context) {
+    final doctorProfileController = Get.put(DoctorProfileController());
     log('hello from profile');
     // final mainMenuCtr = ref.watch(dProfileMainprovider);
 
@@ -174,7 +150,7 @@ class _DoctorProfileViewState extends State<DoctorProfileView>
                               index: 0,
                               onPressed: () {
                                 Get.to(
-                                  () => MyProfileView(),
+                                  () => MyProfileView(profileController: doctorProfileController,),
                                 );
                               },
                               text: "My Profile",
@@ -248,9 +224,10 @@ class _DoctorProfileViewState extends State<DoctorProfileView>
                   CommonpositionPicture(
                       onPressed: () {},
                       picturepath:
+                          AppConstants.docProfileImgUrl,
                           // widget.isuser == false
                           //     ?
-                          'assets/images/whiteman.png'
+                          // 'assets/images/whiteman.png'
                       // : AppAssets.doctorpro,
                       )
                 ],

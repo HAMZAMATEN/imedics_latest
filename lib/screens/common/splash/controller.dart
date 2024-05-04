@@ -115,6 +115,8 @@ class SplashController extends GetxController {
         AppConstants.docName = data['name'];
         ;
         AppConstants.docSpeciality = data['specialization'];
+        AppConstants.docProfileImgUrl = data['image'];
+
         AppConstants.docEmail = data['email'];
         AppConstants.docWallAmount = double.parse((data['__v']).toString());
         Prefrences().saveUserId(AppConstants.docId);

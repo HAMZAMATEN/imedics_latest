@@ -89,6 +89,7 @@ class IndividualDoctorLoginController extends GetxController{
         AppConstants.docName = data['name'];;
         AppConstants.docEmail = data['email'];
         AppConstants.docSpeciality = data['specialization'];
+        AppConstants.docProfileImgUrl = data['image'];
         AppConstants.docWallAmount = double.parse((data['__v']).toString());
         Prefrences().saveUserId(AppConstants.docId);
         Prefrences().setIsPatient(false);

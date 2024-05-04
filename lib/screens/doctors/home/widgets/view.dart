@@ -1,10 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get_state_manager/src/rx_flutter/rx_obx_widget.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/custom_text_field.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
@@ -236,6 +240,7 @@ class UDoctorNextAppointmentCard extends StatelessWidget {
 }
 
 class UPopularDoctorCard extends StatelessWidget {
+  final DoctorHomeController homeController;
   final String image;
   final String name;
   final String speciality;
@@ -250,104 +255,151 @@ class UPopularDoctorCard extends StatelessWidget {
       this.onTap,
       required this.speciality,
       required this.rating,
-      required this.review});
+      required this.review,
+      required this.homeController});
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      highlightColor: AppColors.transparentColor,
-      splashColor: AppColors.transparentColor,
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(6.r),
-          color: AppColors.white,
-        ),
-        child: Row(
-          children: [
-            SizedBox(width: 10.w),
-            CachedNetworkImage(
-              imageUrl: image != ""
-                  ? "${AppConstants.imageBaseUrl + image}"
-                  : 'assets/images/whiteman.png',
-              height: 92.h,
-              width: 82.w,
-              fit: BoxFit.contain,
-              placeholder: (context, url) => CircularProgressIndicator(),
-              errorWidget: (context, url, error) => Image.asset(
-                'assets/images/defaultDoc.jpg',
-                // Path to your default image
-                height: 92.h,
-                width: 82.w,
-                fit: BoxFit.contain,
-              ),
-            ),
-            // Image.asset(
-            //   'assets/images/img.png', // Path to your default image
-            //   height: 92.h,
-            //   width: 82.w,
-            //   fit: BoxFit.contain,
-            // ),
-            SizedBox(width: 10.w),
-            Expanded(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(name,
-                          style: getBoldStyle(
-                              color: AppColors.black,
-                              fontSize: MyFonts.size18)),
-                      SizedBox(width: 6.w),
-                      IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.favorite_border_outlined,
-                            color: AppColors.appColor,
-                          )),
-                    ],
+    return Obx(
+      () => homeController.state.appointmentFetchLoading.value
+          ? Center(
+              child: ShowProgressIndicator(),
+            )
+          : homeController.state.patientAppointmentList.isEmpty
+              ? Center(
+                  child: Text(
+                    'No shared documents available.',
+                    style: getBoldStyle(
+                      color: Colors.black,
+                    ),
                   ),
-                  Container(
-                    height: 2.h,
-                    width: double.infinity,
-                    color: AppColors.lightgrey,
-                  ),
-                  Text(
-                    speciality,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.star,
-                        color: AppColors.ratingColor,
-                        size: 13.h,
-                      ),
-                      SizedBox(width: 5.w),
-                      Text(rating.toString(),
-                          style: getMediumStyle(
-                              color: AppColors.black,
-                              fontSize: MyFonts.size12)),
-                      SizedBox(width: 1.w),
-                      Text(review,
-                          style: getMediumStyle(
-                              color: AppColors.grey, fontSize: MyFonts.size12)),
-                    ],
-                  ),
-                  padding16
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+                )
+              : StreamBuilder<QuerySnapshot>(
+                  stream: FirebaseFirestore.instance
+                      .collection(AppConstants.userCollection)
+                      .where('id',
+                          isEqualTo: homeController
+                              .state.patientAppointmentList[0].userId
+                              .toString())
+                      .snapshots(),
+                  builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                    if (!snapshot.hasData) {
+                      return Center(child: ShowProgressIndicator());
+                    }
+                    return snapshot.data!.docs.isEmpty
+                        ? Center(
+                            child: Text(
+                              'No documents shared yet',
+                              style: getSemiBoldStyle(color: Colors.black),
+                            ),
+                          )
+                        : ListView.builder(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.docs.length,
+                            itemBuilder: (context, index) {
+                              return snapshot.data!.docs[index]
+                                              ['Blood-Report'] ==
+                                          0 ||
+                                      snapshot.data!.docs[index]['CT-Scan'] ==
+                                          0 ||
+                                      snapshot.data!.docs[index]['MRI'] == 0
+                                  ? Center(
+                                      child: Text(
+                                        'No documents shared yet',
+                                        style: getSemiBoldStyle(
+                                            color: Colors.black),
+                                      ),
+                                    )
+                                  : snapshot.data!.docs[index]
+                                              ['Blood-Report'] ==
+                                          0
+                                      ? Container()
+                                      : InkWell(
+                                          highlightColor:
+                                              AppColors.transparentColor,
+                                          splashColor:
+                                              AppColors.transparentColor,
+                                          onTap: onTap,
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(6.r),
+                                              color: AppColors.white,
+                                            ),
+                                            child: Row(
+                                              children: [
+                                                SizedBox(width: 10.w),
+                                                CachedNetworkImage(
+                                                  imageUrl: image != ""
+                                                      ? "${AppConstants.imageBaseUrl + image}"
+                                                      : 'assets/images/whiteman.png',
+                                                  height: 92.h,
+                                                  width: 82.w,
+                                                  fit: BoxFit.contain,
+                                                  placeholder: (context, url) =>
+                                                      CircularProgressIndicator(),
+                                                  errorWidget:
+                                                      (context, url, error) =>
+                                                          Image.asset(
+                                                    'assets/images/defaultDoc.jpg',
+                                                    // Path to your default image
+                                                    height: 92.h,
+                                                    width: 82.w,
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                ),
+                                                // Image.asset(
+                                                //   'assets/images/img.png', // Path to your default image
+                                                //   height: 92.h,
+                                                //   width: 82.w,
+                                                //   fit: BoxFit.contain,
+                                                // ),
+                                                SizedBox(width: 10.w),
+                                                Expanded(
+                                                  child: Column(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .center,
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      Text(name,
+                                                          style: getBoldStyle(
+                                                              color: AppColors
+                                                                  .black,
+                                                              fontSize: MyFonts
+                                                                  .size18)),
+                                                      Container(
+                                                        height: 2.h,
+                                                        width: double.infinity,
+                                                        color:
+                                                            AppColors.lightgrey,
+                                                      ),
+                                                      Text(
+                                                        'Appointment on : ${homeController.state.patientAppointmentList[0].selectedDate}',
+                                                      ),
+                                                      Text(
+                                                          '${(snapshot.data!.docs[index]['Blood-Report'].length + snapshot.data!.docs[index]['MRI'].length + snapshot.data!.docs[index]['CT-Scan'].length)} Documents',
+                                                          style: getMediumStyle(
+                                                              color: AppColors
+                                                                  .grey,
+                                                              fontSize: MyFonts
+                                                                  .size12)),
+                                                      padding16
+                                                    ],
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        );
+                            });
+                  }),
     );
   }
 }
-
-
 
 class RecomondedCard extends StatelessWidget {
   const RecomondedCard({super.key});

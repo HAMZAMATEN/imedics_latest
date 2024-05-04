@@ -80,7 +80,7 @@ class ChangePasswordView extends StatelessWidget {
               ),
               padding16,
               Obx(() =>
-              controller.state.loading.value == true ? ShowProgressIndicator()
+              controller.state.changePAssLoading.value == true ? ShowProgressIndicator()
                   :
               SessionButton(
                   back: () {},

@@ -87,13 +87,15 @@ class DNextAppointmentWidget extends StatelessWidget {
                                   Container(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          'No Appointments yet',
-                                          style: getBoldStyle(
-                                              color: Colors.white,
-                                              fontSize: MyFonts.size18),
+                                        Center(
+                                          child: Text(
+                                            'No Appointments yet',
+                                            style: getBoldStyle(
+                                                color: Colors.black,
+                                                fontSize: MyFonts.size18),
+                                          ),
                                         ),
                                       ],
                                     ),
@@ -106,7 +108,8 @@ class DNextAppointmentWidget extends StatelessWidget {
                                     .toString(),
                                 // name: 'Dr. ${details.name.toString() == '' ? 'John' : details.name.toString()}',
                                 // specialist: details.specialization.toString() == '' ? 'hu' : details.specialization.toString(),
-                                specialist: AppConstants.docSpeciality,
+                                specialist: homeController.state.patientModel.email
+                                    .toString(),
                                 image: 'assets/images/whiteman.png',
                                 // rating: 5,
                                 date: homeController.state

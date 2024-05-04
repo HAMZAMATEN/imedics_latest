@@ -8,6 +8,7 @@ import 'package:imedics_latest/screens/patient_screens/All_Doctors/view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_Specialization/view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/view.dart';
 import 'package:imedics_latest/screens/patient_screens/home/controller.dart';
+import 'package:imedics_latest/screens/patient_screens/home/video_call_page.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/doctors_list_widget.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/specialization_catoger_widget.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/userHomeNameWidget.dart';
@@ -26,6 +27,12 @@ class UserHomePage extends StatelessWidget {
     controller.fetchPatientAppointments();
     controller.fetchAllDoctors();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+        Get.to(()=>CallPage());
+        },
+        child: Icon(Icons.call),
+      ),
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(

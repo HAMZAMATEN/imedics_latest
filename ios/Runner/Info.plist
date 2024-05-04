@@ -45,5 +45,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>NSCameraUsageDescription</key>
+    <string>App required this permission to pick images for updating profile picture and send
+      media messages, one to one calls, speed dating and create events.</string>
+    <key>NSMicrophoneUsageDescription</key>
+    <string>App requires this permission for one to one calls and speed dating.</string>
 </dict>
 </plist>

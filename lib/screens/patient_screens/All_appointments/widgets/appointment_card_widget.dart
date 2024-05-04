@@ -12,7 +12,8 @@ import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
 Widget appointmentCardWidget(UserHomeController controller,int index,AllAppointmentController appointController,List<PatientAppointmentModel> listOfApp,bool isCompleted){
-  UserDocModel doc = appointController.getUpComingAppointDoc(controller, controller.state.patientAppointmentList[index].docId!);
+  UserDocModel doc = isCompleted==true?  appointController.getUpComingAppointDoc(controller, controller.state.completedAppointmentList[index].docId!)
+      : appointController.getUpComingAppointDoc(controller, controller.state.patientAppointmentList[index].docId!);
   return Padding(
     padding:  EdgeInsets.symmetric(vertical: 5.h),
     child: Container(

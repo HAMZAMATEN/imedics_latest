@@ -62,7 +62,6 @@ dependencies:
 
 
 
-  flutter_svg: ^2.0.9
 
   flutter_svg:
   flutter_inappwebview:

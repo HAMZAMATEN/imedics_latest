@@ -83,7 +83,7 @@ class DoctorReportCardWidget extends StatelessWidget {
                           overflow: TextOverflow.ellipsis,
                         ),
                         Text(
-                          'Last Updates: ${date}',
+                          'Appointment on: ${date}',
                           style: getSemiBoldStyle(
                             color: Color.fromRGBO(136, 136, 136, 1),
                           ),

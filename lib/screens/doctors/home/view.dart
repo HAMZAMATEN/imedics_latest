@@ -15,46 +15,13 @@ import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:pull_to_refresh_flutter3/pull_to_refresh_flutter3.dart';
 
-class DoctorHomeScreens extends StatefulWidget {
+class DoctorHomeScreens extends StatelessWidget {
   DoctorHomeScreens({Key? key}) : super(key: key);
 
-  @override
-  _DoctorHomeScreensState createState() => _DoctorHomeScreensState();
-}
-
-class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
   // @override
-  // void initState() {
-  //   init();
-
-  //   super.initState();
-  // }
-
-  // init() async {
-  //   final id = await Global().getUserId();
-
-  //   doctorController.DoctorSpecificDoctorDetails(id.toString());
-  // }
-
-  RefreshController _refreshController =
-  RefreshController(initialRefresh: false);
-  List<String> items = ["1", "2", "3", "4", "5", "6", "7", "8"];
-
-  void _onRefresh() async {
-    // Perform your data fetching operations here.
-    await Future.delayed(Duration(milliseconds: 1000));
-    // Get.put(DoctorIndHomeProvider());
-
-    // setState(() {
-    //   Get.put(DoctorIndHomeProvider());
-    // });
-    _refreshController.refreshCompleted();
-  }
-
-  final doctorHomeController = Get.put(DoctorHomeController());
-
   @override
   Widget build(BuildContext context) {
+    final doctorHomeController = Get.put(DoctorHomeController());
     doctorHomeController.getDoctorAppointmentDetails();
     log('list:${doctorHomeController.state.patientAppointmentList.length.toString()}');
     return Scaffold(
@@ -139,15 +106,9 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
         ],
       ),
       body:
-          SmartRefresher(
-            controller: _refreshController,
-            enablePullDown: true,
-            header: WaterDropHeader(),
-            onRefresh: _onRefresh,
-            child:
           CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
+                  physics: BouncingScrollPhysics(),
+                  slivers: [
           SliverList(
             delegate: SliverChildListDelegate(
               [
@@ -164,6 +125,7 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
                         height: 10,
                       ),
                       UPopularDoctorCard(
+                        homeController: doctorHomeController,
                         onTap: () {},
                         image: 'assets/images/Vector.png',
                         name: 'Shared Documents',
@@ -177,16 +139,15 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
                     ],
                   ),
                 ),
-                Container(
-                  height: 500.h,
-                  child: UReviewTabview(),
-                ),
+                // Container(
+                //   height: 500.h,
+                //   child: UReviewTabview(),
+                // ),
               ],
             ),
           ),
-        ],
-      ),
-      ),
+                  ],
+                ),
     );
   }
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/models/doctors/patient_model.dart';
+import 'package:imedics_latest/screens/doctors/home/widgets/appointment_details.dart';
 import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/appointment_card.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
@@ -20,7 +22,34 @@ class UpcomingTabView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 18.w),
-      child: ListView.builder(
+      child:
+      homeController.state.patientAppointmentList.isEmpty ?
+
+      Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            child: Column(
+              crossAxisAlignment:
+              CrossAxisAlignment.center,
+              children: [
+                Center(
+                  child: Text(
+                    'No upcomming appointments yet',
+                    style: getBoldStyle(
+                        color: Colors.black,
+                        fontSize: MyFonts.size18),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      )
+          :
+
+      ListView.builder(
           padding: EdgeInsets.only(top: 10.h),
           shrinkWrap: true,
           physics: const BouncingScrollPhysics(),
@@ -151,8 +180,15 @@ class UpcomingTabView extends StatelessWidget {
                               textColor: AppColors.white,
                               buttonHeight: 38.h,
                               buttonWidth: 157.w,
-                              onPressed: () {},
-                              buttonText: 'Reschedule'),
+                              onPressed: () {
+                                Get.to(() => AppointmentDetailView(
+                                    image: AppAssets.record,
+                                    patientAppointmentModel: homeController
+                                        .state
+                                        .patientAppointmentList[index],
+                                    homeController: homeController));
+                              },
+                              buttonText: 'Records'),
                           // reschedule != null ? 'Reschedule' : 'Book Again'),
                         ],
                       )

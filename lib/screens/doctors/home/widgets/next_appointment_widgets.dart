@@ -87,13 +87,15 @@ class DNextAppointmentWidget extends StatelessWidget {
                                   Container(
                                     child: Column(
                                       crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                          CrossAxisAlignment.center,
                                       children: [
-                                        Text(
-                                          'No Appointments yet',
-                                          style: getBoldStyle(
-                                              color: Colors.white,
-                                              fontSize: MyFonts.size18),
+                                        Center(
+                                          child: Text(
+                                            'No Appointments yet',
+                                            style: getBoldStyle(
+                                                color: Colors.black,
+                                                fontSize: MyFonts.size18),
+                                          ),
                                         ),
                                       ],
                                     ),

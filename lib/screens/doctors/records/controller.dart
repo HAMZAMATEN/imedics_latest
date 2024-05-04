@@ -9,6 +9,7 @@ import 'package:imedics_latest/models/doctors/patient_model.dart';
 import 'package:imedics_latest/screens/doctors/records/state.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 
 class DoctorRecordController extends GetxController {
   final state = DoctorRecordState();
@@ -40,10 +41,14 @@ class DoctorRecordController extends GetxController {
         log('len:${appointments.length}');
         for(var appointment in appointments) {
           if(appointment.docId == docId){
-            if(checkAppointmentValidation(appointment.bookingDate!)){
+            if(checkAppointmentValidation(appointment.selectedDate!)){
               log('exist');
+              log(appointment.bookingDate.toString());
               filteredAppointments.add(appointment);
             }else{
+
+              log(appointment.bookingDate.toString());
+
               log('not eee');
               filteredCompletedAppointments.add(appointment);
             }
@@ -86,8 +91,22 @@ class DoctorRecordController extends GetxController {
         currMonth<=month &&
         currYear <= year
     ){
+      log('tr');
+      log('cD:$currDay');
+      log('cy:$currYear');
+      log('cm:$currMonth');
+      log('y:$year');
+      log('d:$day');
+      log('m:$month');
       return true;
     }else{
+      log('fl');
+      log('cD:$currDay');
+      log('cy:$currYear');
+      log('cm:$currMonth');
+      log('y:$year');
+      log('d:$day');
+      log('m:$month');
       return false;
     }
   }
@@ -125,5 +144,27 @@ class DoctorRecordController extends GetxController {
 
     return PatientModel.fromJson(jsonDecode(response.body));
 
+  }
+
+
+  String convertDate(String inputDate) {
+    // Split the input date string
+    List<String> dateParts = inputDate.split('-');
+
+    // Parse the date parts into integers
+    int year = int.parse(dateParts[0]);
+    int month = int.parse(dateParts[1]);
+    int day = int.parse(dateParts[2]);
+
+    // Create a DateTime object
+    DateTime dateTime = DateTime(year, month, day);
+
+    // Create a DateFormat instance for the desired format
+    DateFormat formatter = DateFormat('EEEE, MMMM dd yyyy');
+
+    // Format the DateTime object to the desired format
+    String formattedDate = formatter.format(dateTime);
+
+    return formattedDate;
   }
 }

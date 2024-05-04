@@ -21,7 +21,7 @@ class DoctorRecordScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
     final recordController = Get.put(DoctorRecordController());
-
+    recordController.getDoctorAppointmentDetails();
     return Scaffold(
       backgroundColor: Color.fromRGBO(246, 251, 250, 1),
       appBar: AppBar(
@@ -46,7 +46,7 @@ class DoctorRecordScreen extends StatelessWidget {
               ? Center(
                   child: ShowProgressIndicator(),
                 )
-              : recordController.state.patientAppointmentList.isEmpty
+              : recordController.state.completedAppointmentList.isEmpty
                   ? Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -75,10 +75,9 @@ class DoctorRecordScreen extends StatelessWidget {
                               Get.to(
                                 () => DoctorRecordsDetailView(
                                   image: AppAssets.record,
-                                  title: 'Name',
-                                  date: 'Monday May,12,2024',
-                                  status: 'Completed',
-                                  rating: '4.9',
+                                    recordController: recordController,
+                                    patientAppointmentModel: recordController
+                                        .state.completedAppointmentList[index],
                                 ),
                               );
                             },
@@ -161,12 +160,14 @@ class DoctorRecordScreen extends StatelessWidget {
                                                   height: 4.w,
                                                 ),
                                                 Text(
-                                                  recordController
-                                                      .state
-                                                      .completedAppointmentList[
-                                                          index]
-                                                      .selectedDate
-                                                      .toString(),
+                                                  recordController.convertDate(
+                                                      recordController
+                                                          .state
+                                                          .completedAppointmentList[
+                                                      index]
+                                                          .selectedDate
+                                                          .toString()
+                                                  ),
                                                   style: getSemiBoldStyle(
                                                     fontSize: 14.sp,
                                                     color: Color.fromRGBO(

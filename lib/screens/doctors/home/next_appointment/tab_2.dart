@@ -20,7 +20,7 @@ class UAppointTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 3,
+      length: 2,
       child: Container(
           height: 520.h,
           width: 1.sw,

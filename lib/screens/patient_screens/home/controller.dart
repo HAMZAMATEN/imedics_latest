@@ -43,7 +43,7 @@ class UserHomeController extends GetxController {
        for (PatientAppointmentModel appointment in appointments) {
          print("Iteration in fetch appointment");
          if (appointment.userId == desiredUserId) {
-           if(checkAppointmentValidation(appointment.bookingDate!)){
+           if(checkAppointmentValidation(appointment.selectedDate!)){
              // logic for appointments of current day and days after current day
              filteredAppointments.add(appointment);
            }else{

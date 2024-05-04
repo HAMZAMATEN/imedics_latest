@@ -10,6 +10,7 @@ import 'package:imedics_latest/screens/doctors/home/state.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
+import 'package:intl/intl.dart';
 
 class DoctorHomeController extends GetxController {
   final state = DoctorHomeState();
@@ -180,7 +181,7 @@ class DoctorHomeController extends GetxController {
         log('len:${appointments.length}');
         for(var appointment in appointments) {
           if(appointment.docId == docId){
-            if(checkAppointmentValidation(appointment.bookingDate!)){
+            if(checkAppointmentValidation(appointment.selectedDate!)){
               log('exist');
               filteredAppointments.add(appointment);
             }else{
@@ -268,5 +269,25 @@ class DoctorHomeController extends GetxController {
   }
 
 
+  String convertDate(String inputDate) {
+    // Split the input date string
+    List<String> dateParts = inputDate.split('-');
+
+    // Parse the date parts into integers
+    int year = int.parse(dateParts[0]);
+    int month = int.parse(dateParts[1]);
+    int day = int.parse(dateParts[2]);
+
+    // Create a DateTime object
+    DateTime dateTime = DateTime(year, month, day);
+
+    // Create a DateFormat instance for the desired format
+    DateFormat formatter = DateFormat('EEEE, MMMM dd yyyy');
+
+    // Format the DateTime object to the desired format
+    String formattedDate = formatter.format(dateTime);
+
+    return formattedDate;
+  }
 
 }

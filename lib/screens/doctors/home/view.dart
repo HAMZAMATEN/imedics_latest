@@ -1,8 +1,12 @@
 // ignore_for_file: prefer_const_constructors, unnecessary_brace_in_string_interps, unused_import
 
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/next_appointment_widgets.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/reviews_widget.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/view.dart';
@@ -47,8 +51,12 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
     _refreshController.refreshCompleted();
   }
 
+  final doctorHomeController = Get.put(DoctorHomeController());
+
   @override
   Widget build(BuildContext context) {
+    doctorHomeController.getDoctorAppointmentDetails();
+    log('list:${doctorHomeController.state.patientAppointmentList.length.toString()}');
     return Scaffold(
       backgroundColor: Color.fromRGBO(246, 251, 250, 1),
       appBar: AppBar(
@@ -61,34 +69,34 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: 10),
-            // Obx(() {
-            //   if (doctorcontroller.SpecificDoctorDetailsList.isEmpty) {
-            //     return Text(
-            //       "No details available",
-            //       style: TextStyle(),
-            //     );
-            //   } else {
-            //     final details =
-            //     doctorcontroller.SpecificDoctorDetailsList.first!;
-            //     return Column(
-            //       children: [
-            //         Text(
-            //           "Hi  ${details.name}  ",
-            //           style: TextStyle(
-            //               fontSize: 14,
-            //               color: Colors.black,
-            //               fontWeight: FontWeight.w500),
-            //         ),
-            //       ],
-            //     );
-            //   }
-            // }),
-            Text(
-              "No details available",
-              style: TextStyle(
-                color: Colors.black,
-              ),
-            ),
+            AppConstants.docName == '' ?
+                Text(
+                  "No details available",
+                  style: TextStyle(
+                    color: Colors.black
+                  ),
+                )
+            :
+
+                Column(
+                  children: [
+                    Text(
+                      "Hi  ${AppConstants.docName}  ",
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.black,
+                          fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+
+
+            // Text(
+            //   "No details available",
+            //   style: TextStyle(
+            //     color: Colors.black,
+            //   ),
+            // ),
             Image.asset(
               AppAssets.hand,
               height: 16.h,
@@ -146,7 +154,7 @@ class _DoctorHomeScreensState extends State<DoctorHomeScreens> {
                 padding16,
                 const UTopSearchWidget(),
                 padding16,
-                DNextAppointmentWidget(),
+                DNextAppointmentWidget(homeController: doctorHomeController,),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Column(

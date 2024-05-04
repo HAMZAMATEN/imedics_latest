@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/tab_1.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/tab_2.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
 class UserNextAppointmenyScreen extends StatelessWidget {
+  final DoctorHomeController homeController;
   final String PatientNames;
   final String DoctorName;
   final String specialist;
@@ -23,7 +25,7 @@ class UserNextAppointmenyScreen extends StatelessWidget {
         required this.specialist,
         required this.sletedDate,
         required this.seltedTime,
-        required this.DoctorName,
+        required this.DoctorName, required this.homeController,
         // required this.model
       });
 
@@ -95,12 +97,7 @@ class UserNextAppointmenyScreen extends StatelessWidget {
             Positioned(
               top: 350.h,
               child: UAppointTab(
-                doctorname: DoctorName,
-                specialist: specialist,
-                id: id,
-                PatientNames: PatientNames,
-                sletedDate: sletedDate,
-                seltedTime: seltedTime,
+                homeController: homeController,
                 // model: model,
               ),
             ),

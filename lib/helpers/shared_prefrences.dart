@@ -38,5 +38,14 @@ class Prefrences {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     return prefs.getBool('isPatient') ?? true;
   }
+  Future<void> setDoctorType(bool doctorType) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isIndividualDoctor', doctorType);
+  }
+
+  Future<bool> getDoctorType() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return prefs.getBool('isIndividualDoctor') ?? true;
+  }
 
 }

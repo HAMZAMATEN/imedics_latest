@@ -115,12 +115,12 @@ class _DoctorWalletWithdrawState extends State<DoctorWalletWithdraw>
                   ),
                 ),
               ),
-              // Expanded(
-              //     flex: 5,
-              //     child: DoctorwalletAmount(
-              //       onPressed: () {},
-              //       tabController: _tabController,
-              //     )),
+              Expanded(
+                  flex: 5,
+                  child: DoctorwalletAmount(
+                    onPressed: () {},
+                    tabController: _tabController,
+                  )),
             ],
           ),
         ),

@@ -5,8 +5,10 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/doctors/home/controller.dart';
+import 'package:imedics_latest/screens/doctors/home/video_call_screen.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/next_appointment_widgets.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/reviews_widget.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/view.dart';
@@ -36,27 +38,22 @@ class DoctorHomeScreens extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: 10),
-            AppConstants.docName == '' ?
-                Text(
-                  "No details available",
-                  style: TextStyle(
-                    color: Colors.black
+            AppConstants.docName == ''
+                ? Text(
+                    "No details available",
+                    style: TextStyle(color: Colors.black),
+                  )
+                : Column(
+                    children: [
+                      Text(
+                        "Hi  ${AppConstants.docName}  ",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black,
+                            fontWeight: FontWeight.w600),
+                      ),
+                    ],
                   ),
-                )
-            :
-
-                Column(
-                  children: [
-                    Text(
-                      "Hi  ${AppConstants.docName}  ",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-
 
             // Text(
             //   "No details available",
@@ -79,7 +76,9 @@ class DoctorHomeScreens extends StatelessWidget {
               // Replace with MyColors.white if it's defined in your code.
               child: IconButton(
                 onPressed: () {
-                  Get.to(()=>DNotificationSection(),);
+                  Get.to(
+                    () => DNotificationSection(),
+                  );
                   // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
                 },
                 icon: Stack(
@@ -103,19 +102,36 @@ class DoctorHomeScreens extends StatelessWidget {
               ),
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 2),
+            child: CircleAvatar(
+              backgroundColor: Colors.white,
+              // Replace with MyColors.white if it's defined in your code.
+              child: IconButton(
+                onPressed: () {
+                  Get.to(
+                        () => CallView(),
+                  );
+                  // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
+                },
+                icon: Icon(Icons.video_call,color: AppColors.appColor,),
+              ),
+            ),
+          ),
         ],
       ),
-      body:
-          CustomScrollView(
-                  physics: BouncingScrollPhysics(),
-                  slivers: [
+      body: CustomScrollView(
+        physics: BouncingScrollPhysics(),
+        slivers: [
           SliverList(
             delegate: SliverChildListDelegate(
               [
                 padding16,
                 const UTopSearchWidget(),
                 padding16,
-                DNextAppointmentWidget(homeController: doctorHomeController,),
+                DNextAppointmentWidget(
+                  homeController: doctorHomeController,
+                ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 18.0),
                   child: Column(
@@ -146,8 +162,8 @@ class DoctorHomeScreens extends StatelessWidget {
               ],
             ),
           ),
-                  ],
-                ),
+        ],
+      ),
     );
   }
 }

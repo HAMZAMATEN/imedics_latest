@@ -74,7 +74,7 @@ class DoctorReportScreen extends StatelessWidget {
                   onTap: () {
                     Get.to(
                       () => DoctorReportDetailsScreen(
-                        appBarTitle: controller.state.text[index],
+                        appBarTitle: controller.state.text[index], reportType: controller.state.reportType[index],
                       ),
                     );
                   },

@@ -26,6 +26,7 @@ class DoctorHomeScreens extends StatelessWidget {
     final doctorHomeController = Get.put(DoctorHomeController());
     doctorHomeController.getDoctorAppointmentDetails();
     log('list:${doctorHomeController.state.patientAppointmentList.length.toString()}');
+    log('dId:${AppConstants.docId}');
     return Scaffold(
       backgroundColor: Color.fromRGBO(246, 251, 250, 1),
       appBar: AppBar(

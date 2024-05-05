@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -55,6 +57,7 @@ class UpcomingTabView extends StatelessWidget {
           physics: const BouncingScrollPhysics(),
           itemCount: homeController.state.patientAppointmentList.length,
           itemBuilder: (context, index) {
+            log('id:${homeController.state.patientAppointmentList[1].sId}');
             return Padding(
               padding: const EdgeInsets.only(bottom: 8),
               child: Container(

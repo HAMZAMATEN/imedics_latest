@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import 'package:imedics_latest/screens/doctors/reports/state.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DoctorReportController extends GetxController {
   final state = DoctorReportState();
@@ -170,4 +172,42 @@ class DoctorReportController extends GetxController {
 
     return formattedDate;
   }
+
+
+  Future<void> downloadFile(String url, String filename) async {
+
+    try {
+      var response = await http.get(Uri.parse(url));
+      if (response.statusCode == 200) {
+        var bytes = response.bodyBytes;
+
+        var tempDir = await getTemporaryDirectory();
+
+        var contentType = response.headers['content-type'];
+        var extension =
+        contentType != null ? contentType.split('/').last : 'unknown';
+        var filePath = '${tempDir.path}/$filename.$extension';
+        var file = File(filePath);
+        await file.writeAsBytes(bytes);
+      } else {
+        print(
+            'Failed to download file. Server responded with status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      // Exception occurred during the request
+      print('Failed to download file: $e');
+    }
+
+  }
+
+  String formatMicrosecondsToDateString(int microsecondsSinceEpoch) {
+    // Convert microseconds to DateTime
+    DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(microsecondsSinceEpoch);
+
+    // Format the DateTime using DateFormat from intl package
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+
+    return formattedDate;
+  }
+
 }

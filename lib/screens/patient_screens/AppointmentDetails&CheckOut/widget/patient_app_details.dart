@@ -73,8 +73,8 @@ class PatientDetailsView extends StatelessWidget {
                         child: DropdownButtonFormField<String>(
                           hint: Text(controller.state.bookingFor.value),
                           items: [
-                            DropdownMenuItem(child: Text("Self"),value: 'self',),
-                            DropdownMenuItem(child: Text("Others"),value: 'other',),
+                            DropdownMenuItem(child: Text("Self",style: getRegularStyle(color: Colors.black),),value: 'self',),
+                            DropdownMenuItem(child: Text("Others",style: getRegularStyle(color: Colors.black),),value: 'other',),
                           ],
                           onChanged: (String? value) {
                             print(value);
@@ -126,9 +126,9 @@ class PatientDetailsView extends StatelessWidget {
                         child: DropdownButtonFormField<String>(
                           hint: Text(controller.state.gender.value),
                           items: [
-                            DropdownMenuItem(child: Text('Male'),value: 'male',),
-                            DropdownMenuItem(child: Text('Female'),value: 'female',),
-                            DropdownMenuItem(child: Text('Other'),value: 'other',),
+                            DropdownMenuItem(child: Text('Male',style: getRegularStyle(color: Colors.black),),value: 'male',),
+                            DropdownMenuItem(child: Text('Female',style: getRegularStyle(color: Colors.black),),value: 'female',),
+                            DropdownMenuItem(child: Text('Other',style: getRegularStyle(color: Colors.black),),value: 'other',),
                           ],
                           onChanged: (String? value) {
                             print(value);
@@ -181,13 +181,13 @@ class PatientDetailsView extends StatelessWidget {
                         child: DropdownButtonFormField<String>(
                           hint: Text(controller.state.age.value),
                           items: [
-                            DropdownMenuItem(child: Text('15 Years'),value: '15 Years',),
-                            DropdownMenuItem(child: Text('20 Years'),value: '20 Years',),
-                            DropdownMenuItem(child: Text('25 Years'),value: '25 Years',),
-                            DropdownMenuItem(child: Text('30 Years'),value: '30 Years',),
-                            DropdownMenuItem(child: Text('40 Years'),value: '40 Years',),
-                            DropdownMenuItem(child: Text('45 Years'),value: '45 Years',),
-                            DropdownMenuItem(child: Text('Above 45'),value: 'Above 45',),
+                            DropdownMenuItem(child: Text('15 Years',style: getRegularStyle(color: Colors.black),),value: '15 Years',),
+                            DropdownMenuItem(child: Text('20 Years',style: getRegularStyle(color: Colors.black),),value: '20 Years',),
+                            DropdownMenuItem(child: Text('25 Years',style: getRegularStyle(color: Colors.black),),value: '25 Years',),
+                            DropdownMenuItem(child: Text('30 Years',style: getRegularStyle(color: Colors.black),),value: '30 Years',),
+                            DropdownMenuItem(child: Text('40 Years',style: getRegularStyle(color: Colors.black),),value: '40 Years',),
+                            DropdownMenuItem(child: Text('45 Years',style: getRegularStyle(color: Colors.black),),value: '45 Years',),
+                            DropdownMenuItem(child: Text('Above 45',style: getRegularStyle(color: Colors.black),),value: 'Above 45',),
                           ],
                           onChanged: (String? value) {
                             print(value);

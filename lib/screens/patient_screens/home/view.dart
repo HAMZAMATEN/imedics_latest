@@ -14,6 +14,7 @@ import 'package:imedics_latest/screens/patient_screens/home/widgets/specializati
 import 'package:imedics_latest/screens/patient_screens/home/widgets/userHomeNameWidget.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/userSearchWidget.dart';
 import 'package:imedics_latest/screens/patient_screens/home/widgets/user_next_appointment_widget.dart';
+import 'package:imedics_latest/screens/patient_screens/home/widgets/vide_call_2.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
@@ -27,12 +28,6 @@ class UserHomePage extends StatelessWidget {
     controller.fetchPatientAppointments();
     controller.fetchAllDoctors();
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-        Get.to(()=>CallPage());
-        },
-        child: Icon(Icons.call),
-      ),
       body: SafeArea(
         child: Container(
           child: SingleChildScrollView(
@@ -43,6 +38,13 @@ class UserHomePage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   padding8,
+                  // InkWell(
+                  //     onTap:(){Get.to(()=>CallPage());},
+                  //     child: Text("Call")),
+                  // padding8,
+                  // InkWell(
+                  //     onTap:(){Get.to(()=>CallPage2());},
+                  //     child: Text("Call 2")),
                   userHomeNameWidget(),
                   padding16,
                   userSearchWidget(),

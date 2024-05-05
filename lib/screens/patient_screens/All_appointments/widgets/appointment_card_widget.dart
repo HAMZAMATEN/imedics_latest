@@ -16,57 +16,60 @@ Widget appointmentCardWidget(UserHomeController controller,int index,AllAppointm
       : appointController.getUpComingAppointDoc(controller, controller.state.patientAppointmentList[index].docId!);
   return Padding(
     padding:  EdgeInsets.symmetric(vertical: 5.h),
-    child: Container(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(5),
-      ),
-      // height: 160.h,
-      // width: double.infinity,
-      child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text("${doc.name}",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-            padding5,
-            Text("${doc.specialization} ",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-            padding10,
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                Row(
-                  children: [
-                    Icon(Icons.calendar_month,color: AppColors.appColor,),
-                    padding5,
-                    Text("${listOfApp[index].selectedTimeSlot}",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-                  ],
-                ),
-                padding5,
-                Row(
-                  children: [
-                    Icon(Icons.calendar_month,color: AppColors.appColor,),
-                    padding5,
-                    Text("${listOfApp[index].selectedDate}",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
-                  ],
-                ),
-              ],
-            ),
-            padding5,
-           isCompleted ==false ? CustomButton(buttonText: "Cancel",backColor: Colors.white,textColor: Colors.black,borderColor: Colors.black12,):Container(),
-            isCompleted==false ? Divider(color: Colors.black12,):Container(),
-            isCompleted==false? CustomButton(buttonText: "Reschedule"):Container(),
-            // Row(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   crossAxisAlignment: CrossAxisAlignment.center,
-            //   children: [
-            //     CustomButton(buttonText: "Cancel",backColor: Colors.white,textColor: Colors.black,),
-            //     SizedBox(width: 10.w,),
-            //     CustomButton(buttonText: "Reschedule"),
-            //   ],
-            // )
-          ],
+    child: InkWell(
+      onTap:(){},
+      child: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(5),
+        ),
+        // height: 160.h,
+        // width: double.infinity,
+        child: Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 10.h),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text("${doc.name}",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
+              padding5,
+              Text("${doc.specialization} ",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
+              padding10,
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_month,color: AppColors.appColor,),
+                      padding5,
+                      Text("${listOfApp[index].selectedTimeSlot}",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
+                    ],
+                  ),
+                  padding5,
+                  Row(
+                    children: [
+                      Icon(Icons.calendar_month,color: AppColors.appColor,),
+                      padding5,
+                      Text("${listOfApp[index].selectedDate}",style: getBoldStyle(color: Colors.black,fontSize: MyFonts.size16),),
+                    ],
+                  ),
+                ],
+              ),
+              padding5,
+             isCompleted ==false ? CustomButton(buttonText: "Cancel",backColor: Colors.white,textColor: Colors.black,borderColor: Colors.black12,):Container(),
+              isCompleted==false ? Divider(color: Colors.black12,):Container(),
+              isCompleted==false? CustomButton(buttonText: "Reschedule"):Container(),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     CustomButton(buttonText: "Cancel",backColor: Colors.white,textColor: Colors.black,),
+              //     SizedBox(width: 10.w,),
+              //     CustomButton(buttonText: "Reschedule"),
+              //   ],
+              // )
+            ],
+          ),
         ),
       ),
     ),

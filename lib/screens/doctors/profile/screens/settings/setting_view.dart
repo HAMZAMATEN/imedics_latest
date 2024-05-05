@@ -18,6 +18,14 @@ class SettingsView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20.h,
+            color: AppColors.black94,
+          ),
+        ),
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         title: Text(
           'Settings',

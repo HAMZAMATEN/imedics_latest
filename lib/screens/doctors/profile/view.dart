@@ -9,6 +9,7 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/common/accountType/view.dart';
 import 'package:imedics_latest/screens/doctors/profile/controller.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/information_center.dart';
 import 'package:imedics_latest/screens/doctors/profile/screens/join_office.dart';
 import 'package:imedics_latest/screens/doctors/profile/screens/myProfile.dart';
 import 'package:imedics_latest/screens/doctors/profile/screens/settings/setting_view.dart';
@@ -196,7 +197,11 @@ class DoctorProfileView extends StatelessWidget {
                             // ),
                             DoctorProfileTile(
                               index: 5,
-                              onPressed: () {},
+                              onPressed: () {
+                                Get.to(
+                                      () => InformationCenter(),
+                                );
+                              },
                               text: "Information Center",
                             ),
 

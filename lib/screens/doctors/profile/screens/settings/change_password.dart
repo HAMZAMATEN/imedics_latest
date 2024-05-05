@@ -23,6 +23,14 @@ class ChangePasswordView extends StatelessWidget {
     );
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20.h,
+            color: AppColors.black94,
+          ),
+        ),
         centerTitle: true,
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),
         title: Text(

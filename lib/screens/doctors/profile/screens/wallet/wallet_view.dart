@@ -37,94 +37,88 @@ class _DoctorWalletViewState extends State<DoctorWalletView>
   Widget build(BuildContext context) {
     // final mainMenuCtr = ref.watch(dProfileMainprovider);
     // ignore: deprecated_member_use
-    return WillPopScope(
-      onWillPop: () {
-        Navigator.pop(context);
-        return Future.value(false);
-      },
-      child: Scaffold(
-        body: Container(
-          decoration: const BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: [
-                  AppColors.appColor1,
-                  AppColors.appColor,
-                ]),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Expanded(
-                flex: 2,
-                child: SizedBox(
-                  child: Stack(
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 90.w, top: 50.h),
-                        child: Image.asset(
-                          AppAssets.loginBg,
-                          height: 272.h,
-                          width: 307.7.w,
-                          color: AppColors.white.withOpacity(0.1),
-                        ),
+    return Scaffold(
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+              colors: [
+                AppColors.appColor1,
+                AppColors.appColor,
+              ]),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              flex: 2,
+              child: SizedBox(
+                child: Stack(
+                  children: [
+                    Padding(
+                      padding: EdgeInsets.only(left: 90.w, top: 50.h),
+                      child: Image.asset(
+                        AppAssets.loginBg,
+                        height: 272.h,
+                        width: 307.7.w,
+                        color: AppColors.white.withOpacity(0.1),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 50),
-                        child: Image.asset(
-                          AppAssets.bgGradient,
-                        ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 50),
+                      child: Image.asset(
+                        AppAssets.bgGradient,
                       ),
-                      Positioned(
-                        top: 30.h,
-                        left: 0,
-                        child: Padding(
-                            padding: const EdgeInsets.all(18.0),
-                            child: IconButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                icon: Icon(
-                                  Icons.arrow_back,
-                                  color: Colors.black,
-                                ))),
-                      ),
-                      Positioned(
-                        top: 35.h,
-                        left: 0,
-                        right: 0,
-                        child: Padding(
+                    ),
+                    Positioned(
+                      top: 30.h,
+                      left: 0,
+                      child: Padding(
                           padding: const EdgeInsets.all(18.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    'Wallet',
-                                    style: getBoldStyle(
-                                        color: AppColors.black,
-                                        fontSize: MyFonts.size26),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
+                          child: IconButton(
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                              icon: Icon(
+                                Icons.arrow_back,
+                                color: Colors.black,
+                              ))),
+                    ),
+                    Positioned(
+                      top: 35.h,
+                      left: 0,
+                      right: 0,
+                      child: Padding(
+                        padding: const EdgeInsets.all(18.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Wallet',
+                                  style: getBoldStyle(
+                                      color: AppColors.black,
+                                      fontSize: MyFonts.size26),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
-              Expanded(
-                  flex: 5,
-                  child: DoctorWalletPoint(
-                    onPressed: () {},
-                    tabController: _tabController,
-                  )),
-            ],
-          ),
+            ),
+            Expanded(
+                flex: 5,
+                child: DoctorWalletPoint(
+                  onPressed: () {},
+                  tabController: _tabController,
+                )),
+          ],
         ),
       ),
     );

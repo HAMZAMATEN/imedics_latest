@@ -14,6 +14,14 @@ class JoinOfficePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20.h,
+            color: AppColors.black94,
+          ),
+        ),
         automaticallyImplyLeading: true,
         // backgroundColor: const Color(0xff38B698).withOpacity(0.1),
         backgroundColor: Color.fromRGBO(255, 255, 255, 1),

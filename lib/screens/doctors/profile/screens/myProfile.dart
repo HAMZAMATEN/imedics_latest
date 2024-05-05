@@ -38,7 +38,7 @@ class _MyProfileViewState extends State<MyProfileView> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    widget.profileController.init();
+    // widget.profileController.init();
   }
   @override
   Widget build(BuildContext context) {
@@ -56,6 +56,14 @@ class _MyProfileViewState extends State<MyProfileView> {
         centerTitle: true,
         foregroundColor: Colors.white,
         backgroundColor: AppColors.appColor1,
+        leading: IconButton(
+          onPressed: () => Navigator.pop(context),
+          icon: Icon(
+            Icons.arrow_back_ios,
+            size: 20.h,
+            color: AppColors.white,
+          ),
+        ),
         title: Text('My profile',
             style: TextStyle(
                 fontSize: 20,

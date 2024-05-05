@@ -32,8 +32,8 @@ class DoctorProfileState {
   XFile? pickedImage;
   var imagePath = ''.obs;
 
-  late TextEditingController emailController;
+  TextEditingController emailController= TextEditingController();
   // TextEditingController phoneNumberController = TextEditingController();
-  late TextEditingController aboutYourselfController;
-  late TextEditingController usernameController ;
+  TextEditingController aboutYourselfController= TextEditingController();
+  TextEditingController usernameController = TextEditingController();
 }

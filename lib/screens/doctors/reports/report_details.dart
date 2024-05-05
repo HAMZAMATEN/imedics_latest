@@ -1,29 +1,37 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/doctors/reports/controller.dart';
 import 'package:imedics_latest/screens/doctors/reports/widgets/view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:http/http.dart' as http;
 
 class DoctorReportDetailsScreen extends StatelessWidget {
   final String appBarTitle;
-  const DoctorReportDetailsScreen({super.key, required this.appBarTitle});
+  final String reportType;
+
+  const DoctorReportDetailsScreen(
+      {super.key, required this.appBarTitle, required this.reportType});
 
   @override
   Widget build(BuildContext context) {
+    final reportController = Get.put(DoctorReportController());
     return Scaffold(
       backgroundColor: Color.fromRGBO(246, 251, 250, 1),
       appBar: AppBar(
         backgroundColor: Color.fromRGBO(246, 251, 250, 1),
-
         centerTitle: true,
         leading: IconButton(
-          onPressed: (){
+          onPressed: () {
             Get.back();
           },
           icon: Icon(
@@ -61,23 +69,56 @@ class DoctorReportDetailsScreen extends StatelessWidget {
         decoration: const BoxDecoration(
           color: Color.fromRGBO(246, 251, 250, 1),
         ),
-        child: ListView.builder(
-          physics: BouncingScrollPhysics(),
-          padding: const EdgeInsets.all(18),
-          itemCount: 7,
-          itemBuilder: (context, index) {
-            return Padding(
-              padding: const EdgeInsets.only(top: 10.0),
-              child: DoctorDetailsAboutReportCard(title: 'Report Name', date: '01/05/2024', onTap: (){
-                String fileUrl =
-                    'https://imdfx-newserver-production.up.railway.app/uploads/5b895e1c44e58fc94f3d38c5aee84014';
-                String filename =
-                    'example'; // Provide the desired filename here
-                downloadFile(fileUrl, filename);
-                // controller.setSelectedReportType(textfields[index]);
+        child: StreamBuilder<QuerySnapshot>(
+          stream: FirebaseFirestore.instance
+              .collection('reports')
+              .where('doctor_id', isEqualTo: AppConstants.docId)
+              .where('report_type', isEqualTo: reportType)
+              .snapshots(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (!snapshot.hasData) {
+              return Center(
+                child: ShowProgressIndicator(),
+              );
+            }
 
-              },),
-            );
+            return snapshot.data!.docs.isEmpty
+                ? Center(
+                    child: Text(
+                      'No shared reports yet',
+                      style: getSemiBoldStyle(
+                          color: Colors.black, fontSize: 20.sp),
+                    ),
+                  )
+                : ListView.builder(
+                    physics: BouncingScrollPhysics(),
+                    padding: const EdgeInsets.all(18),
+                    itemCount: snapshot.data!.docs.length,
+                    itemBuilder: (context, index) {
+                      return Padding(
+                        padding: const EdgeInsets.only(top: 10.0),
+                        child: DoctorDetailsAboutReportCard(
+                          title: snapshot.data!.docs[index]['report_title']
+                              .toString(),
+                          date: reportController.formatMicrosecondsToDateString(
+                              int.parse(snapshot
+                                  .data!.docs[index]['id']
+                                  .toString())
+                          ),
+                          onTap: () {
+                            String fileUrl = snapshot
+                                .data!.docs[index]['report_image']
+                                .toString();
+                            String filename = snapshot
+                                .data!.docs[index]['report_title']
+                                .toString(); // Provide the desired filename here
+                            reportController.downloadFile(fileUrl, filename);
+                            // controller.setSelectedReportType(textfields[index]);
+                          },
+                        ),
+                      );
+                    },
+                  );
           },
         ),
       ),
@@ -85,27 +126,3 @@ class DoctorReportDetailsScreen extends StatelessWidget {
   }
 }
 
-
-Future<void> downloadFile(String url, String filename) async {
-  try {
-    var response = await http.get(Uri.parse(url));
-    if (response.statusCode == 200) {
-      var bytes = response.bodyBytes;
-
-      var tempDir = await getTemporaryDirectory();
-
-      var contentType = response.headers['content-type'];
-      var extension =
-      contentType != null ? contentType.split('/').last : 'unknown';
-      var filePath = '${tempDir.path}/$filename.$extension';
-      var file = File(filePath);
-      await file.writeAsBytes(bytes);
-    } else {
-      print(
-          'Failed to download file. Server responded with status code: ${response.statusCode}');
-    }
-  } catch (e) {
-    // Exception occurred during the request
-    print('Failed to download file: $e');
-  }
-}

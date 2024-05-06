@@ -29,6 +29,7 @@ class IndividualDoctorLoginController extends GetxController{
   Future<void> loginWithEmailPass(String email,String pass) async{
     setLoading(true);
     try {
+      log('try');
       final response = await http.post(Uri.parse('${AppConstants.baseUrl}/doctorlogin'),
         headers: {"Content-Type": "application/json"},
         body: jsonEncode({

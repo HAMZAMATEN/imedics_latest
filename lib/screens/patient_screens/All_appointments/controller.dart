@@ -21,6 +21,7 @@ class AllAppointmentController extends GetxController {
     for (UserDocModel doc in controller.state.doctorsList) {
       if (doc.sId == docId) {
         appDoc = doc;
+        print(appDoc);
       }
     }
     return appDoc;

@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/firebase_options.dart';
 import 'package:imedics_latest/helpers/app_theme.dart';
+import 'package:imedics_latest/helpers/notification_services.dart';
 import 'package:imedics_latest/screens/common/splash/view.dart';
 import 'package:imedics_latest/screens/doctors/application/view.dart';
 
@@ -13,6 +14,12 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  NotificationServices().requestPermissions();
+  NotificationServices().setupBackgrounInteractMsg();
+  NotificationServices().foregroundMessage();
+  NotificationServices().initFirebase();
+  NotificationServices().getToken().then((value) {
+  });
   runApp(const MyApp());
 }
 

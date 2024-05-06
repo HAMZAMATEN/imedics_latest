@@ -227,5 +227,6 @@ class UpcomingTabView extends StatelessWidget {
                 );
               }),
     );
+
   }
 }

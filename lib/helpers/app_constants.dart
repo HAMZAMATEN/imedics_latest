@@ -2,7 +2,9 @@ class AppConstants{
 
   static String baseUrl = 'https://imdfx-newserver-production.up.railway.app/api';
   static String imageBaseUrl = 'https://imdfx-newserver-production.up.railway.app';
-
+  static late String stripe_publish_key;
+  static late String stripe_secret_key;
+  static String paymentId =  "";
   // on boarding account variables
   static int index = 0;
 

@@ -49,8 +49,8 @@ class AllAppointmentController extends GetxController {
       await FirebaseFirestore.instance.collection("reports").doc(id).set(
           {
             "id": id,
-            "appointment_id": "663548adede96432c5409889",
-            "doctor_id": "65b106e6878a225eb211b6d8",
+            "appointment_id": "${appointId}",
+            "doctor_id": "${docId}",
             "user_id": "${AppConstants.userId}",
             "report_type": "MRI",
             "report_title": "Tumor",
@@ -97,7 +97,7 @@ class AllAppointmentController extends GetxController {
     // String time = appoint.selectedTimeSlot!;
     //
     String date = "2024-5-7";
-    String time = "00:00 AM";
+    String time = "02:00 AM";
 
 
     // print(date);

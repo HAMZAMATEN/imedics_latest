@@ -8,6 +8,8 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/helpers/shared_prefrences.dart';
+import 'package:imedics_latest/screens/common/accountType/view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_screens/EditProfile/view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_screens/wallet_screen/view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/widgets/profile_picture.dart';
@@ -183,8 +185,12 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                   ),
                   ProfileTile(
                     index: 6,
-                    onPressed: () {
-
+                    onPressed: () async{
+                      AppConstants.clearUserValues();
+                      await Prefrences().saveUserId('');
+                      Get.offAll(
+                            () => AccountTypeScreen(),
+                      );
                     },
                     text: "Log out",
                   ),

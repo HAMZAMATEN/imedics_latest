@@ -2,6 +2,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/checkOutWidgets/payment_controller.dart';
 import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/checkOutWidgets/paypal_checkout.dart';
 import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/view.dart';
@@ -109,6 +112,14 @@ class _UserSelectAccountTypeViewState extends State<UserSelectAccountTypeView> {
               Text('More Payment Options',
                 style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size16),
               ),
+              SizedBox(
+                height: 10,
+              ),
+              InkWell(
+                  onTap: (){
+                    PaymentController().makePayment(context, 200, "${AppConstants.userId}");
+                  },
+                  child: Text("Pay using stripe",style: getBoldStyle(color: AppColors.appColor,fontSize: 50),)),
               SizedBox(
                 height: 10,
               ),

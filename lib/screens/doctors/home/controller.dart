@@ -291,7 +291,7 @@ class DoctorHomeController extends GetxController {
     // String time = appoint.selectedTimeSlot!;
     //
     String date = "2024-5-7";
-    String time = "00:00 AM";
+    String time = "02:00 AM";
 
     // print(date);
     // String date = "2024-5-6";
@@ -346,7 +346,7 @@ class DoctorHomeController extends GetxController {
         dbDate.day == currentDate.day;
   }
 
-  Future<void> checkAndJoinCall(
+  Future<void> DoctorCheckAndJoinCall(
       PatientAppointmentModel appoint, PatientModel patientModel) async {
     try {
       String docToken = await fetchPatientToken(patientModel.sId!);
@@ -372,7 +372,7 @@ class DoctorHomeController extends GetxController {
             .then((value) {
           NotificationServices().sendNotification(
               "Video Call started",
-              "Patient ${AppConstants.userName} joined video call",
+              "Doctor ${AppConstants.docName} joined video call",
               docToken,
               "Doctor informed and will join shortly");
           Get.to(() => DoctorVideoCallScreen(

@@ -60,6 +60,10 @@ dependencies:
   zego_uikit_prebuilt_call:
   flutter_local_notifications:
   app_settings: ^5.1.1
+    #  for payments
+  flutter_stripe:
+    #  protection for keyFile
+  flutter_dotenv: ^5.1.0
 
 
 
@@ -102,6 +106,7 @@ flutter:
     - assets/icons/
     - assets/images/animation.gif
     - assets/icons/icons/
+    - assets/keyFile/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

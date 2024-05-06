@@ -8,11 +8,9 @@ import 'package:imedics_latest/components/show_custom_dialogue.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/models/doctors/patient_model.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
-import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
-import 'package:imedics_latest/screens/patient_screens/user_DoctorDetails/widget/user_about_doc_tab.dart';
-import 'package:imedics_latest/screens/patient_screens/user_DoctorDetails/widget/user_review_doc_tab.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/app_text.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
@@ -28,7 +26,7 @@ class PatientDetailBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final controller = Get.put(AllAppointmentController());
+    final controller = Get.put(DoctorHomeController());
     return Stack(
       children: [
         Container(
@@ -160,22 +158,24 @@ class PatientDetailBody extends StatelessWidget {
             ],
           ),
         ),
-        // Padding(
-        //   padding: EdgeInsets.symmetric(horizontal: 20.w),
-        //   child: Align(
-        //     alignment: Alignment.bottomCenter,
-        //     child: CustomButton(
-        //       buttonText: "Join call.Doctor will be here soon!",
-        //       onPressed: () {
-        //
-        //         showAppCustomDialogue(context, "Join Call", "Once join, don't leave until you finish your appointment", "Confirm to join", Icon(Icons.error_outline,color: AppColors.appColor,), () {
-        //           controller.checkAndJoinCall(appoint,doctor);
-        //         });
-        //
-        //       },
-        //     ),
-        //   ),
-        // )
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20.w),
+          child: Align(
+            alignment: Alignment.bottomCenter,
+            child: CustomButton(
+              buttonText: "Join call.Doctor will be here soon!",
+              onPressed: () {
+
+                showAppCustomDialogue(context, "Join Call", "Once join, don't leave until you finish your appointment", "Confirm to join", Icon(Icons.error_outline,color: AppColors.appColor,), () {
+                  // controller.checkAndJoinCall(appoint,doctor);
+                  controller.DoctorCheckAndJoinCall(appoint, patientModel);
+
+                });
+
+              },
+            ),
+          ),
+        )
       ],
     );
   }

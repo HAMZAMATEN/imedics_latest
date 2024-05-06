@@ -1,9 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/firebase_options.dart';
+import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/helpers/app_theme.dart';
 import 'package:imedics_latest/helpers/notification_services.dart';
 import 'package:imedics_latest/screens/common/splash/view.dart';
@@ -14,6 +17,8 @@ void main() async{
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  Stripe.publishableKey = 'pk_test_51Ogo46EwduwUAGBRz8KlKG0uKlP2DL1KfBVj3Iqum4fSQVtOfD4WPCisOOmVfIoEAKsBJNTI0WzOmpOLmntqPTTJ00F599LcQW';
+  await dotenv.load(fileName: "assets/keyFile/keys.env");
   NotificationServices().requestPermissions();
   NotificationServices().setupBackgrounInteractMsg();
   NotificationServices().foregroundMessage();
@@ -30,6 +35,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
+    AppConstants.stripe_publish_key = dotenv.env['STRIPE_PUBLISH_KEY']!;
+    AppConstants.stripe_secret_key = dotenv.env['STRIPE_SECRET_KEY']!;
     SystemChrome.setSystemUIOverlayStyle(
       SystemUiOverlayStyle(
         statusBarColor: Colors.transparent,

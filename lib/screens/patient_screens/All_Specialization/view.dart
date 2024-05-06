@@ -61,12 +61,6 @@ class AllSpecializationView extends StatelessWidget {
                     return InkWell(
                       onTap: () async {
                         Get.to(()=>SpecializedDoctorsView(controller: controller, specialization: _specialList[index]));
-                        // handle on tap event on widget
-                        // String spaialotor = _specialList[index];
-                        // controller.userSecializationDoctor(spaialotor);
-                        // await controller.userSecializationDoctor(spaialotor);
-                        // Navigator.pushNamed(
-                        //     context, AppRoutes.userSpecialListDetailScreen);
                       },
                       child: Column(
                         children: [

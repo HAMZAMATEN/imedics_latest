@@ -22,7 +22,7 @@ class UAppointTab extends StatelessWidget {
     return DefaultTabController(
       length: 2,
       child: Container(
-          height: 520.h,
+          height: 600.h,
           width: 1.sw,
           decoration: BoxDecoration(
             color: AppColors.white.withOpacity(0.9),

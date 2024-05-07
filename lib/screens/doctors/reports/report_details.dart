@@ -98,23 +98,19 @@ class DoctorReportDetailsScreen extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: DoctorDetailsAboutReportCard(
-                          doctorReportController: reportController,
-                          title: snapshot.data!.docs[index]['report_title']
-                              .toString(),
+                          title: appBarTitle,
                           date: reportController.formatMicrosecondsToDateString(
-                              int.parse(
-                                  snapshot.data!.docs[index]['id'].toString())),
+                              int.parse(snapshot
+                                  .data!.docs[index]['id']
+                                  .toString())
+                          ),
                           onTap: () {
                             String fileUrl = snapshot
                                 .data!.docs[index]['report_image']
                                 .toString();
                             String filename = snapshot
-                                        .data!.docs[index]['report_title']
-                                        .toString() ==
-                                    ''
-                                ? 'image:$index'
-                                : snapshot.data!.docs[index]['report_title']
-                                    .toString(); // Provide the desired filename here
+                                .data!.docs[index]['report_title']
+                                .toString(); // Provide the desired filename here
                             reportController.downloadFile(fileUrl, filename);
                             // controller.setSelectedReportType(textfields[index]);
                           },
@@ -128,3 +124,4 @@ class DoctorReportDetailsScreen extends StatelessWidget {
     );
   }
 }
+

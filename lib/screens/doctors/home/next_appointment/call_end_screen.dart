@@ -9,6 +9,7 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/models/doctors/patient_model.dart';
 import 'package:imedics_latest/screens/doctors/application/view.dart';
+import 'package:imedics_latest/screens/doctors/home/view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/waiting_room/details_widget.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/view.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
@@ -135,7 +136,7 @@ class DoctorCallEndScreen extends StatelessWidget {
                         height: 137.h,
                         width: 157.w,
                         child: Image.asset(
-                          'assets/images/as_patient.png',
+                          'assets/images/defaultDoc.jpg',
                           // Path to your default image
                           height: 92.h,
                           width: 82.w,
@@ -164,6 +165,21 @@ class DoctorCallEndScreen extends StatelessWidget {
               ),
             ),
 
+            Padding(
+              padding: EdgeInsets.only(top: 215.h, right: 25.w),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  IconButton(
+                      onPressed: () {},
+                      icon: Icon(
+                        Icons.favorite_border,
+                        color: AppColors.appColor,
+                        size: 27.h,
+                      )),
+                ],
+              ),
+            ),
             Padding(
               padding: EdgeInsets.only(top: 200.h),
               child: Row(

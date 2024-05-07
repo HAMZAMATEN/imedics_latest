@@ -228,4 +228,28 @@ class DoctorReportController extends GetxController {
     return formattedDate;
   }
 
+
+  Future<void> fetchNoOfSharedReports () async{
+    print("Called");
+     QuerySnapshot snapshot = await FirebaseFirestore.instance.collection('reports').where("report_type",isEqualTo: 'Blood-Report').get();
+    state.bloodReportsCount = await snapshot.docs.length;
+
+
+    QuerySnapshot snapshotct = await FirebaseFirestore.instance.collection('reports').where("report_type",isEqualTo: 'CT-Scan').get();
+    state.ctScanReportsCount = await snapshotct.docs.length;
+    // Stream<QuerySnapshot<Map<String, dynamic>>> snapshotct = await FirebaseFirestore.instance.collection('reports').where('report_type',isEqualTo: 'Blood-Report').snapshots();
+    // state.ctScanReportsCount = await snapshotct.length;
+
+    QuerySnapshot snapshotmr = await FirebaseFirestore.instance.collection('reports').where("report_type",isEqualTo: 'MRI').get();
+    state.mriReportsCount = await snapshotmr.docs.length;
+
+    // state.reportsCount.add(state.bloodReportsCount);
+    // state.reportsCount.add(state.ctScanReportsCount);
+    // state.reportsCount.add(state.mriReportsCount);
+    state.reportsCount.insert(0, state.bloodReportsCount);
+    state.reportsCount.insert(1, state.ctScanReportsCount);
+    state.reportsCount.insert(2, state.mriReportsCount);
+  }
+
+
 }

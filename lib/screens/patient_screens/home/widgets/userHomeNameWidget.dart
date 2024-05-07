@@ -24,7 +24,7 @@ Widget userHomeNameWidget() {
                   Text(
                     "Hi ${AppConstants.userName} ",
                     style: getRegularStyle(
-                        color: AppColors.textColor, fontSize: MyFonts.size16),
+                        color: AppColors.textColor, fontSize: MyFonts.size18),
                   ),
                   Image.asset(
                     AppAssets.hand,
@@ -33,7 +33,7 @@ Widget userHomeNameWidget() {
                   ),
                 ],
               ),
-              SizedBox(height: 10.h,),
+              SizedBox(height: 5.h,),
               Text(
                 'How do you feel?',
                 style: getExtraBoldStyle(
@@ -43,9 +43,9 @@ Widget userHomeNameWidget() {
             ],
           ),
         ),
-        Icon(Icons.notifications_active,
-        color: AppColors.appColor,
-        )
+        // Icon(Icons.notifications_active,
+        // color: AppColors.appColor,
+        // )
         // Image.asset(
         //   'assets/images/notification.png',
         //   width: 20.w,

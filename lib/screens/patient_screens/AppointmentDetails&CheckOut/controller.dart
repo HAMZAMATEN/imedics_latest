@@ -1,10 +1,12 @@
 import 'dart:convert';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/components/try_again_dialogue_box.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/helpers/notification_services.dart';
 import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/checkOutWidgets/payment_successfull.dart';
 import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/state.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/view.dart';
@@ -119,7 +121,7 @@ class SetAppointmentDetailsController extends GetxController {
         cvv: controller.state.cvvCont.text.toString(),
         cardNumber: controller.state.cardNumCont.text.toString(),
         cardName: controller.state.accTitleCont.text.toString(),
-        cardType: "Debit Card",
+        cardType: "Debit Card(Stripe)",
         selectedDate:
             '${controller.state.year.value}-${controller.state.month.value}-${controller.state.date.value}',
         selectedTimeSlot: '${controller.state.time.value}',
@@ -139,6 +141,8 @@ class SetAppointmentDetailsController extends GetxController {
       if(response.statusCode==200){
         Snackbar.showSnackBar("Booked Successfully", Icons.done);
         //Wrtie code to implement notification
+        String docToken  = await fetchDocToken(doctor.sId!);
+        NotificationServices().sendNotification("Booking Alert", "${AppConstants.userName} booked appointment with you", docToken, "Notification alert sent to doctor");
         Get.off(()=>PaymentSuccessfullWidget(appController: controller,));
       }else{
         Snackbar.showSnackBar("Error: Unable to book appointment\nTry again later!", Icons.error_outline);
@@ -155,6 +159,23 @@ class SetAppointmentDetailsController extends GetxController {
       });
       // Get.offAll(()=>UserApplicationView());
     }
-
   }
+
+
+  Future<String> fetchDocToken(String docId) async{
+    print("DOC id is $docId");
+    String token= "";
+    try{
+      DocumentSnapshot document =  await FirebaseFirestore.instance.collection("doctors").doc(docId).get();
+      if(document.exists){
+        token = document["pushToken"];
+      }
+      print("TOken fetched");
+      print(token);
+    }catch(e){
+      Snackbar.showSnackBar("Error $e", Icons.error_outline);
+    }
+    return token;
+  }
+
 }

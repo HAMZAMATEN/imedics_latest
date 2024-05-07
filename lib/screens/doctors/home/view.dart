@@ -69,57 +69,57 @@ class DoctorHomeScreens extends StatelessWidget {
             ),
           ],
         ),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 12),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              // Replace with MyColors.white if it's defined in your code.
-              child: IconButton(
-                onPressed: () {
-                  Get.to(
-                    () => DNotificationSection(),
-                  );
-                  // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
-                },
-                icon: Stack(
-                  children: [
-                    Image.asset(
-                      'assets/images/notification.png',
-                      // Replace with your asset path
-                      width: 20,
-                      height: 20,
-                    ),
-                    Positioned(
-                        top: 0,
-                        right: 0,
-                        child: CircleAvatar(
-                          backgroundColor: Colors.red,
-                          // Replace with MyColors.appColor if it's defined in your code.
-                          radius: 4,
-                        )),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 2),
-            child: CircleAvatar(
-              backgroundColor: Colors.white,
-              // Replace with MyColors.white if it's defined in your code.
-              child: IconButton(
-                onPressed: () {
-                  Get.to(
-                        () => CallView(),
-                  );
-                  // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
-                },
-                icon: Icon(Icons.video_call,color: AppColors.appColor,),
-              ),
-            ),
-          ),
-        ],
+        // actions: [
+        //   Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 12),
+        //     child: CircleAvatar(
+        //       backgroundColor: Colors.white,
+        //       // Replace with MyColors.white if it's defined in your code.
+        //       child: IconButton(
+        //         onPressed: () {
+        //           Get.to(
+        //             () => DNotificationSection(),
+        //           );
+        //           // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
+        //         },
+        //         icon: Stack(
+        //           children: [
+        //             Image.asset(
+        //               'assets/images/notification.png',
+        //               // Replace with your asset path
+        //               width: 20,
+        //               height: 20,
+        //             ),
+        //             Positioned(
+        //                 top: 0,
+        //                 right: 0,
+        //                 child: CircleAvatar(
+        //                   backgroundColor: Colors.red,
+        //                   // Replace with MyColors.appColor if it's defined in your code.
+        //                   radius: 4,
+        //                 )),
+        //           ],
+        //         ),
+        //       ),
+        //     ),
+        //   ),
+        //   Padding(
+        //     padding: const EdgeInsets.symmetric(horizontal: 2),
+        //     child: CircleAvatar(
+        //       backgroundColor: Colors.white,
+        //       // Replace with MyColors.white if it's defined in your code.
+        //       child: IconButton(
+        //         onPressed: () {
+        //           Get.to(
+        //                 () => CallView(),
+        //           );
+        //           // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
+        //         },
+        //         icon: Icon(Icons.video_call,color: AppColors.appColor,),
+        //       ),
+        //     ),
+        //   ),
+        // ],
       ),
       body: CustomScrollView(
         physics: BouncingScrollPhysics(),

@@ -157,7 +157,7 @@ class AllUploadedDocumetns extends StatelessWidget {
                                                                     index - 1;
                                                                 return reportExpansionTile(
                                                                     context,
-                                                                    "Blood Report",
+                                                                    "Blood-Report",
                                                                     "${bloodReports[index + 1]}",
                                                                     controller);
                                                               }),
@@ -251,7 +251,7 @@ class AllUploadedDocumetns extends StatelessWidget {
                                                                     index - 1;
                                                                 return reportExpansionTile(
                                                                     context,
-                                                                    "MRI Report",
+                                                                    "MRI",
                                                                     "${mriReport[index + 1]}",
                                                                     controller);
                                                               }),
@@ -276,7 +276,7 @@ class AllUploadedDocumetns extends StatelessWidget {
                 onPressed: () async{
                   await controller.sendDataToFirebase(appoint).then((value){
                     Get.back();
-                    Snackbar.showSnackBar("Added to Firestore", Icons.done);
+                    Snackbar.showSnackBar("Shared with doctor", Icons.done);
                   });
                 },
               ),

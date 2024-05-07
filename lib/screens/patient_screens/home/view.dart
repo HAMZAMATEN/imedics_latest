@@ -6,6 +6,7 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/patient_screens/All_Doctors/view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_Specialization/view.dart';
+import 'package:imedics_latest/screens/patient_screens/All_Specialization/widgets/specialized_doctors_view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/view.dart';
 import 'package:imedics_latest/screens/patient_screens/home/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/home/video_call_page.dart';
@@ -47,7 +48,7 @@ class UserHomePage extends StatelessWidget {
                   //     child: Text("Call 2")),
                   userHomeNameWidget(),
                   padding16,
-                  userSearchWidget(),
+                  userSearchWidget(controller),
                   padding18,
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -65,9 +66,15 @@ class UserHomePage extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                    specializationWidget(name: 'Heart Specialist', imagePath: 'sp1.png',onTap: (){}),
-                      specializationWidget(name: 'Neurologist', imagePath: 'sp2.png',onTap: (){}),
-                      specializationWidget(name: 'Eye Specialist', imagePath: 'sp3.png',onTap: (){}),
+                    specializationWidget(name: 'Heart Specialist', imagePath: 'sp1.png',onTap: (){
+                      Get.to(()=>SpecializedDoctorsView(controller: controller, specialization: 'Heart Specialist'));
+                    }),
+                      specializationWidget(name: 'Neurologist', imagePath: 'sp2.png',onTap: (){
+                        Get.to(()=>SpecializedDoctorsView(controller: controller, specialization: 'Neurologist'));
+                      }),
+                      specializationWidget(name: 'Eye Specialist', imagePath: 'sp3.png',onTap: (){
+                        Get.to(()=>SpecializedDoctorsView(controller: controller, specialization: 'Eye Specialist'));
+                      }),
 
                     ],
                   ),

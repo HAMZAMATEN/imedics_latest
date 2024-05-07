@@ -7,6 +7,7 @@ import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/screens/doctors/profile/screens/settings/change_password.dart';
 import 'package:imedics_latest/screens/doctors/profile/screens/settings/notifications/notifications.dart';
+import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_screens/changePassword/view.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 
@@ -49,7 +50,7 @@ class SettingsView extends StatelessWidget {
             children: [
               ListTile(
                 onTap: (){
-                  Get.to(() => ChangePasswordView(),);
+                  Get.to(() => ChangeUserPasswordView(),);
                 },
                 leading: Image.asset(
                   'assets/images/rightuser.png',

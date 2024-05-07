@@ -159,16 +159,37 @@ Future<void> fetchPatientDetails(String id) async{
   Future<void> setUserFirebaseData(String id) async{
     try{
       String? pushToken = await FirebaseMessaging.instance.getToken();
-      await FirebaseFirestore.instance.collection('${AppConstants.userCollection}').doc(id).set(
-          {
-            'id':id,
-            "pushToken":pushToken,
-          }
-      ).then((value){
-        setLoading(false);
-        Get.offAll(()=>UserApplicationView());
-        clearControllers();
-      });
+
+      DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance.collection('${AppConstants.userCollection}').doc(id).get();
+
+      if(documentSnapshot.exists){
+        await FirebaseFirestore.instance.collection('${AppConstants.userCollection}').doc(id).update(
+            {
+              'id':id,
+              "pushToken":pushToken,
+            }
+            ).then((value){
+          setLoading(false);
+          Get.offAll(()=>UserApplicationView());
+          clearControllers();
+        });
+      }else{
+        await FirebaseFirestore.instance.collection('${AppConstants.userCollection}').doc(id).set(
+            {
+              'id':id,
+              "pushToken":pushToken,
+              "Blood-Report":[],
+              "CT-Scan":[],
+              "MRI":[],
+            }
+        ).then((value){
+          setLoading(false);
+          Get.offAll(()=>UserApplicationView());
+          clearControllers();
+        });
+      }
+
+
     }catch(e){
       print("Exception while sending data to firebase is $e");
     }

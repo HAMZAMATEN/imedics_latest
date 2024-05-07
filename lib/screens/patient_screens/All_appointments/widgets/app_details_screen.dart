@@ -5,16 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
+import 'package:imedics_latest/screens/patient_screens/All_appointments/chat/view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/widgets/all_uploaded_documents.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 class AppointmentDetailsScreen extends StatelessWidget {
   UserDocModel doc;
@@ -264,7 +267,28 @@ class AppointmentDetailsScreen extends StatelessWidget {
                   Divider(
                       color: Colors.black12,
                   ),
-                  padding5,
+                  padding35,
+                CustomButton(
+                  buttonText: "Start Chat",
+                  onPressed: () async{
+                    await ZIMKit().connectUser(id: "${AppConstants.userId}", name: "${AppConstants.userName}").then((value){
+                      // Get.to(()=>ZIMKitDemoHomePage(appointment: appoint,));
+
+                      ZIMKit().showDefaultNewPeerChatDialog(context);
+
+
+                    });
+
+                    //     .then(_){
+                    //   Navigator.of(context).push(
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const ZIMKitDemoHomePage(),
+                    //     ),
+                    //   );
+                    // };
+                  },
+
+                ),
               ],
             ),
           ),

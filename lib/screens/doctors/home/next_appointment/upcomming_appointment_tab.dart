@@ -70,7 +70,7 @@ class UpcomingTabView extends StatelessWidget {
                           homeController.state
                               .patientAppointmentList[
                           index],
-                          homeController: homeController));
+                          homeController: homeController, isComplete: false,));
                     },
                     child: Container(
                       // height: 170.h,
@@ -185,6 +185,7 @@ class UpcomingTabView extends StatelessWidget {
                                     buttonText: "Enter Waiting Room",
                                     onPressed: () {
                                       Get.to(() => DoctorWaitingRoomScreen(
+                                        doctorHomeController: homeController,
                                             patientModel:
                                                 homeController.state.patientModel,
                                             appoint: homeController.state

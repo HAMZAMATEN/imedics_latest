@@ -9,6 +9,7 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/models/doctors/patient_model.dart';
 import 'package:imedics_latest/screens/doctors/application/view.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/view.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/waiting_room/details_widget.dart';
 import 'package:imedics_latest/screens/patient_screens/applicationScreens/view.dart';
@@ -31,6 +32,7 @@ class DoctorCallEndScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // final doctorDetails = controller.userSpecificDoctorDetailsList[0];
+    final doctorHomeController = Get.put(DoctorHomeController());
     // fetchSingleDocDetails();
     return Scaffold(
       body: Container(
@@ -146,19 +148,37 @@ class DoctorCallEndScreen extends StatelessWidget {
                       SizedBox(
                         height: 20.h,
                       ),
-                      Text(
-                        "Consultation Session with ${patientModel.username}",
-                        textAlign: TextAlign.center,
-                        style: getSemiBoldStyle(
-                            color: Colors.white, fontSize: MyFonts.size18),
-                      ),
-                      padding5,
-                      Text(
-                        "${patientModel.email}",
-                        textAlign: TextAlign.center,
-                        style: getSemiBoldStyle(
-                            color: Colors.white, fontSize: MyFonts.size16),
-                      ),
+
+                      FutureBuilder<PatientModel>(
+                          future: doctorHomeController
+                              .fetchParticularPatientDetails(
+                              appoint.userId.toString()),
+                          builder: (context,
+                              AsyncSnapshot<PatientModel>
+                              snapshot) {
+                            if (!snapshot.hasData) {
+                              return Container(
+                                  height: 30.h,
+                                  child: ShowProgressIndicator());
+                            }
+                            return Column(
+                              children: [
+                                Text(
+                                  "Consultation Session with ${snapshot.data!.username.toString()}",
+                                  textAlign: TextAlign.center,
+                                  style: getSemiBoldStyle(
+                                      color: Colors.white, fontSize: MyFonts.size18),
+                                ),
+                                padding5,
+                                Text(
+                                  "${snapshot.data!.username.toString()}",
+                                  textAlign: TextAlign.center,
+                                  style: getSemiBoldStyle(
+                                      color: Colors.white, fontSize: MyFonts.size16),
+                                ),
+                              ],
+                            );
+                          }),
                     ],
                   ),
                 ],

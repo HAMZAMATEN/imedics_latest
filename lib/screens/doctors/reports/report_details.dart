@@ -113,7 +113,7 @@ class DoctorReportDetailsScreen extends StatelessWidget {
                                 .toString(); // Provide the desired filename here
                             reportController.downloadFile(fileUrl, filename);
                             // controller.setSelectedReportType(textfields[index]);
-                          },
+                          }, doctorReportController: reportController,
                         ),
                       );
                     },

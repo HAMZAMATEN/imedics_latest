@@ -1,10 +1,16 @@
-class AppConstants{
+class AppConstants {
+  static int appID = 2096401212;
+  static String appSign =
+      '35b20c13f6f1131c189c34da6b47a7ed44f47a0c72d4e482aa52f6029d53458c';
 
-  static String baseUrl = 'https://imdfx-newserver-production.up.railway.app/api';
-  static String imageBaseUrl = 'https://imdfx-newserver-production.up.railway.app';
+  static String baseUrl =
+      'https://imdfx-newserver-production.up.railway.app/api';
+  static String imageBaseUrl =
+      'https://imdfx-newserver-production.up.railway.app';
   static late String stripe_publish_key;
   static late String stripe_secret_key;
-  static String paymentId =  "";
+  static String paymentId = "";
+
   // on boarding account variables
   static int index = 0;
 
@@ -17,32 +23,33 @@ class AppConstants{
   static String userName = '';
   static String userEmail = '';
   static double wallAmount = 0.0;
-  static String docFee ="";
+  static String docFee = "";
   static String docId = '';
   static String docName = '';
   static String docSpeciality = '';
   static String docEmail = '';
   static String docProfileImgUrl = '';
   static double docWallAmount = 0.0;
+
   // static String docFee ="";
 
-  static void clearUserValues(){
-    userId="";
-    userName="";
-    userEmail="";
+  static void clearUserValues() {
+    userId = "";
+    userName = "";
+    userEmail = "";
     wallAmount = 0.0;
   }
-  static void clearIndDoctorValues(){
-    docId="";
-    docName="";
-    docEmail="";
-    docSpeciality="";
-    docProfileImgUrl="";
+
+  static void clearIndDoctorValues() {
+    docId = "";
+    docName = "";
+    docEmail = "";
+    docSpeciality = "";
+    docProfileImgUrl = "";
     docWallAmount = 0.0;
   }
 
   //Firebase Constants
   static String userCollection = "users";
   static String individualDoctorCollection = "doctors";
-
 }

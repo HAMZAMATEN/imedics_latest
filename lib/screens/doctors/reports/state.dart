@@ -23,6 +23,7 @@ class DoctorReportState {
 
 
   var appointmentFetchLoading = false.obs;
+  var downloadImgLoading = false.obs;
   var completedAppointmentList = [];
   List<PatientAppointmentModel> patientAppointmentList = [];
   var docListFetchLoading = false.obs;

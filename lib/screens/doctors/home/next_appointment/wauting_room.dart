@@ -7,6 +7,7 @@ import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/models/doctors/patient_model.dart';
+import 'package:imedics_latest/screens/doctors/home/controller.dart';
 import 'package:imedics_latest/screens/doctors/home/next_appointment/detail_body.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/waiting_room/details_widget.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
@@ -17,8 +18,9 @@ import 'package:imedics_latest/utils/myFonts.dart';
 class DoctorWaitingRoomScreen extends StatelessWidget {
   PatientModel patientModel;
   PatientAppointmentModel appoint ;
+  final DoctorHomeController doctorHomeController;
   DoctorWaitingRoomScreen({super.key,required this.patientModel,
-    required this.appoint,
+    required this.appoint, required this.doctorHomeController,
 
 
   });
@@ -89,6 +91,7 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 150.h),
               child: PatientDetailBody(
+                doctorHomeController: doctorHomeController,
                 patientModel: patientModel,
                 appoint:appoint,
               ),

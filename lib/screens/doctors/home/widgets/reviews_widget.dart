@@ -134,36 +134,66 @@ class _UReviewTabviewState extends State<UReviewTabview> {
                         SizedBox(
                           height: 15.h,
                         ),
-                        Container(
-                          width: 450,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              border: Border.all(
-                                  color: AppColors.appColor, width: 1)),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.mail_outline,
-                                color: AppColors.appColor,
-                              ),
-                              SizedBox(
-                                width: 10.w,
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(top: 5.0),
-                                child: Text(
-                                  'imedefix SUPPORT'.toUpperCase(),
-                                  style: TextStyle(
-                                    fontFamily: 'Gilroy',
-                                    fontSize: 15,
-                                    fontWeight: FontWeight.w700,
-                                    color: AppColors.appColor,
+                        InkWell(
+                          onTap: () {
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return AlertDialog(
+                                  title: Text(
+                                    'Get in touch',
+                                    style: getSemiBoldStyle(
+                                        color: AppColors.appColor, fontSize: 20.sp),
                                   ),
+                                  content: Text(
+                                    "Get assistance by our 24/7 support system.Get in touch through\nWhatsapp:+1-555-5555-5555\nEmail:imdefixsupport@medfix.org",
+                                  ),
+                                  actions: [
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pop();
+                                      },
+                                      child: Text(
+                                        'Close',
+                                        style: getRegularStyle(color: AppColors.appColor),
+                                      ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            );
+                          },
+                          child: Container(
+                            width: 450,
+                            height: 50,
+                            decoration: BoxDecoration(
+                                border: Border.all(
+                                    color: AppColors.appColor, width: 1)),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.mail_outline,
+                                  color: AppColors.appColor,
                                 ),
-                              )
-                            ],
+                                SizedBox(
+                                  width: 10.w,
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 5.0),
+                                  child: Text(
+                                    'imedefix SUPPORT'.toUpperCase(),
+                                    style: TextStyle(
+                                      fontFamily: 'Gilroy',
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w700,
+                                      color: AppColors.appColor,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
                           ),
                         )
                       ])),

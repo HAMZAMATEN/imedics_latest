@@ -5,6 +5,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/doctors/home/controller.dart';
@@ -25,6 +26,7 @@ class DoctorHomeScreens extends StatelessWidget {
   Widget build(BuildContext context) {
     final doctorHomeController = Get.put(DoctorHomeController());
     doctorHomeController.getDoctorAppointmentDetails();
+    doctorHomeController.init();
     log('list:${doctorHomeController.state.patientAppointmentList.length.toString()}');
     log('dId:${AppConstants.docId}');
     return Scaffold(
@@ -69,101 +71,61 @@ class DoctorHomeScreens extends StatelessWidget {
             ),
           ],
         ),
-        // actions: [
-        //   Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 12),
-        //     child: CircleAvatar(
-        //       backgroundColor: Colors.white,
-        //       // Replace with MyColors.white if it's defined in your code.
-        //       child: IconButton(
-        //         onPressed: () {
-        //           Get.to(
-        //             () => DNotificationSection(),
-        //           );
-        //           // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
-        //         },
-        //         icon: Stack(
-        //           children: [
-        //             Image.asset(
-        //               'assets/images/notification.png',
-        //               // Replace with your asset path
-        //               width: 20,
-        //               height: 20,
-        //             ),
-        //             Positioned(
-        //                 top: 0,
-        //                 right: 0,
-        //                 child: CircleAvatar(
-        //                   backgroundColor: Colors.red,
-        //                   // Replace with MyColors.appColor if it's defined in your code.
-        //                   radius: 4,
-        //                 )),
-        //           ],
-        //         ),
-        //       ),
-        //     ),
-        //   ),
-        //   Padding(
-        //     padding: const EdgeInsets.symmetric(horizontal: 2),
-        //     child: CircleAvatar(
-        //       backgroundColor: Colors.white,
-        //       // Replace with MyColors.white if it's defined in your code.
-        //       child: IconButton(
-        //         onPressed: () {
-        //           Get.to(
-        //                 () => CallView(),
-        //           );
-        //           // Navigator.pushNamed(context, AppRoutes.notificationScreen); // Adjust according to your navigation setup.
-        //         },
-        //         icon: Icon(Icons.video_call,color: AppColors.appColor,),
-        //       ),
-        //     ),
-        //   ),
-        // ],
+
       ),
-      body: CustomScrollView(
-        physics: BouncingScrollPhysics(),
-        slivers: [
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                padding16,
-                const UTopSearchWidget(),
-                padding16,
-                DNextAppointmentWidget(
-                  homeController: doctorHomeController,
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 18.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 10,
-                      ),
-                      UPopularDoctorCard(
-                        homeController: doctorHomeController,
-                        onTap: () {},
-                        image: 'assets/images/Vector.png',
-                        name: 'Shared Documents',
-                        speciality: 'Upload on 10 May',
-                        rating: 0,
-                        review: '2 Documents',
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                    ],
+      body:
+
+      Obx(
+          ()=>
+              doctorHomeController.state.loading.value == true ?
+                  Center(
+                    child: ShowProgressIndicator(),
+                  )
+                  :
+              CustomScrollView(
+          physics: BouncingScrollPhysics(),
+          slivers: [
+            SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  padding16,
+                  const UTopSearchWidget(),
+                  padding16,
+                  DNextAppointmentWidget(
+                    homeController: doctorHomeController,
                   ),
-                ),
-                // Container(
-                //   height: 500.h,
-                //   child: UReviewTabview(),
-                // ),
-              ],
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SizedBox(
+                          height: 10,
+                        ),
+                        UPopularDoctorCard(
+                          homeController: doctorHomeController,
+                          onTap: () {},
+                          image: 'assets/images/Vector.png',
+                          name: 'Shared Documents',
+                          speciality: 'Upload on 10 May',
+                          rating: 0,
+                          review: '2 Documents',
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                      ],
+                    ),
+                  ),
+                  Container(
+                    height: 500.h,
+                    child: UReviewTabview(),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

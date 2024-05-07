@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/helpers/notification_services.dart';
-import 'package:imedics_latest/screens/doctors/home/video_call_screen.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/state.dart';
 import 'package:imedics_latest/screens/patient_screens/All_appointments/waiting_room/call_view.dart';
 import 'package:imedics_latest/screens/patient_screens/home/controller.dart';

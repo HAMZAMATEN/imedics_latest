@@ -44,7 +44,7 @@ class CompleteTabView extends StatelessWidget {
               ],
             )
           : ListView.builder(
-              padding: EdgeInsets.only(top: 10.h),
+              padding: EdgeInsets.only(top: 10.h,bottom: 80.h),
               shrinkWrap: true,
               physics: const BouncingScrollPhysics(),
               itemCount: homeController.state.completedAppointmentList.length,

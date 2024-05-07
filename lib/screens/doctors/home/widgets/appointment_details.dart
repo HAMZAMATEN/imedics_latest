@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -5,17 +7,20 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/custom_button.dart';
 import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/models/doctors/patient_model.dart';
 import 'package:imedics_latest/screens/doctors/home/controller.dart';
+import 'package:imedics_latest/screens/doctors/home/widgets/doctor_chat_page.dart';
 import 'package:imedics_latest/screens/doctors/records/controller.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/patient_appoint_model.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
 import 'package:intl/intl.dart';
+import 'package:zego_zimkit/zego_zimkit.dart';
 
 class AppointmentDetailView extends StatelessWidget {
   final bool isComplete;
@@ -30,7 +35,6 @@ class AppointmentDetailView extends StatelessWidget {
     required this.homeController,
     required this.isComplete,
   });
-
 
   @override
   Widget build(BuildContext context) {
@@ -472,10 +476,30 @@ class AppointmentDetailView extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Chat History',
-                      style:
-                          getBoldStyle(color: AppColors.black, fontSize: 16.sp),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Chat History',
+                          style: getBoldStyle(
+                              color: AppColors.black, fontSize: 16.sp),
+                        ),
+                        CustomButton(
+                            onPressed: () async {
+                              await ZIMKit()
+                                  .connectUser(
+                                      id: "${AppConstants.docId}",
+                                      name: "${AppConstants.docName}")
+                                  .then((value) {
+                                    log('val:${value}');
+                                ZIMKit().showDefaultNewPeerChatDialog(context);
+                                // );
+                              });
+                            },
+                            buttonWidth: 120.w,
+                            borderRadius: 10.r,
+                            buttonText: 'Start Chat'),
+                      ],
                     ),
                     padding16,
                     Row(

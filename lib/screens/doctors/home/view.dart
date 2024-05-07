@@ -9,7 +9,6 @@ import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/doctors/home/controller.dart';
-import 'package:imedics_latest/screens/doctors/home/video_call_screen.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/next_appointment_widgets.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/reviews_widget.dart';
 import 'package:imedics_latest/screens/doctors/home/widgets/view.dart';

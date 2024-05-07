@@ -3,8 +3,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
+import 'package:imedics_latest/screens/doctors/reports/controller.dart';
 import 'package:imedics_latest/utils/app_assets.dart';
 
 class DoctorReportCardWidget extends StatelessWidget {
@@ -24,8 +27,7 @@ class DoctorReportCardWidget extends StatelessWidget {
     required this.img,
     required this.isExpanded, // Modified
     // required this.onTap, // Modified
-    Key? key,
-  }) : super(key: key);
+  }) ;
 
   @override
   Widget build(BuildContext context) {
@@ -121,12 +123,13 @@ class DoctorDetailsAboutReportCard extends StatelessWidget {
   final String title;
   final String date;
   final VoidCallback onTap;
+  final DoctorReportController doctorReportController;
 
   const DoctorDetailsAboutReportCard(
       {super.key,
       required this.title,
       required this.date,
-      required this.onTap});
+      required this.onTap, required this.doctorReportController});
 
   @override
   Widget build(BuildContext context) {
@@ -180,28 +183,36 @@ class DoctorDetailsAboutReportCard extends StatelessWidget {
               ),
             ],
           ),
-          Column(
-            children: [
-              GestureDetector(
-                onTap: onTap,
-                child: Container(
-                  height: 22.h,
-                  width: 22.w,
-                  child: Image.asset(
-                    AppAssets.download,
-                    color: AppColors.appColor,
+          Obx(
+            () =>
+            doctorReportController.state.downloadImgLoading.value == true?
+            Center(
+              child: ShowProgressIndicator(),
+            )
+                :
+                Column(
+              children: [
+                GestureDetector(
+                  onTap: onTap,
+                  child: Container(
+                    height: 22.h,
+                    width: 22.w,
+                    child: Image.asset(
+                      AppAssets.download,
+                      color: AppColors.appColor,
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 4.h,
-              ),
-              Text(
-                'Download',
-                style: getSemiBoldStyle(
-                    color: Color.fromRGBO(136, 136, 136, 1), fontSize: 18),
-              )
-            ],
+                SizedBox(
+                  height: 4.h,
+                ),
+                Text(
+                  'Download',
+                  style: getSemiBoldStyle(
+                      color: Color.fromRGBO(136, 136, 136, 1), fontSize: 18),
+                )
+              ],
+            ),
           ),
         ],
       ),

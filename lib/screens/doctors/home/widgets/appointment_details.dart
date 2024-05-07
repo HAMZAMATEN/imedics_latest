@@ -31,6 +31,7 @@ class AppointmentDetailView extends StatelessWidget {
     required this.isComplete,
   });
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -1,7 +1,8 @@
-
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/loadingDialogue.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/checkOutWidgets/payment_controller.dart';
@@ -18,27 +19,29 @@ import 'add_payment_screen.dart';
 class UserSelectAccountTypeView extends StatefulWidget {
   SetAppointmentDetailsController appController;
   UserDocModel doctor;
-  UserSelectAccountTypeView({Key? key,
+  UserSelectAccountTypeView({
+    Key? key,
     required this.appController,
-  required this.doctor,
+    required this.doctor,
   }) : super(key: key);
 
   @override
-  State<UserSelectAccountTypeView> createState() => _UserSelectAccountTypeViewState();
+  State<UserSelectAccountTypeView> createState() =>
+      _UserSelectAccountTypeViewState();
 }
 
 class _UserSelectAccountTypeViewState extends State<UserSelectAccountTypeView> {
-
   // Track selection state for each payment option
   bool isSelectedCard = false; // Set the default selection to Bank Card
   bool isSelectedPaypal = false;
   bool isSelectedApple = false;
+  RxBool stripeSelected = false.obs;
 
   // final controller = Get.put(UserHomeScreenProvider());
 
   @override
   Widget build(BuildContext context) {
-    int totalAmount = int.parse(widget.doctor.once[0]['consultationfees'])+5;
+    int totalAmount = int.parse(widget.doctor.once[0]['consultationfees']) + 5;
     final screenWidth = MediaQuery.of(context).size.width;
     final screenHeight = MediaQuery.of(context).size.height;
 
@@ -47,7 +50,8 @@ class _UserSelectAccountTypeViewState extends State<UserSelectAccountTypeView> {
         backgroundColor: const Color(0xff38B698).withOpacity(0.1),
         title: Text(
           'Payment Account Type',
-          style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size20),
+          style:
+              getSemiBoldStyle(color: Colors.black, fontSize: MyFonts.size20),
         ),
         actions: [
           Padding(
@@ -77,117 +81,138 @@ class _UserSelectAccountTypeViewState extends State<UserSelectAccountTypeView> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: screenHeight * 0.030),
-              Text('Credit & Debit Card',
-                style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size18),
-              ),
+              // Text('Credit & Debit Card',
+              //   style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size18),
+              // ),
               SizedBox(
                 height: 10,
               ),
-              _buildPaymentOption(
-                screenWidth,
-                '... ... ... ... ... 5738',
-                'assets/icons/icons/bank_card.png',
-                isSelectedCard,
-                    () {
-                  if (!isSelectedCard) {
-                    setState(() {
-                      isSelectedCard = true;
-                      isSelectedPaypal = false;
-                      isSelectedApple = false;
-                    });
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => AddPaymentScreen(appController: widget.appController, doctor: widget.doctor,)))
-                        .then((value) {
-                      isSelectedCard = false;
-                      isSelectedApple = false;
-                      isSelectedPaypal = false;
-                      setState(() {});
-                    });
-                  }
-                },
-              ),
-              SizedBox(height: 40),
-              Text('More Payment Options',
-                style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size16),
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              InkWell(
-                  onTap: (){
-                    PaymentController().makePayment(context, 200, "${AppConstants.userId}");
+              Obx(
+                () => _buildPaymentOption(
+                  screenWidth,
+                  "Pay with Stripe payment",
+                  "assets/icons/icons/stripe.png",
+                  stripeSelected.value,
+                  () {
+                    stripeSelected.value = !stripeSelected.value;
+                    if(stripeSelected.value){
+                      showAppLoading(context);
+                      final payCont = PaymentController();
+                      payCont.makePayment(context, double.parse((totalAmount).toString()), "${AppConstants.userId}",widget.appController,widget.doctor);
+
+
+                    }
+
                   },
-                  child: Text("Pay using stripe",style: getBoldStyle(color: AppColors.appColor,fontSize: 50),)),
-              SizedBox(
-                height: 10,
+                ),
               ),
-              _buildPaymentOption(
-                screenWidth,
-                'Paypal',
-                'assets/icons/icons/paypal.png',
-                isSelectedPaypal,
-                    () {
-                  Navigator.of(context).push(MaterialPageRoute(
-                    builder: (BuildContext context) => PaypalCheckout(
-                      returnURL: "success.snippetcoder.com",
-                      cancelURL: "cancel.snippetcoder.com",
-                      sandboxMode: true,
-                      clientId:
-                      "AXFXfhTpTp775JjaH5UJwVPijLmayOeYeNuO-i8OHdtlzhQzavePzvvp0IVi0HnfrH6Egi_gn6buv9QV",
-                      secretKey:
-                      "ECUBk3NbfWOTfxF31w8gcv4FkDzA84NOiEc1FtPWjJm6Vdwe4WHnP06XJt7OjFzbN-B-1E7gQHWxtuXY",
-                      transactions:  [
-                        {
-                          "amount": {
-                            "total": '${totalAmount}',
-                            "currency": "USD",
-                            "details": {
-                              "subtotal": '${totalAmount}',
-                              "shipping": '0',
-                              "shipping_discount": 0
-                            }
-                          },
-                          "description": "The consultation fee of doctor for a regular checkup.",
-                        }
-                      ],
-                      note: "Contact us for any questions on your order.",
-                      onSuccess: (Map params) async {
-                        widget.appController.bookAppointment(context,widget.doctor ,widget.appController);
-                      },
-                      onError: (error) {
-                        print("onError: $error");
-                        Navigator.of(context).pop();
-                      },
-                      onCancel: () {
-                        print('cancelled:');
-                      },
-                    ),
-                  ));
-                  // Toggle the selection for Paypal
-                  // setState(() {
-                  //   isSelectedCard = false;
-                  //   isSelectedPaypal = true;
-                  //   isSelectedApple = false;
-                  // });
-                },
-              ),
-              SizedBox(height: 20),
-              _buildPaymentOption(
-                screenWidth,
-                'Apple',
-                'assets/icons/icons/apple.png',
-                isSelectedApple,
-                    () {
-                  // Toggle the selection for Apple
-                  setState(() {
-                    isSelectedCard = false;
-                    isSelectedPaypal = false;
-                    isSelectedApple = true;
-                  });
-                },
-              ),
+
+              //
+              // _buildPaymentOption(
+              //   screenWidth,
+              //   '... ... ... ... ... 5738',
+              //   'assets/icons/icons/bank_card.png',
+              //   isSelectedCard,
+              //       () {
+              //     if (!isSelectedCard) {
+              //       setState(() {
+              //         isSelectedCard = true;
+              //         isSelectedPaypal = false;
+              //         isSelectedApple = false;
+              //       });
+              //       Navigator.push(
+              //           context,
+              //           MaterialPageRoute(
+              //               builder: (context) => AddPaymentScreen(appController: widget.appController, doctor: widget.doctor,)))
+              //           .then((value) {
+              //         isSelectedCard = false;
+              //         isSelectedApple = false;
+              //         isSelectedPaypal = false;
+              //         setState(() {});
+              //       });
+              //     }
+              //   },
+              // ),
+              // SizedBox(height: 40),
+              // Text('More Payment Options',
+              //   style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size16),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // InkWell(
+              //     onTap: (){
+              //       PaymentController().makePayment(context, 200, "${AppConstants.userId}");
+              //     },
+              //     child: Text("Pay using stripe",style: getBoldStyle(color: AppColors.appColor,fontSize: 50),)),
+              // SizedBox(
+              //   height: 10,
+              // ),
+              // _buildPaymentOption(
+              //   screenWidth,
+              //   'Paypal',
+              //   'assets/icons/icons/paypal.png',
+              //   isSelectedPaypal,
+              //       () {
+              //     Navigator.of(context).push(MaterialPageRoute(
+              //       builder: (BuildContext context) => PaypalCheckout(
+              //         returnURL: "success.snippetcoder.com",
+              //         cancelURL: "cancel.snippetcoder.com",
+              //         sandboxMode: true,
+              //         clientId:
+              //         "AXFXfhTpTp775JjaH5UJwVPijLmayOeYeNuO-i8OHdtlzhQzavePzvvp0IVi0HnfrH6Egi_gn6buv9QV",
+              //         secretKey:
+              //         "ECUBk3NbfWOTfxF31w8gcv4FkDzA84NOiEc1FtPWjJm6Vdwe4WHnP06XJt7OjFzbN-B-1E7gQHWxtuXY",
+              //         transactions:  [
+              //           {
+              //             "amount": {
+              //               "total": '${totalAmount}',
+              //               "currency": "USD",
+              //               "details": {
+              //                 "subtotal": '${totalAmount}',
+              //                 "shipping": '0',
+              //                 "shipping_discount": 0
+              //               }
+              //             },
+              //             "description": "The consultation fee of doctor for a regular checkup.",
+              //           }
+              //         ],
+              //         note: "Contact us for any questions on your order.",
+              //         onSuccess: (Map params) async {
+              //           widget.appController.bookAppointment(context,widget.doctor ,widget.appController);
+              //         },
+              //         onError: (error) {
+              //           print("onError: $error");
+              //           Navigator.of(context).pop();
+              //         },
+              //         onCancel: () {
+              //           print('cancelled:');
+              //         },
+              //       ),
+              //     ));
+              //     // Toggle the selection for Paypal
+              //     // setState(() {
+              //     //   isSelectedCard = false;
+              //     //   isSelectedPaypal = true;
+              //     //   isSelectedApple = false;
+              //     // });
+              //   },
+              // ),
+              // SizedBox(height: 20),
+              // _buildPaymentOption(
+              //   screenWidth,
+              //   'Apple',
+              //   'assets/icons/icons/apple.png',
+              //   isSelectedApple,
+              //       () {
+              //     // Toggle the selection for Apple
+              //     setState(() {
+              //       isSelectedCard = false;
+              //       isSelectedPaypal = false;
+              //       isSelectedApple = true;
+              //     });
+              //   },
+              // ),
             ],
           ),
         ),
@@ -216,8 +241,8 @@ class _UserSelectAccountTypeViewState extends State<UserSelectAccountTypeView> {
             SizedBox(width: 15),
             Text(
               label,
-              style: getSemiBoldStyle(color: Colors.black,fontSize: MyFonts.size18),
-
+              style: getSemiBoldStyle(
+                  color: Colors.black, fontSize: MyFonts.size18),
             ),
             Spacer(),
             Container(
@@ -231,18 +256,18 @@ class _UserSelectAccountTypeViewState extends State<UserSelectAccountTypeView> {
               child: Center(
                 child: isSelected
                     ? Container(
-                  width: 20,
-                  height: 20,
-                  decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [
-                        Color(0xff5EEF8F),
-                        Color(0xff00A69D),
-                      ],
-                    ),
-                    shape: BoxShape.circle,
-                  ),
-                )
+                        width: 20,
+                        height: 20,
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                            colors: [
+                              Color(0xff5EEF8F),
+                              Color(0xff00A69D),
+                            ],
+                          ),
+                          shape: BoxShape.circle,
+                        ),
+                      )
                     : SizedBox(),
               ),
             )

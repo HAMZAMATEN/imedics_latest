@@ -5,7 +5,7 @@ import 'package:imedics_latest/utils/app_assets.dart';
 
 class DoctorReportState {
   final List<String> text = ['Blood Report', 'CT Scan', 'MRI'];
-  final List<String> textFields = ['BloodReport', 'STscan', 'MRI'];
+  final List<String> textFields = ['BloodReport', 'CTscan', 'MRI'];
   final List<String> reportType = ['Blood-Report', 'CT-Scan', 'MRI'];
   final List<String> image = [
     AppAssets.bloodRep,
@@ -13,6 +13,12 @@ class DoctorReportState {
     AppAssets.mri
   ];
   int? expandedIndex;
+
+  int bloodReportsCount = 0;
+  int ctScanReportsCount = 0;
+  int mriReportsCount = 0;
+
+  RxList<int> reportsCount=<int>[0,0,0].obs;
 
 
 

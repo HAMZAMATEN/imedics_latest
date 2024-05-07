@@ -10,7 +10,7 @@ import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/helpers/app_theme.dart';
 import 'package:imedics_latest/helpers/notification_services.dart';
 import 'package:imedics_latest/screens/common/splash/view.dart';
-import 'package:imedics_latest/screens/doctors/application/view.dart';
+
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();

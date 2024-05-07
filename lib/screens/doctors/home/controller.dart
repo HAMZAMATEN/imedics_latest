@@ -291,7 +291,7 @@ class DoctorHomeController extends GetxController {
     // String time = appoint.selectedTimeSlot!;
     //
     String date = "2024-5-7";
-    String time = "02:00 AM";
+    String time = "08:00 PM";
 
     // print(date);
     // String date = "2024-5-6";
@@ -312,6 +312,8 @@ class DoctorHomeController extends GetxController {
       // 18 current hour
       int currentHour = DateTime.now().hour;
 
+
+      // print("Current hour is $currentHour");
       if (hour == currentHour || hour == currentHour - 1) {
         // print("hour==currentHour || hour==currentHour-1");
         // print(hour==currentHour);
@@ -349,13 +351,15 @@ class DoctorHomeController extends GetxController {
   Future<void> DoctorCheckAndJoinCall(
       PatientAppointmentModel appoint, PatientModel patientModel) async {
     try {
-      String docToken = await fetchPatientToken(patientModel.sId!);
+      String patientToken = await fetchPatientToken(patientModel.sId!);
       DocumentSnapshot doc = await FirebaseFirestore.instance
           .collection("calls")
           .doc("${appoint.sId}")
           .get();
 
       if (doc.exists) {
+        NotificationServices().sendNotification("Video Call started", "Doctor ${AppConstants.docName} joined video call", patientToken, "Patient informed and will join shortly");
+        // NotificationServices().sendNotification(title, Notificbody, token, snackbarMsg)
         Get.to(() => DoctorVideoCallScreen(
             appoint: appoint, patientModel: patientModel));
         // send notification and navigate to call screen
@@ -373,8 +377,8 @@ class DoctorHomeController extends GetxController {
           NotificationServices().sendNotification(
               "Video Call started",
               "Doctor ${AppConstants.docName} joined video call",
-              docToken,
-              "Doctor informed and will join shortly");
+              patientToken,
+              "Patient informed and will join shortly");
           Get.to(() => DoctorVideoCallScreen(
               appoint: appoint, patientModel: patientModel));
           // Navigate to call screen and send notifcation

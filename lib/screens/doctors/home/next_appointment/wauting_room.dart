@@ -112,21 +112,21 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
               ),
             ),
 
-            Padding(
-              padding: EdgeInsets.only(top: 215.h, right: 25.w),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  IconButton(
-                      onPressed: () {},
-                      icon: Icon(
-                        Icons.favorite_border,
-                        color: AppColors.appColor,
-                        size: 27.h,
-                      )),
-                ],
-              ),
-            ),
+            // Padding(
+            //   padding: EdgeInsets.only(top: 215.h, right: 25.w),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       IconButton(
+            //           onPressed: () {},
+            //           icon: Icon(
+            //             Icons.favorite_border,
+            //             color: AppColors.appColor,
+            //             size: 27.h,
+            //           )),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(top: 200.h),
               child: Row(

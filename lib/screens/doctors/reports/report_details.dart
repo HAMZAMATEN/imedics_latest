@@ -98,8 +98,7 @@ class DoctorReportDetailsScreen extends StatelessWidget {
                       return Padding(
                         padding: const EdgeInsets.only(top: 10.0),
                         child: DoctorDetailsAboutReportCard(
-                          title: snapshot.data!.docs[index]['report_title']
-                              .toString(),
+                          title: appBarTitle,
                           date: reportController.formatMicrosecondsToDateString(
                               int.parse(snapshot
                                   .data!.docs[index]['id']

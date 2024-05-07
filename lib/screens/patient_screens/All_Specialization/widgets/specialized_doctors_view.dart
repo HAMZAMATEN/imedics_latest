@@ -37,7 +37,7 @@ class SpecializedDoctorsView extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               padding10,
-              specializationSearchWidget(),
+              specializationSearchWidget(controller),
               padding10,
               cont.state.filterLoading.value==true?Center(child: ShowProgressIndicator(),):
                   cont.state.filteredDocsList.length==0?Center(child: Padding(

@@ -57,69 +57,69 @@ class PatientDetailBody extends StatelessWidget {
                             color: AppColors.grey, fontSize: MyFonts.size14),
                       ),
                       padding6,
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Column(
-                            children: [
-                              Text(
-                                "> 1 hour",
-                                style: getSemiBoldStyle(
-                                    color: AppColors.appColor,
-                                    fontSize: MyFonts.size12),
-                              ),
-                              Text(
-                                'WAIT TIME',
-                                style: getSemiBoldStyle(
-                                    color: AppColors.grey,
-                                    fontSize: MyFonts.size10),
-                              ),
-                            ],
-                          ),
-                          Container(
-                            height: 43.h,
-                            width: 2.w,
-                            color: AppColors.lightgrey,
-                          ),
-                          // Column(
-                          //   children: [
-                          //     Text(
-                          //       doctor.yearofexperience!,
-                          //       style: getSemiBoldStyle(
-                          //           color: AppColors.appColor,
-                          //           fontSize: MyFonts.size12),
-                          //     ),
-                          //     Text(
-                          //       'EXPERIENCE',
-                          //       style: getSemiBoldStyle(
-                          //           color: AppColors.grey,
-                          //           fontSize: MyFonts.size10),
-                          //     ),
-                          //   ],
-                          // ),
-                          Container(
-                            height: 43.h,
-                            width: 2.w,
-                            color: AppColors.lightgrey,
-                          ),
-                          Column(
-                            children: [
-                              Text(
-                                '98% ',
-                                style: getSemiBoldStyle(
-                                    color: AppColors.appColor,
-                                    fontSize: MyFonts.size12),
-                              ),
-                              Text(
-                                'SATISFIED',
-                                style: getSemiBoldStyle(
-                                    color: AppColors.grey,
-                                    fontSize: MyFonts.size10),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      //   children: [
+                      //     Column(
+                      //       children: [
+                      //         Text(
+                      //           "> 1 hour",
+                      //           style: getSemiBoldStyle(
+                      //               color: AppColors.appColor,
+                      //               fontSize: MyFonts.size12),
+                      //         ),
+                      //         Text(
+                      //           'WAIT TIME',
+                      //           style: getSemiBoldStyle(
+                      //               color: AppColors.grey,
+                      //               fontSize: MyFonts.size10),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     Container(
+                      //       height: 43.h,
+                      //       width: 2.w,
+                      //       color: AppColors.lightgrey,
+                      //     ),
+                      //     // Column(
+                      //     //   children: [
+                      //     //     Text(
+                      //     //       doctor.yearofexperience!,
+                      //     //       style: getSemiBoldStyle(
+                      //     //           color: AppColors.appColor,
+                      //     //           fontSize: MyFonts.size12),
+                      //     //     ),
+                      //     //     Text(
+                      //     //       'EXPERIENCE',
+                      //     //       style: getSemiBoldStyle(
+                      //     //           color: AppColors.grey,
+                      //     //           fontSize: MyFonts.size10),
+                      //     //     ),
+                      //     //   ],
+                      //     // ),
+                      //     Container(
+                      //       height: 43.h,
+                      //       width: 2.w,
+                      //       color: AppColors.lightgrey,
+                      //     ),
+                      //     Column(
+                      //       children: [
+                      //         Text(
+                      //           '98% ',
+                      //           style: getSemiBoldStyle(
+                      //               color: AppColors.appColor,
+                      //               fontSize: MyFonts.size12),
+                      //         ),
+                      //         Text(
+                      //           'SATISFIED',
+                      //           style: getSemiBoldStyle(
+                      //               color: AppColors.grey,
+                      //               fontSize: MyFonts.size10),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //   ],
+                      // ),
                       padding50,
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -163,7 +163,7 @@ class PatientDetailBody extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: CustomButton(
-              buttonText: "Join call.Doctor will be here soon!",
+              buttonText: "Join call.Patient will be here soon!",
               onPressed: () {
 
                 showAppCustomDialogue(context, "Join Call", "Once join, don't leave until you finish your appointment", "Confirm to join", Icon(Icons.error_outline,color: AppColors.appColor,), () {

@@ -45,7 +45,7 @@ class AllSpecializationView extends StatelessWidget {
           child: Column(
             children: [
               padding10,
-              specializationSearchWidget(),
+              specializationSearchWidget(controller),
               padding10,
               GridView.builder(
                   physics: const NeverScrollableScrollPhysics(),

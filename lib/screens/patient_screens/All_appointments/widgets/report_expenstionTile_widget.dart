@@ -65,10 +65,10 @@ Widget reportExpansionTile(BuildContext context, String reportType,
                       onChanged: (val) {
 
                         if(val==true){
-                          controller.addImageToList(imageUrl);
+                          controller.addImageToList(imageUrl,reportType);
                         }
                         if(val ==false){
-                          controller.removeImageFromList(imageUrl);
+                          controller.removeImageFromList(imageUrl,reportType);
                         }
                         switchVal.value=val;
 

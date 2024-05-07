@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
+import 'package:imedics_latest/components/loadingDialogue.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
@@ -10,6 +11,8 @@ import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/helpers/shared_prefrences.dart';
 import 'package:imedics_latest/screens/common/accountType/view.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/information_center.dart';
+import 'package:imedics_latest/screens/doctors/profile/screens/settings/setting_view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_screens/EditProfile/view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/profile_screens/wallet_screen/view.dart';
 import 'package:imedics_latest/screens/patient_screens/profile_screens/widgets/profile_picture.dart';
@@ -151,23 +154,24 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                     },
                     text: "My Profile",
                   ),
-                  ProfileTile(
-                    index: 1,
-                    onPressed: () {
-                      Get.to(()=>WalletView());
-                    },
-                    text: "My Wallet",
-                  ),
-                  ProfileTile(
-                    index: 2,
-                    onPressed: () {
-                      // Navigator.pushNamed(context, AppRoutes.addPaymentMethod);
-                    },
-                    text: "Payment Method",
-                  ),
+                  // ProfileTile(
+                  //   index: 1,
+                  //   onPressed: () {
+                  //     Get.to(()=>WalletView());
+                  //   },
+                  //   text: "My Wallet",
+                  // ),
+                  // ProfileTile(
+                  //   index: 2,
+                  //   onPressed: () {
+                  //     // Navigator.pushNamed(context, AppRoutes.addPaymentMethod);
+                  //   },
+                  //   text: "Payment Method",
+                  // ),
                   ProfileTile(
                     index: 3,
                     onPressed: () {
+                      Get.to(()=>SettingsView());
                       // Navigator.pushNamed(
                       //     context, AppRoutes.settingsPageScreen);
                     },
@@ -175,26 +179,36 @@ class _buildDoctorProfileFieldsState extends State<buildDoctorProfileFields> {
                   ),
                   ProfileTile(
                     index: 4,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(()=>InformationCenter());
+                    },
                     text: "Help Center",
                   ),
                   ProfileTile(
                     index: 5,
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.to(()=>InformationCenter());
+                    },
                     text: "Information Center",
                   ),
                   ProfileTile(
                     index: 6,
                     onPressed: () async{
-                      AppConstants.clearUserValues();
-                      await Prefrences().saveUserId('');
-                      Get.offAll(
-                            () => AccountTypeScreen(),
-                      );
+                      await showAppLoading(context);
+                      await Future.delayed(
+                          Duration(seconds: 2),() async{
+                        AppConstants.clearUserValues();
+                        await Prefrences().saveUserId('');
+                        Navigator.pop(context);
+                        Get.offAll(
+                              () => AccountTypeScreen(),
+                        );
+                      });
+
                     },
                     text: "Log out",
                   ),
-                  padding80
+                  SizedBox(height:300.h),
                 ],
               ),
             ),

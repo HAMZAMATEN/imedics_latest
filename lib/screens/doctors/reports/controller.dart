@@ -18,7 +18,9 @@ class DoctorReportController extends GetxController {
   final state = DoctorReportState();
 
 
-
+  setDownloadImgLoading(bool val) {
+    state.downloadImgLoading.value = val;
+  }
 
 
   setFetchAppointmentLoading(bool val){
@@ -175,9 +177,13 @@ class DoctorReportController extends GetxController {
 
 
   Future<void> downloadFile(String url, String filename) async {
-
+    setDownloadImgLoading(true);
     try {
+      log('try');
+
       var response = await http.get(Uri.parse(url));
+      log('res:${response.body}');
+      log('res:${response.statusCode}');
       if (response.statusCode == 200) {
         var bytes = response.bodyBytes;
 
@@ -187,17 +193,29 @@ class DoctorReportController extends GetxController {
         var extension =
         contentType != null ? contentType.split('/').last : 'unknown';
         var filePath = '${tempDir.path}/$filename.$extension';
+        log('path:$filePath');
         var file = File(filePath);
         await file.writeAsBytes(bytes);
+        log('succesfully download');
+        Snackbar.showSnackBar('Image downloaded successfully', Icons.done_all);
+
+        setDownloadImgLoading(false);
+
       } else {
         print(
             'Failed to download file. Server responded with status code: ${response.statusCode}');
+        Snackbar.showSnackBar('Failed to download file. Server responded with status code: ${response.statusCode}', Icons.error);
+        setDownloadImgLoading(false);
+
       }
     } catch (e) {
       // Exception occurred during the request
       print('Failed to download file: $e');
-    }
+      Snackbar.showSnackBar('Failed to download file: $e', Icons.error);
 
+      setDownloadImgLoading(false);
+
+    }
   }
 
   String formatMicrosecondsToDateString(int microsecondsSinceEpoch) {

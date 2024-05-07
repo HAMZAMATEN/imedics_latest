@@ -179,6 +179,7 @@ class CompleteTabView extends StatelessWidget {
                                   buttonWidth: 157.w,
                                   onPressed: () {
                                     Get.to(() => AppointmentDetailView(
+                                      isComplete: true,
                                         image: AppAssets.record,
                                         patientAppointmentModel: homeController
                                             .state

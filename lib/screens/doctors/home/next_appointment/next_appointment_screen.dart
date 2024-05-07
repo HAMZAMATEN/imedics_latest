@@ -95,7 +95,7 @@ class UserNextAppointmenyScreen extends StatelessWidget {
                   date: sletedDate,
                 )),
             Positioned(
-              top: 350.h,
+              top: 330.h,
               child: UAppointTab(
                 homeController: homeController,
                 // model: model,

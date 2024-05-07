@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -14,8 +15,10 @@ import 'package:imedics_latest/screens/patient_screens/patientModels/patient_app
 import 'package:imedics_latest/utils/app_assets.dart';
 import 'package:imedics_latest/utils/app_paddings.dart';
 import 'package:imedics_latest/utils/myFonts.dart';
+import 'package:intl/intl.dart';
 
 class AppointmentDetailView extends StatelessWidget {
+  final bool isComplete;
   final String image;
   final PatientAppointmentModel patientAppointmentModel;
   final DoctorHomeController homeController;
@@ -25,6 +28,7 @@ class AppointmentDetailView extends StatelessWidget {
     required this.image,
     required this.patientAppointmentModel,
     required this.homeController,
+    required this.isComplete,
   });
 
   @override
@@ -104,11 +108,11 @@ class AppointmentDetailView extends StatelessWidget {
                                   FutureBuilder<PatientModel>(
                                       future: homeController
                                           .fetchParticularPatientDetails(
-                                          patientAppointmentModel.userId
-                                              .toString()),
+                                              patientAppointmentModel.userId
+                                                  .toString()),
                                       builder: (context,
                                           AsyncSnapshot<PatientModel>
-                                          snapshot) {
+                                              snapshot) {
                                         if (!snapshot.hasData) {
                                           return Container(
                                               height: 30.h,
@@ -144,7 +148,9 @@ class AppointmentDetailView extends StatelessWidget {
                                       children: [
                                         TextSpan(text: 'Status: '),
                                         TextSpan(
-                                          text: 'Completed',
+                                          text: isComplete
+                                              ? 'Completed'
+                                              : 'Upcomming',
                                           style: getSemiBoldStyle(
                                               fontSize: 14.sp,
                                               color: AppColors.appColor),
@@ -180,7 +186,7 @@ class AppointmentDetailView extends StatelessWidget {
                     Text(
                       'Date & Time',
                       style:
-                      getBoldStyle(color: AppColors.black, fontSize: 16.sp),
+                          getBoldStyle(color: AppColors.black, fontSize: 16.sp),
                     ),
                     padding10,
                     Container(
@@ -236,355 +242,218 @@ class AppointmentDetailView extends StatelessWidget {
                     Text(
                       'Shared Documents',
                       style:
-                      getBoldStyle(color: AppColors.black, fontSize: 16.sp),
+                          getBoldStyle(color: AppColors.black, fontSize: 16.sp),
                     ),
                     padding16,
                     StreamBuilder<QuerySnapshot>(
                         stream: FirebaseFirestore.instance
-                            .collection(AppConstants.userCollection)
-                            .where('id',
-                            isEqualTo:
-                            patientAppointmentModel.userId.toString())
+                            .collection('reports')
+                            .where('doctor_id', isEqualTo: AppConstants.docId)
+                            .where('appointment_id',
+                                isEqualTo: patientAppointmentModel.sId)
                             .snapshots(),
                         builder:
                             (context, AsyncSnapshot<QuerySnapshot> snapshot) {
                           if (!snapshot.hasData) {
                             return Center(child: ShowProgressIndicator());
                           }
-                          return snapshot.data!.docs.isEmpty
+                          return snapshot.data!.docs.length == 0
                               ? Center(
-                            child: Text(
-                              'No documents shared yet',
-                              style:
-                              getSemiBoldStyle(color: Colors.black),
-                            ),
-                          )
+                                  child: Text(
+                                    'No shared documents available.',
+                                    style:
+                                        getSemiBoldStyle(color: Colors.black),
+                                  ),
+                                )
                               : ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                return
-
-                                  snapshot.data!.docs[index]
-                                  ['Blood-Report'] ==
-                                      0 ||
-                                      snapshot.data!.docs[index]
-                                      ['CT-Scan'] ==
-                                          0
-                                      ||
-                                      snapshot.data!.docs[index]
-                                      ['MRI'] ==
-                                          0
-                                      ?
-                                  Center(
-                                    child: Text(
-                                      'No documents shared yet',
-                                      style:
-                                      getSemiBoldStyle(color: Colors.black),
-                                    ),
-                                  )
-                                      :
-                                  snapshot.data!.docs[index]
-                                  ['Blood-Report'] ==
-                                      0
-                                      ? Container()
-                                      : InkWell(
-                                    onTap: (){
-
-                                    },
-                                        child: Row(
-                                                                            children: [
-                                        Container(
-                                          height: 75.h,
-                                          width: 81.w,
-                                          // padding: EdgeInsets.all(10),
-                                          decoration: BoxDecoration(
-                                            borderRadius:
-                                            BorderRadius.circular(
-                                                5.r),
-                                            border: Border.all(
-                                              color: Color.fromRGBO(
-                                                  136, 144, 152, 0.85),
-                                              width: 1.2,
-                                            ),
-                                            color: Color.fromRGBO(
-                                                136, 144, 152, 0.1),
-                                          ),
-                                          child: Center(
-                                            child: Container(
-                                              height: 43.h,
-                                              width: 43.w,
-                                              child: Image.asset(
-                                                AppAssets.bloodRep,
-                                                color: AppColors.appColor,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          width: 20.w,
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Blood Report',
-                                              style: getBoldStyle(
-                                                color: AppColors.black,
-                                                fontSize: 18.sp,
-                                              ),
-                                            ),
-                                            FutureBuilder<PatientModel>(
-                                                future: homeController
-                                                    .fetchParticularPatientDetails(
-                                                    snapshot.data!.docs[index]['id'.toString()]),
-                                                builder: (context,
-                                                    AsyncSnapshot<
-                                                        PatientModel>
-                                                    snapshot) {
-                                                  if (!snapshot.hasData) {
-                                                    return Container(
-                                                        height: 30.h,
-                                                        child:
-                                                        ShowProgressIndicator());
-                                                  }
-                                                  return Text(
-                                                    "Shared By: "+snapshot.data!.username
-                                                        .toString(),
-                                                    style: getBoldStyle(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: snapshot.data!.docs.length,
+                                  itemBuilder: (context, index) {
+                                    return Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 8.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Expanded(
+                                            flex: 8,
+                                            child: Row(
+                                              children: [
+                                                Container(
+                                                  height: 75.h,
+                                                  width: 81.w,
+                                                  // padding: EdgeInsets.all(10),
+                                                  decoration: BoxDecoration(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            5.r),
+                                                    border: Border.all(
+                                                      color: Color.fromRGBO(
+                                                          136, 144, 152, 0.85),
+                                                      width: 1.2,
+                                                    ),
+                                                    color: Color.fromRGBO(
+                                                        136, 144, 152, 0.1),
+                                                  ),
+                                                  child: Center(
+                                                    child: Container(
+                                                      height: 43.h,
+                                                      width: 43.w,
+                                                      child: Image.asset(
+                                                        snapshot
+                                                                    .data!
+                                                                    .docs[index]
+                                                                        [
+                                                                        'report_type']
+                                                                    .toString() ==
+                                                                'MRI'
+                                                            ? AppAssets.mri
+                                                            : snapshot
+                                                                        .data!
+                                                                        .docs[
+                                                                            index]
+                                                                            [
+                                                                            'report_type']
+                                                                        .toString() ==
+                                                                    'Blood-Report'
+                                                                ? AppAssets
+                                                                    .bloodRep
+                                                                : AppAssets
+                                                                    .ctscan,
                                                         color:
-                                                        AppColors.appColor,
-                                                        fontSize:
-                                                        MyFonts.size16),
-                                                  );
-                                                }),
-                                            SizedBox(
-                                              height: 4.w,
+                                                            AppColors.appColor,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 10.w,
+                                                ),
+                                                Column(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                              ['report_type']
+                                                          .toString(),
+                                                      style: getBoldStyle(
+                                                        color: AppColors.black,
+                                                        fontSize: 18.sp,
+                                                      ),
+                                                    ),
+                                                    Text(
+                                                      snapshot
+                                                          .data!
+                                                          .docs[index]
+                                                              ['report_title']
+                                                          .toString(),
+                                                      style: getBoldStyle(
+                                                        color:
+                                                            AppColors.appColor,
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                    ),
+                                                    SizedBox(
+                                                      height: 4.w,
+                                                    ),
+                                                    Text(
+                                                      'Shared on : ${homeController.getFormatDate(snapshot.data!.docs[index]['id'])}',
+                                                      style: getBoldStyle(
+                                                        color: Color.fromRGBO(
+                                                            136, 136, 136, 1),
+                                                        fontSize: 14.sp,
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              '${snapshot.data!.docs[index]['Blood-Report'].length} Document',
-                                              style: getBoldStyle(
-                                                color: Color.fromRGBO(
-                                                    136, 136, 136, 1),
-                                                fontSize: 14.sp,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                                                            ],
-                                                                          ),
-                                      );
-                              });
+                                          ),
+                                          Obx(
+                                            () =>
+                                                homeController
+                                                            .state
+                                                            .downloadImgLoading
+                                                            .value ==
+                                                        true
+                                                    ? Stack(
+                                                        alignment:
+                                                            Alignment.center,
+                                                        children: [
+                                                          Center(
+                                                            child:
+                                                                ShowProgressIndicator(),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    : Expanded(
+                                                        flex: 2,
+                                                        child: Column(
+                                                          children: [
+                                                            GestureDetector(
+                                                              onTap: () {
+                                                                String fileUrl = snapshot
+                                                                        .data!
+                                                                        .docs[index]
+                                                                    [
+                                                                    'report_image'];
+                                                                String filename = snapshot.data!.docs[index]
+                                                                            [
+                                                                            'report_title'] ==
+                                                                        ''
+                                                                    ? 'image$index'
+                                                                    : snapshot
+                                                                            .data!
+                                                                            .docs[index]
+                                                                        [
+                                                                        'report_title']; // Provide the desired filename here
+                                                                homeController
+                                                                    .downloadFile(
+                                                                        fileUrl,
+                                                                        filename);
+                                                              },
+                                                              child: Container(
+                                                                height: 22.h,
+                                                                width: 22.w,
+                                                                child:
+                                                                    Image.asset(
+                                                                  AppAssets
+                                                                      .download,
+                                                                  color: AppColors
+                                                                      .appColor,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                            SizedBox(
+                                                              height: 4.h,
+                                                            ),
+                                                            Text(
+                                                              'Download',
+                                                              style: getSemiBoldStyle(
+                                                                  color: Color
+                                                                      .fromRGBO(
+                                                                          136,
+                                                                          136,
+                                                                          136,
+                                                                          1),
+                                                                  fontSize:
+                                                                      14.sp),
+                                                            )
+                                                          ],
+                                                        ),
+                                                      ),
+                                          ),
+                                        ],
+                                      ),
+                                    );
+                                  });
                         }),
                     padding16,
-                    StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection(AppConstants.userCollection)
-                            .where('id',
-                            isEqualTo:
-                            patientAppointmentModel.userId.toString())
-                            .snapshots(),
-                        builder:
-                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData) {
-                            return Center(child: ShowProgressIndicator());
-                          }
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data!.docs[index]['MRI'].length == 0
-                                    ? Container()
-                                    : Row(
-                                  children: [
-                                    Container(
-                                      height: 75.h,
-                                      width: 81.w,
-                                      // padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(5.r),
-                                        border: Border.all(
-                                          color: Color.fromRGBO(
-                                              136, 144, 152, 0.85),
-                                          width: 1.2,
-                                        ),
-                                        color: Color.fromRGBO(
-                                            136, 144, 152, 0.1),
-                                      ),
-                                      child: Center(
-                                        child: Container(
-                                          height: 43.h,
-                                          width: 43.w,
-                                          child: Image.asset(
-                                            AppAssets.mri,
-                                            color: AppColors.appColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'MRI',
-                                          style: getBoldStyle(
-                                            color: AppColors.black,
-                                            fontSize: 18.sp,
-                                          ),
-                                        ),
-                                        FutureBuilder<PatientModel>(
-                                            future: homeController
-                                                .fetchParticularPatientDetails(
-                                                snapshot.data!.docs[index]['id'.toString()]),
-                                            builder: (context,
-                                                AsyncSnapshot<
-                                                    PatientModel>
-                                                snapshot) {
-                                              if (!snapshot.hasData) {
-                                                return Container(
-                                                    height: 30.h,
-                                                    child:
-                                                    ShowProgressIndicator());
-                                              }
-                                              return Text(
-                                                "Shared By: "+snapshot.data!.username
-                                                    .toString(),
-                                                style: getBoldStyle(
-                                                    color:
-                                                    AppColors.appColor,
-                                                    fontSize:
-                                                    MyFonts.size16),
-                                              );
-                                            }),
-                                        SizedBox(
-                                          height: 4.w,
-                                        ),
-                                        Text(
-                                          '${snapshot.data!.docs[index]['MRI'].length} Document',
-                                          style: getBoldStyle(
-                                            color: Color.fromRGBO(
-                                                136, 136, 136, 1),
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              });
-                        }),
-                    padding16,
-                    StreamBuilder<QuerySnapshot>(
-                        stream: FirebaseFirestore.instance
-                            .collection(AppConstants.userCollection)
-                            .where('id',
-                            isEqualTo:
-                            patientAppointmentModel.userId.toString())
-                            .snapshots(),
-                        builder:
-                            (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-                          if (!snapshot.hasData) {
-                            return Center(child: ShowProgressIndicator());
-                          }
-                          return ListView.builder(
-                              shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: snapshot.data!.docs.length,
-                              itemBuilder: (context, index) {
-                                return snapshot.data!.docs[index]['CT-Scan'].length ==
-                                    0
-                                    ? Container()
-                                    : Row(
-                                  children: [
-                                    Container(
-                                      height: 75.h,
-                                      width: 81.w,
-                                      // padding: EdgeInsets.all(10),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                        BorderRadius.circular(5.r),
-                                        border: Border.all(
-                                          color: Color.fromRGBO(
-                                              136, 144, 152, 0.85),
-                                          width: 1.2,
-                                        ),
-                                        color: Color.fromRGBO(
-                                            136, 144, 152, 0.1),
-                                      ),
-                                      child: Center(
-                                        child: Container(
-                                          height: 43.h,
-                                          width: 43.w,
-                                          child: Image.asset(
-                                            AppAssets.ctscan,
-                                            color: AppColors.appColor,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      width: 20.w,
-                                    ),
-                                    Column(
-                                      crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'CT-Scan',
-                                          style: getBoldStyle(
-                                            color: AppColors.black,
-                                            fontSize: 18.sp,
-                                          ),
-                                        ),
-                                        FutureBuilder<PatientModel>(
-                                            future: homeController
-                                                .fetchParticularPatientDetails(
-                                                snapshot.data!.docs[index]['id'.toString()]),
-                                            builder: (context,
-                                                AsyncSnapshot<
-                                                    PatientModel>
-                                                snapshot) {
-                                              if (!snapshot.hasData) {
-                                                return Container(
-                                                    height: 30.h,
-                                                    child:
-                                                    ShowProgressIndicator());
-                                              }
-                                              return Text(
-                                                "Shared By: "+snapshot.data!.username
-                                                    .toString(),
-                                                style: getBoldStyle(
-                                                    color:
-                                                    AppColors.appColor,
-                                                    fontSize:
-                                                    MyFonts.size16),
-                                              );
-                                            }),
-                                        SizedBox(
-                                          height: 4.w,
-                                        ),
-                                        Text(
-                                          '${snapshot.data!.docs[index]['CT-Scan'].length} Document',
-                                          style: getBoldStyle(
-                                            color: Color.fromRGBO(
-                                                136, 136, 136, 1),
-                                            fontSize: 14.sp,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                );
-                              });
-                        }),
                   ],
                 ),
               ),
@@ -605,7 +474,7 @@ class AppointmentDetailView extends StatelessWidget {
                     Text(
                       'Chat History',
                       style:
-                      getBoldStyle(color: AppColors.black, fontSize: 16.sp),
+                          getBoldStyle(color: AppColors.black, fontSize: 16.sp),
                     ),
                     padding16,
                     Row(
@@ -743,7 +612,7 @@ class AppointmentDetailView extends StatelessWidget {
                     Text(
                       'Your Feedback',
                       style:
-                      getBoldStyle(color: AppColors.black, fontSize: 16.sp),
+                          getBoldStyle(color: AppColors.black, fontSize: 16.sp),
                     ),
                     padding16,
                     Row(

@@ -14,6 +14,7 @@ class DoctorReportState {
   ];
   int? expandedIndex;
 
+  var downloadImgLoading = false.obs;
 
 
   var appointmentFetchLoading = false.obs;

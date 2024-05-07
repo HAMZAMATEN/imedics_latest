@@ -25,7 +25,7 @@ class UpcomingTabView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 18.w),
+      padding: EdgeInsets.only(left: 18.w, right: 18.w, bottom: 50.h),
       child: homeController.state.patientAppointmentList.isEmpty
           ? Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -168,18 +168,22 @@ class UpcomingTabView extends StatelessWidget {
                           // cancelationReason == null
                           //     ?
                           isWaitingRoom
-                              ? CustomButton(
-                                  buttonText: "Enter Waiting Room",
-                                  onPressed: () {
-                                    Get.to(() => DoctorWaitingRoomScreen(
-                                          patientModel:
-                                              homeController.state.patientModel,
-                                          appoint: homeController.state
-                                              .patientAppointmentList[index],
-                                        ));
-                                    // logic to go in side waiting room and move to waiting room screen
-                                  },
-                                )
+                              ? Expanded(
+                                child: CustomButton(
+                                                            // buttonHeight: 45.h,
+                                    buttonText: "Enter Waiting Room",
+                                    onPressed: () {
+                                      Get.to(() => DoctorWaitingRoomScreen(
+                                        doctorHomeController: homeController,
+                                            patientModel:
+                                                homeController.state.patientModel,
+                                            appoint: homeController.state
+                                                .patientAppointmentList[index],
+                                          ));
+                                      // logic to go in side waiting room and move to waiting room screen
+                                    },
+                                  ),
+                              )
                               : Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -201,6 +205,7 @@ class UpcomingTabView extends StatelessWidget {
                                         buttonWidth: 157.w,
                                         onPressed: () {
                                           Get.to(() => AppointmentDetailView(
+                                              isComplete: false,
                                               image: AppAssets.record,
                                               patientAppointmentModel:
                                                   homeController.state
@@ -227,8 +232,5 @@ class UpcomingTabView extends StatelessWidget {
                 );
               }),
     );
-
-
   }
 }
-

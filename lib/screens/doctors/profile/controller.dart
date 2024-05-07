@@ -8,6 +8,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:imedics_latest/components/snack_bar_widget.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:imedics_latest/helpers/shared_prefrences.dart';
+import 'package:imedics_latest/screens/common/accountType/view.dart';
 import 'package:imedics_latest/screens/doctors/profile/state.dart';
 import 'package:imedics_latest/screens/doctors/session/view.dart';
 import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
@@ -59,7 +60,7 @@ class DoctorProfileController extends GetxController {
       AppConstants.clearIndDoctorValues();
       await Prefrences().saveUserId('');
       Get.offAll(
-        () => DoctorSessionScreen(isOfficeDoctor: false),
+        () => AccountTypeScreen(),
       );
       setLoading(false);
     });

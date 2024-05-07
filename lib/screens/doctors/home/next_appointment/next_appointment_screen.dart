@@ -87,7 +87,7 @@ class UserNextAppointmenyScreen extends StatelessWidget {
                   )),
             ),
             Positioned(
-                top: 110.h,
+                top: 90.h,
                 child: UDoctorDeyailCard(
                   special: specialist,
                   doctorName: DoctorName,
@@ -95,7 +95,7 @@ class UserNextAppointmenyScreen extends StatelessWidget {
                   date: sletedDate,
                 )),
             Positioned(
-              top: 330.h,
+              top: 300.h,
               child: UAppointTab(
                 homeController: homeController,
                 // model: model,

@@ -5,6 +5,7 @@ import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_mo
 
 class DoctorHomeState {
   var appointmentFetchLoading = false.obs;
+  var loading = false.obs;
   var downloadImgLoading = false.obs;
   var completedAppointmentList = [];
   List<PatientAppointmentModel> patientAppointmentList = [];

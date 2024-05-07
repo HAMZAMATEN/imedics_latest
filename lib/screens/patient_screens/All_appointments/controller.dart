@@ -27,12 +27,23 @@ class AllAppointmentController extends GetxController {
     return appDoc;
   }
 
-  void addImageToList(String image) {
-    state.imageUrlsToShare.add(image);
+  void addImageToList(String image,String type) {
+
+    ReportModel repo = ReportModel(imageUrl: image, reportType: type);
+    state.reportList.add(repo);
+
+    // state.imageUrlsToShare.add(image);
+    // state.reportTypeList.add(type);
   }
 
-  void removeImageFromList(String image) {
-    state.imageUrlsToShare.remove(image);
+  void removeImageFromList(String image,String type) {
+    // ReportModel repo = ReportModel(imageUrl: image, reportType: type);
+
+    state.reportList.removeWhere((report) =>
+    report.imageUrl == image && report.reportType == type);
+
+    // state.imageUrlsToShare.remove(image);
+    // state.reportTypeList.remove(type);
   }
 
 
@@ -40,7 +51,7 @@ class AllAppointmentController extends GetxController {
     state.uploadLoading.value = val;
   }
 
-  Future<void> shareReport(String image, String docId, String appointId) async {
+  Future<void> shareReport(String image,String type, String docId, String appointId) async {
     String id = DateTime
         .now()
         .microsecondsSinceEpoch
@@ -52,8 +63,8 @@ class AllAppointmentController extends GetxController {
             "appointment_id": "${appointId}",
             "doctor_id": "${docId}",
             "user_id": "${AppConstants.userId}",
-            "report_type": "MRI",
-            "report_title": "Tumor",
+            "report_type": "${type}",
+            "report_title": "",
             "report_image": "${image}",
           }).then((value) {}).onError((error, stackTrace) {
         // print(error);
@@ -68,9 +79,16 @@ class AllAppointmentController extends GetxController {
 
   Future<void> sendDataToFirebase(PatientAppointmentModel appoint) async {
     setUploadLoading(true);
-    for (String imageUrl in state.imageUrlsToShare) {
-      await shareReport(imageUrl, appoint.docId!, appoint.sId!);
+
+
+    for(ReportModel repo in state.reportList){
+      await shareReport(repo.imageUrl,repo.reportType, appoint.docId!, appoint.sId!);
     }
+
+    // for (String imageUrl in state.imageUrlsToShare) {
+    //   await shareReport(imageUrl, appoint.docId!, appoint.sId!);
+    // }
+
     setUploadLoading(false);
   }
 

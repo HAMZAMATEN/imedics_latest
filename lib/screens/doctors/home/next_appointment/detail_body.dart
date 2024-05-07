@@ -18,14 +18,12 @@ import 'package:imedics_latest/utils/myFonts.dart';
 
 class PatientDetailBody extends StatelessWidget {
   PatientModel patientModel;
-  PatientAppointmentModel appoint;
   final DoctorHomeController doctorHomeController;
-
+  PatientAppointmentModel appoint;
   PatientDetailBody({
     super.key,
     required this.patientModel,
-    required this.appoint,
-    required this.doctorHomeController,
+    required this.appoint, required this.doctorHomeController,
   });
 
   @override
@@ -46,20 +44,42 @@ class PatientDetailBody extends StatelessWidget {
                         topRight: Radius.circular(25.r)),
                     color: AppColors.white.withOpacity(0.9),
                   ),
-                  child: Column(
+                  child:
+
+                  Column(
                     children: [
                       padding80,
-                      Text(
-                        patientModel.username!,
-                        style: getBoldStyle(
-                            color: AppColors.black, fontSize: MyFonts.size20),
-                      ),
+                      FutureBuilder<PatientModel>(
+                          future: doctorHomeController
+                              .fetchParticularPatientDetails(
+                              appoint.userId.toString()),
+                          builder: (context,
+                              AsyncSnapshot<PatientModel>
+                              snapshot) {
+                            if (!snapshot.hasData) {
+                              return Container(
+                                  height: 30.h,
+                                  child: ShowProgressIndicator());
+                            }
+                            return Column(
+                              children: [
+                                Text(
+                                  snapshot.data!.username.toString(),
+                                  style: getBoldStyle(
+                                      color: AppColors.black, fontSize: MyFonts.size20),
+                                ),
+                                padding6,
+                                Text(
+                                  snapshot.data!.email.toString(),
+                                  style: getSemiBoldStyle(
+                                      color: AppColors.grey, fontSize: MyFonts.size14),
+                                ),
+                              ],
+                            );
+                          }),
+
                       padding6,
-                      Text(
-                        patientModel.email!,
-                        style: getSemiBoldStyle(
-                            color: AppColors.grey, fontSize: MyFonts.size14),
-                      ),
+
                       padding50,
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -87,35 +107,30 @@ class PatientDetailBody extends StatelessWidget {
                             FutureBuilder<PatientModel>(
                                 future: doctorHomeController
                                     .fetchParticularPatientDetails(
-                                        appoint.userId.toString()),
+                                    appoint.userId.toString()),
                                 builder: (context,
-                                    AsyncSnapshot<PatientModel> snapshot) {
+                                    AsyncSnapshot<PatientModel>
+                                    snapshot) {
                                   if (!snapshot.hasData) {
-                                    return Center(
-                                      child: Container(
-                                          height: 30.h,
-                                          child: ShowProgressIndicator()),
-                                    );
+                                    return Container(
+                                        height: 30.h,
+                                        child: ShowProgressIndicator());
                                   }
                                   return Padding(
-                                    padding:
-                                        EdgeInsets.symmetric(vertical: 10.h),
+                                    padding: EdgeInsets.symmetric(vertical: 10.h),
                                     child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
                                           "Full Name",
-                                          style: getSemiBoldStyle(
-                                              color: Colors.black54,
-                                              fontSize: MyFonts.size15),
+                                          style:
+                                          getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
                                         ),
                                         Text(
                                           snapshot.data!.username.toString(),
                                           textAlign: TextAlign.right,
-                                          style: getSemiBoldStyle(
-                                              color: Colors.black54,
-                                              fontSize: MyFonts.size15),
+                                          style:
+                                          getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
                                         ),
                                       ],
                                     ),
@@ -139,20 +154,15 @@ class PatientDetailBody extends StatelessWidget {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: CustomButton(
-              buttonText: "Join call. Patient will be waiting for you.",
+              buttonText: "Join call.Patient will be here soon!",
               onPressed: () {
-                showAppCustomDialogue(
-                    context,
-                    "Join Call",
-                    "Once join, don't leave until you finish your appointment",
-                    "Confirm to join",
-                    Icon(
-                      Icons.error_outline,
-                      color: AppColors.appColor,
-                    ), () {
+
+                showAppCustomDialogue(context, "Join Call", "Once join, don't leave until you finish your appointment", "Confirm to join", Icon(Icons.error_outline,color: AppColors.appColor,), () {
                   // controller.checkAndJoinCall(appoint,doctor);
                   controller.DoctorCheckAndJoinCall(appoint, patientModel);
+
                 });
+
               },
             ),
           ),
@@ -171,13 +181,13 @@ Widget detailRow(String title, String value) {
         Text(
           "${title}",
           style:
-              getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
+          getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
         ),
         Text(
           "${value}",
           textAlign: TextAlign.right,
           style:
-              getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
+          getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
         ),
       ],
     ),

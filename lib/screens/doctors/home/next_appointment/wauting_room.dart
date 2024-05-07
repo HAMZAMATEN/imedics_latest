@@ -19,7 +19,6 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
   PatientModel patientModel;
   PatientAppointmentModel appoint ;
   final DoctorHomeController doctorHomeController;
-
   DoctorWaitingRoomScreen({super.key,required this.patientModel,
     required this.appoint, required this.doctorHomeController,
 
@@ -77,7 +76,7 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
                         },
                       ),
                       Text(
-                        'Meeting Details',
+                        'Meeting Time',
                         style: getBoldStyle(
                             color: AppColors.white, fontSize: MyFonts.size16),
                       ),
@@ -92,7 +91,6 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
             Padding(
               padding: EdgeInsets.only(top: 150.h),
               child: PatientDetailBody(
-
                 doctorHomeController: doctorHomeController,
                 patientModel: patientModel,
                 appoint:appoint,
@@ -106,9 +104,8 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
                   Container(
                     height: 137.h,
                     width: 157.w,
-
                     child:  Image.asset(
-                      'assets/images/as_patient.png', // Path to your default image
+                      'assets/images/defaultDoc.jpg', // Path to your default image
                       height: 92.h,
                       width: 82.w,
                       fit: BoxFit.contain,
@@ -118,6 +115,21 @@ class DoctorWaitingRoomScreen extends StatelessWidget {
               ),
             ),
 
+            // Padding(
+            //   padding: EdgeInsets.only(top: 215.h, right: 25.w),
+            //   child: Row(
+            //     mainAxisAlignment: MainAxisAlignment.end,
+            //     children: [
+            //       IconButton(
+            //           onPressed: () {},
+            //           icon: Icon(
+            //             Icons.favorite_border,
+            //             color: AppColors.appColor,
+            //             size: 27.h,
+            //           )),
+            //     ],
+            //   ),
+            // ),
             Padding(
               padding: EdgeInsets.only(top: 200.h),
               child: Row(

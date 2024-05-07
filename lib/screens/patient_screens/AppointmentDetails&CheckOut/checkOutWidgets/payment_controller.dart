@@ -7,12 +7,14 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:imedics_latest/screens/patient_screens/AppointmentDetails&CheckOut/controller.dart';
+import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
 
 class PaymentController {
 
   dynamic paymentIntent;
 
-  displayPaymentSheet(BuildContext context,String id) async {
+  displayPaymentSheet(BuildContext context,String id,SetAppointmentDetailsController controller,UserDocModel doc) async {
     try {
       await Stripe.instance.presentPaymentSheet().then((value) {
         Navigator.pop(context);
@@ -38,7 +40,7 @@ class PaymentController {
             ));
 
         // create booking
-        // createBooking(context,id);
+        controller.bookAppointment(context, doc, controller);
 
         paymentIntent = null;
       }).onError((error, stackTrace) {
@@ -100,7 +102,7 @@ class PaymentController {
     }
   }
 
-  Future<void> makePayment(BuildContext context, double totalAmount,String id) async {
+  Future<void> makePayment(BuildContext context, double totalAmount,String id,SetAppointmentDetailsController controller,UserDocModel doc) async {
     try {
       //STEP 1: Create Payment Intent
       paymentIntent = await createPaymentIntent('USD', totalAmount);
@@ -115,7 +117,7 @@ class PaymentController {
           .then((value) {});
 
       //STEP 3: Display Payment sheet
-      displayPaymentSheet(context,id);
+      displayPaymentSheet(context,id,controller,doc);
     } catch (err) {
       throw Exception(err);
     }

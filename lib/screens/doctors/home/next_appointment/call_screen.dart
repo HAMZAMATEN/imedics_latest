@@ -42,7 +42,9 @@ class DoctorVideoCallScreen extends StatelessWidget {
 
             // navigate to done screen
             showEndCallDialogue(context, () {
-              Get.to(()=>DoctorCallEndScreen(patientModel:patientModel, appoint: appoint));
+              Get.to(()=>DoctorCallEndScreen(
+
+                  patientModel:patientModel, appoint: appoint));
               // try {
               //   await FirebaseFirestore.instance
               //       .collection("calls")

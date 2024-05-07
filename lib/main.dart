@@ -17,7 +17,7 @@ void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   ZIMKit().init(
     appID: AppConstants.appID, // your appid
-    appSign: YourSecret.appSign, // your appSign
+    appSign: AppConstants.appSign, // your appSign
   );
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,

@@ -96,6 +96,19 @@ class InformationCenter extends StatelessWidget {
                 // Navigate to office/hospital search screen
               },
             ),
+            buildFeatureExpansionTile(
+              context: context,
+              title: 'Contact Information',
+              dialogSubtitle: "Get assistance by our 24/7 support system.Get in touch through\nWhatsapp:+1-555-5555-5555\nEmail:imdefixsupport@medfix.org",
+              dialogTitle: 'Get in touch',
+              subtitle:
+              "Get assistance by our 24/7 support system.Get in touch through\nWhatsapp:+1-555-5555-5555\nEmail:imdefixsupport@medfix.org",
+              icon: Icons.help,
+              onTap: () {
+                // Navigate to office/hospital search screen
+              },
+            ),
+
           ],
         ),
       ),

@@ -52,7 +52,7 @@ class CompleteTabView extends StatelessWidget {
                 return Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Container(
-                    height: 159.h,
+                    // height: 159.h,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5.r),
                       color: AppColors.white,
@@ -160,36 +160,35 @@ class CompleteTabView extends StatelessWidget {
                           padding4,
                           // cancelationReason == null
                           //     ?
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              CustomButton(
-                                textColor: AppColors.grey,
-                                buttonHeight: 38.h,
-                                buttonWidth: 157.w,
-                                backColor: AppColors.white,
-                                borderColor: AppColors.grey.withOpacity(0.6),
-                                onPressed: () {},
-                                buttonText: 'Cancel',
-                              ),
-                              // cancel != null ? 'Cancel' : 'Add Review'),
-                              CustomButton(
-                                  textColor: AppColors.white,
-                                  buttonHeight: 38.h,
-                                  buttonWidth: 157.w,
-                                  onPressed: () {
-                                    Get.to(() => AppointmentDetailView(
-                                      isComplete: true,
-                                        image: AppAssets.record,
-                                        patientAppointmentModel: homeController
-                                            .state
-                                            .completedAppointmentList[index],
-                                        homeController: homeController));
-                                  },
-                                  buttonText: 'Records'),
-                              // reschedule != null ? 'Reschedule' : 'Book Again'),
-                            ],
-                          )
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          //   children: [
+                          //     CustomButton(
+                          //       textColor: AppColors.grey,
+                          //       buttonHeight: 38.h,
+                          //       buttonWidth: 157.w,
+                          //       backColor: AppColors.white,
+                          //       borderColor: AppColors.grey.withOpacity(0.6),
+                          //       onPressed: () {},
+                          //       buttonText: 'Cancel',
+                          //     ),
+                          //     // cancel != null ? 'Cancel' : 'Add Review'),
+                          //     CustomButton(
+                          //         textColor: AppColors.white,
+                          //         buttonHeight: 38.h,
+                          //         buttonWidth: 157.w,
+                          //         onPressed: () {
+                          //           Get.to(() => AppointmentDetailView(
+                          //               image: AppAssets.record,
+                          //               patientAppointmentModel: homeController
+                          //                   .state
+                          //                   .completedAppointmentList[index],
+                          //               homeController: homeController));
+                          //         },
+                          //         buttonText: 'Records'),
+                          //     // reschedule != null ? 'Reschedule' : 'Book Again'),
+                          //   ],
+                          // )
                           // : CustomButton(
                           // textColor: AppColors.grey,
                           // buttonHeight: 38.h,

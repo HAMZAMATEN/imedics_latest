@@ -1,5 +1,5 @@
 import 'dart:developer';
-import 'dart:io';
+
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +27,7 @@ class DoctorReportScreen extends StatelessWidget {
     // Ensure these assets exist and are correctly referenced
     final controller = Get.put(DoctorReportController());
     controller.getDoctorAppointmentDetails();
+    controller.fetchNoOfSharedReports();
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
@@ -128,11 +129,23 @@ class DoctorReportScreen extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
-                                        controller.state.text[index],
-                                        style: getBoldStyle(
-                                            color: Colors.black, fontSize: 18),
-                                        overflow: TextOverflow.ellipsis,
+                                      Column(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            controller.state.text[index],
+                                            style: getBoldStyle(
+                                                color: Colors.black, fontSize: 18),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                          SizedBox(height: 5.h,),
+                                          Obx(() =>Text(
+                                            "Shared : ${(controller.state.reportsCount.value[index]).toString()}",
+                                            style: getBoldStyle(
+                                                color: Colors.black, fontSize: 15),
+                                            overflow: TextOverflow.ellipsis,
+                                          ),)
+                                        ],
                                       ),
                                     ],
                                   ),

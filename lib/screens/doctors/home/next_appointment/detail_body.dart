@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:imedics_latest/components/app_text_widgets.dart';
 import 'package:imedics_latest/components/custom_button.dart';
+import 'package:imedics_latest/components/progress_indicator.dart';
 import 'package:imedics_latest/components/show_custom_dialogue.dart';
 import 'package:imedics_latest/helpers/app_colors.dart';
 import 'package:imedics_latest/helpers/app_constants.dart';
@@ -17,11 +18,12 @@ import 'package:imedics_latest/utils/myFonts.dart';
 
 class PatientDetailBody extends StatelessWidget {
   PatientModel patientModel;
+  final DoctorHomeController doctorHomeController;
   PatientAppointmentModel appoint;
   PatientDetailBody({
     super.key,
     required this.patientModel,
-    required this.appoint,
+    required this.appoint, required this.doctorHomeController,
   });
 
   @override
@@ -42,84 +44,42 @@ class PatientDetailBody extends StatelessWidget {
                         topRight: Radius.circular(25.r)),
                     color: AppColors.white.withOpacity(0.9),
                   ),
-                  child: Column(
+                  child:
+
+                  Column(
                     children: [
                       padding80,
-                      Text(
-                        patientModel.username!,
-                        style: getBoldStyle(
-                            color: AppColors.black, fontSize: MyFonts.size20),
-                      ),
+                      FutureBuilder<PatientModel>(
+                          future: doctorHomeController
+                              .fetchParticularPatientDetails(
+                              appoint.userId.toString()),
+                          builder: (context,
+                              AsyncSnapshot<PatientModel>
+                              snapshot) {
+                            if (!snapshot.hasData) {
+                              return Container(
+                                  height: 30.h,
+                                  child: ShowProgressIndicator());
+                            }
+                            return Column(
+                              children: [
+                                Text(
+                                  snapshot.data!.username.toString(),
+                                  style: getBoldStyle(
+                                      color: AppColors.black, fontSize: MyFonts.size20),
+                                ),
+                                padding6,
+                                Text(
+                                  snapshot.data!.email.toString(),
+                                  style: getSemiBoldStyle(
+                                      color: AppColors.grey, fontSize: MyFonts.size14),
+                                ),
+                              ],
+                            );
+                          }),
+
                       padding6,
-                      Text(
-                        patientModel.email!,
-                        style: getSemiBoldStyle(
-                            color: AppColors.grey, fontSize: MyFonts.size14),
-                      ),
-                      padding6,
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         Text(
-                      //           "> 1 hour",
-                      //           style: getSemiBoldStyle(
-                      //               color: AppColors.appColor,
-                      //               fontSize: MyFonts.size12),
-                      //         ),
-                      //         Text(
-                      //           'WAIT TIME',
-                      //           style: getSemiBoldStyle(
-                      //               color: AppColors.grey,
-                      //               fontSize: MyFonts.size10),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     Container(
-                      //       height: 43.h,
-                      //       width: 2.w,
-                      //       color: AppColors.lightgrey,
-                      //     ),
-                      //     // Column(
-                      //     //   children: [
-                      //     //     Text(
-                      //     //       doctor.yearofexperience!,
-                      //     //       style: getSemiBoldStyle(
-                      //     //           color: AppColors.appColor,
-                      //     //           fontSize: MyFonts.size12),
-                      //     //     ),
-                      //     //     Text(
-                      //     //       'EXPERIENCE',
-                      //     //       style: getSemiBoldStyle(
-                      //     //           color: AppColors.grey,
-                      //     //           fontSize: MyFonts.size10),
-                      //     //     ),
-                      //     //   ],
-                      //     // ),
-                      //     Container(
-                      //       height: 43.h,
-                      //       width: 2.w,
-                      //       color: AppColors.lightgrey,
-                      //     ),
-                      //     Column(
-                      //       children: [
-                      //         Text(
-                      //           '98% ',
-                      //           style: getSemiBoldStyle(
-                      //               color: AppColors.appColor,
-                      //               fontSize: MyFonts.size12),
-                      //         ),
-                      //         Text(
-                      //           'SATISFIED',
-                      //           style: getSemiBoldStyle(
-                      //               color: AppColors.grey,
-                      //               fontSize: MyFonts.size10),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //   ],
-                      // ),
+
                       padding50,
                       Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30.w),
@@ -144,7 +104,38 @@ class PatientDetailBody extends StatelessWidget {
                                       color: Colors.black,
                                       fontSize: MyFonts.size20),
                                 )),
-                            detailRow("Full Name", "${AppConstants.userName}"),
+                            FutureBuilder<PatientModel>(
+                                future: doctorHomeController
+                                    .fetchParticularPatientDetails(
+                                    appoint.userId.toString()),
+                                builder: (context,
+                                    AsyncSnapshot<PatientModel>
+                                    snapshot) {
+                                  if (!snapshot.hasData) {
+                                    return Container(
+                                        height: 30.h,
+                                        child: ShowProgressIndicator());
+                                  }
+                                  return Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 10.h),
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          "Full Name",
+                                          style:
+                                          getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
+                                        ),
+                                        Text(
+                                          snapshot.data!.username.toString(),
+                                          textAlign: TextAlign.right,
+                                          style:
+                                          getSemiBoldStyle(color: Colors.black54, fontSize: MyFonts.size15),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                }),
                             detailRow("Gender", "${appoint.gender}"),
                             detailRow("Age", "${appoint.patientAge}"),
                             padding30,

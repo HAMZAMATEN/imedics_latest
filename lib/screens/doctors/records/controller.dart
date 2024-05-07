@@ -167,4 +167,12 @@ class DoctorRecordController extends GetxController {
 
     return formattedDate;
   }
+
+  getFormatDate(date) {
+    // 2022-10-17T13:34:01.000000Z
+    int formattedDateTime = int.parse(date);
+    DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(formattedDateTime);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    return formattedDate;
+  }
 }

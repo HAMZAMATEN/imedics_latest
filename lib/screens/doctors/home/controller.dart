@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -16,150 +17,21 @@ import 'package:imedics_latest/screens/patient_screens/patientModels/patient_app
 import 'package:http/http.dart' as http;
 import 'package:imedics_latest/screens/patient_screens/patientModels/user_doc_model.dart';
 import 'package:intl/intl.dart';
+import 'package:path_provider/path_provider.dart';
 
 class DoctorHomeController extends GetxController {
   final state = DoctorHomeState();
 
-  // setFetchAppointmentLoading(bool val){
-  //   state.appointmentFetchLoading.value=val;
-  // }
-  // Future<void> fetchPatientAppointments() async{
-  //   List<PatientAppointmentModel> filteredAppointments = [];
-  //   setFetchAppointmentLoading(true);
-  //   print("Function called");
-  //
-  //   try{
-  //     var response = await http.get(Uri.parse("${AppConstants.baseUrl}/getallbookappointment"),);
-  //     var items = jsonDecode(response.body);
-  //     // log('items:$items');
-  //
-  //     if(response.statusCode==200){
-  //       print("Status code is 200");
-  //       List<PatientAppointmentModel> appointments = items.map<PatientAppointmentModel>((json) {
-  //         return PatientAppointmentModel.fromJson(json);
-  //       }).toList();
-  //       print("Doc id is ${AppConstants.docId}");
-  //       String desiredocId = "${AppConstants.docId}";
-  //       // String desiredUserId = "\"662798168f105ba43d99a6f8\"";
-  //
-  //       // filtering appointments that have userId of current user
-  //       for (PatientAppointmentModel appointment in appointments) {
-  //         // print("Iteration in fetch appointment");
-  //         // state.completedAppointmentList = [];
-  //         if (appointment.docId == desiredocId) {
-  //           log('docId:${appointment.docId}');
-  //           log('desired:${desiredocId}');
-  //           if(checkAppointmentValidation(appointment.bookingDate!)){
-  //             log('inside1');
-  //
-  //             // logic for appointments of current day and days after current day
-  //             filteredAppointments.add(appointment);
-  //           }else{
-  //             // logic for appointments passed current date
-  //             state.completedAppointmentList.add(appointment);
-  //             log('len:${state.completedAppointmentList.length}');
-  //           }
-  //         }
-  //       }
-  //       //sorting in asceding order and storing in list to show
-  //       filteredAppointments.sort((a, b) => a.selectedDate!.compareTo(b.selectedDate!));
-  //       state.patientAppointmentList = filteredAppointments;
-  //       if(state.patientAppointmentList.length>0){
-  //         log('data');
-  //         fetchPatientDetails(state.patientAppointmentList[0].userId!);
-  //       }else{
-  //         setFetchAppointmentLoading(false);
-  //       }
-  //
-  //       // setFetchAppointmentLoading(false);
-  //
-  //     }
-  //
-  //     if(response.statusCode==404){
-  //       print("Status code is 404");
-  //       state.patientAppointmentList=[];
-  //       setFetchAppointmentLoading(false);
-  //     }
-  //   }
-  //   catch(e){
-  //     print("Error while fetching");
-  //     setFetchAppointmentLoading(false);
-  //     Snackbar.showSnackBar("Error fetching data", Icons.error_outline);
-  //   }
-  //
-  // }
-  // bool checkAppointmentValidation(String appDate){
-  //   DateTime currentDate = DateTime.now();
-  //   int currDay = currentDate.day;
-  //   int currMonth = currentDate.month;
-  //   int currYear = currentDate.year;
-  //
-  //   List<String> components = appDate.split('-');
-  //   int year = int.parse(components[0]);
-  //   int month = int.parse(components[1]);
-  //   int day = int.parse(components[2]);
-  //
-  //   if(currDay<=day &&
-  //       currMonth<=month &&
-  //       currYear <= year
-  //   ){
-  //     return true;
-  //   }else{
-  //     return false;
-  //   }
-  // }
-  //
-  // // fetching single doctor details
-  // Future<void> fetchPatientDetails(String docId) async{
-  //   try{
-  //     http.Response response = await http.get(Uri.parse("${AppConstants.baseUrl}/getDoctorDetail/${docId}"));
-  //     var items = jsonDecode(response.body);
-  //     if(response.statusCode==200){
-  //
-  //       state.appointMentDoc = UserDocModel.fromJson(jsonDecode(response.body));
-  //       setFetchAppointmentLoading(false);
-  //     }
-  //     if(response.statusCode==404){
-  //       Snackbar.showSnackBar("Error while fetching doctors details", Icons.error_outline);
-  //       // state.doctorsList = [];
-  //       setFetchAppointmentLoading(false);
-  //
-  //     }
-  //   }catch(e){
-  //     Snackbar.showSnackBar("Error: $e", Icons.error_outline);
-  //     setFetchAppointmentLoading(false);
-  //
-  //   }
-  // }
-  //
-  //
-  //
-  // // code for fetching all doctors
-  // setFetchDocLoading(bool val){
-  //   state.docListFetchLoading.value=val;
-  // }
-  // Future<void> fetchAllDoctors() async{
-  //   setFetchDocLoading(true);
-  //   try{
-  //     http.Response response = await http.get(Uri.parse("${AppConstants.baseUrl}/doctorpersnoldetails"));
-  //     var items = jsonDecode(response.body);
-  //     if(response.statusCode==200){
-  //       List<UserDocModel> listOfDocs = items.map<UserDocModel>((json) {
-  //         return UserDocModel.fromJson(json);
-  //       }).toList();
-  //       state.doctorsList=listOfDocs;
-  //       setFetchDocLoading(false);
-  //     }
-  //     if(response.statusCode==404){
-  //       Snackbar.showSnackBar("Error while fetching doctors list", Icons.error_outline);
-  //       state.doctorsList = [];
-  //       setFetchDocLoading(false);
-  //     }
-  //   }catch(e){
-  //     setFetchDocLoading(false);
-  //     Snackbar.showSnackBar("Error: $e", Icons.error_outline);
-  //   }
-  // }
+  init(){
+    state.loading.value = true;
+    Future.delayed(Duration(seconds: 3) , () {
+      state.loading.value = false;
+    });
+  }
+
+  setDownloadImgLoading(bool val) {
+    state.downloadImgLoading.value = val;
+  }
 
   setFetchAppointmentLoading(bool val) {
     state.appointmentFetchLoading.value = val;
@@ -290,8 +162,8 @@ class DoctorHomeController extends GetxController {
     // String date = appoint.selectedDate!;
     // String time = appoint.selectedTimeSlot!;
     //
-    String date = "2024-5-7";
-    String time = "08:00 PM";
+    String date = "2024-5-8";
+    String time = "02:00 AM";
 
     // print(date);
     // String date = "2024-5-6";
@@ -419,5 +291,55 @@ class DoctorHomeController extends GetxController {
       Snackbar.showSnackBar("Error $e", Icons.error_outline);
     }
     return token;
+  }
+
+  Future<void> downloadFile(String url, String filename) async {
+    setDownloadImgLoading(true);
+    try {
+      log('try');
+
+      var response = await http.get(Uri.parse(url));
+      log('res:${response.body}');
+      log('res:${response.statusCode}');
+      if (response.statusCode == 200) {
+        var bytes = response.bodyBytes;
+
+        var tempDir = await getTemporaryDirectory();
+
+        var contentType = response.headers['content-type'];
+        var extension =
+        contentType != null ? contentType.split('/').last : 'unknown';
+        var filePath = '${tempDir.path}/$filename.$extension';
+        log('path:$filePath');
+        var file = File(filePath);
+        await file.writeAsBytes(bytes);
+        log('succesfully download');
+        Snackbar.showSnackBar('Image downloaded successfully', Icons.done_all);
+
+        setDownloadImgLoading(false);
+
+      } else {
+        print(
+            'Failed to download file. Server responded with status code: ${response.statusCode}');
+        Snackbar.showSnackBar('Failed to download file. Server responded with status code: ${response.statusCode}', Icons.error);
+        setDownloadImgLoading(false);
+
+      }
+    } catch (e) {
+      // Exception occurred during the request
+      print('Failed to download file: $e');
+      Snackbar.showSnackBar('Failed to download file: $e', Icons.error);
+
+      setDownloadImgLoading(false);
+
+    }
+  }
+
+  getFormatDate(date) {
+    // 2022-10-17T13:34:01.000000Z
+    int formattedDateTime = int.parse(date);
+    DateTime dateTime = DateTime.fromMicrosecondsSinceEpoch(formattedDateTime);
+    String formattedDate = DateFormat('yyyy-MM-dd').format(dateTime);
+    return formattedDate;
   }
 }
